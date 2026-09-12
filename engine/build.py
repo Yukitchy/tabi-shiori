@@ -24,15 +24,15 @@ def build(slug):
     ch=d.get('choices')
     chs=''
     if ch:
-        chs+=f'<section class="s"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の3つを見て、気に入ったものを押してください。</div></section>'
+        chs+=f'<section class="s" data-clock="{esc(ch.get("clock",""))}"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の3つを見て、気に入ったものを押してください。</div></section>'
         for o in ch['options']:
-            chs+=(f'<section class="s"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
+            chs+=(f'<section class="s" data-clock="{esc(o.get("clock",""))}"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
                   f'<span class="badge">{esc(o["badge"])}　{esc(o["label"])}</span><h2>{o["h"]}</h2>{photo(o["photo"])}'
                   f'<p class="lead">{esc(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
                   f'{pts(o["pts"])}{links(o.get("links",[]))}'
                   f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
     def sec(s):
-        return (f'<section class="s"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}'
+        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}'
                 f'<p class="lead">{esc(s["lead"])}</p>{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
@@ -95,16 +95,18 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(50vh,380px);width:44px;pointer-events:none;z-index:5}}
 .rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-36px}}.rail .lab.b{{bottom:-36px}}
 .rail .track{{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#e9eef3;border-radius:999px}}
+.rail .klabel{{position:absolute;right:36px;top:0;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .25s;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
+.rail .klabel.on{{opacity:1}}
 .rail .knob{{position:absolute;left:50%;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px #fff,0 3px 0 4px var(--shadow)}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
 </style></head><body>
-<div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
+<div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
 {pres}{chs}{secs}
-<section class="s"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
-<section class="s"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
+<section class="s" data-clock="出発の前に"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
+<section class="s" data-clock="出発の前に"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
 <section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>
 </div>
 <script>
@@ -114,8 +116,17 @@ function apply(k){{if(!PICKS[k])return;document.querySelectorAll('.opt').forEach
  box.innerHTML='いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。';}}
 document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{{try{{localStorage.setItem('pick16',b.dataset.k)}}catch(e){{}};apply(b.dataset.k);box.scrollIntoView({{behavior:'smooth',block:'center'}});}}));
 try{{apply(localStorage.getItem('pick16'))}}catch(e){{}}
-const deck=document.getElementById('deck'),knob=document.getElementById('knob');
-const upd=()=>{{const r=deck.scrollTop/(deck.scrollHeight-deck.clientHeight||1);knob.style.top=(r*100)+'%';}};deck.addEventListener('scroll',upd,{{passive:true}});upd();
+const deck=document.getElementById('deck'),knob=document.getElementById('knob'),klabel=document.getElementById('klabel');
+const secs=[...document.querySelectorAll('#deck .s')];
+let raf=0;
+const upd=()=>{{raf=0;
+ const r=deck.scrollTop/(deck.scrollHeight-deck.clientHeight||1);
+ knob.style.top=(r*100)+'%';klabel.style.top=(r*100)+'%';
+ const mid=deck.clientHeight/2;
+ const cur=secs.find(s=>{{const b=s.getBoundingClientRect();return b.top<=mid&&b.bottom>=mid;}});
+ const t=cur?cur.dataset.clock:'';
+ klabel.textContent=t;klabel.classList.toggle('on',!!t);}};
+deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{{passive:true}});upd();
 </script></body></html>'''
     (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
 if __name__=='__main__':

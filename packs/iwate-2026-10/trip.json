@@ -69,7 +69,8 @@
       "地図",
       "https://www.google.com/maps/search/?api=1&query=八幡平アスピーテライン"
      ]
-    ]
+    ],
+    "clock": "16日 昼"
    },
    {
     "key": "umi",
@@ -108,7 +109,8 @@
       "黒崎めぐり（普代村）",
       "https://www.vill.fudai.iwate.jp/kanko/experience/kurosaki-meguri.html"
      ]
-    ]
+    ],
+    "clock": "16日 昼"
    },
    {
     "key": "nonbiri",
@@ -143,9 +145,11 @@
       "地図",
       "https://www.google.com/maps/search/?api=1&query=小岩井農場まきば園"
      ]
-    ]
+    ],
+    "clock": "16日 昼"
    }
-  ]
+  ],
+  "clock": "1日目を選ぶ"
  },
  "sections": [
   {
@@ -184,7 +188,8 @@
      "くろさき荘",
      "https://kurosakisou.jp/"
     ]
-   ]
+   ],
+   "clock": "16日 夕方"
   },
   {
    "day": "17日 朝",
@@ -214,7 +219,8 @@
      "地図（普代→宮古）",
      "https://www.google.com/maps/dir/?api=1&origin=岩手県下閉伊郡普代村宇留部6-8&destination=浄土ヶ浜"
     ]
-   ]
+   ],
+   "clock": "17日 朝"
   },
   {
    "day": "17日 午前",
@@ -248,7 +254,8 @@
      "地図",
      "https://www.google.com/maps/search/?api=1&query=浄土ヶ浜ビジターセンター"
     ]
-   ]
+   ],
+   "clock": "17日 午前"
   },
   {
    "day": "17日 昼",
@@ -278,7 +285,8 @@
      "地図",
      "https://www.google.com/maps/search/?api=1&query=宮古市魚菜市場"
     ]
-   ]
+   ],
+   "clock": "17日 昼"
   },
   {
    "day": "17日 夕方",
@@ -308,7 +316,8 @@
      "宮古盛岡横断道路",
      "https://sanriku-travel.jp/archive/contents-1448"
     ]
-   ]
+   ],
+   "clock": "17日 夜"
   }
  ],
  "car": {
@@ -487,7 +496,8 @@
       ]
      ]
     }
-   ]
+   ],
+   "clock": "出発の前に"
   }
  ]
 }
