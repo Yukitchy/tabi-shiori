@@ -10,9 +10,9 @@ def build(slug):
     for f in (P/'img').glob('*'): shutil.copy(f,O/'img'/f.name)
     pts=lambda L:'<ul class="pts">'+''.join(f'<li><i>{i+1}</i><span>{esc(a)}<small>{esc(b)}</small></span></li>' for i,(a,b) in enumerate(L))+'</ul>'
     links=lambda L:'<div class="links">'+''.join(f'<a href="{esc(u)}" target="_blank" rel="noopener">{esc(t)}</a>' for t,u in L)+'</div>' if L else ''
-    def photo(k):
+    def photo(k,eager=False):
         c=cr.get(k,{}); cap=f'<a href="{esc(c["page"])}" target="_blank" rel="noopener">{esc(c.get("title",""))}</a> {esc(c.get("lic",""))}' if c else ''
-        return f'<figure class="photo"><img src="img/{k}.jpg" alt="" loading="lazy"><figcaption>{cap}</figcaption></figure>'
+        return f'<figure class="photo"><img src="img/{k}.jpg" alt="" loading="{"eager" if eager else "lazy"}" {"fetchpriority=\"high\"" if eager else ""}><figcaption>{cap}</figcaption></figure>'
     ch=d.get('choices')
     chs=''
     if ch:
@@ -51,7 +51,8 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
 .nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}.nums dd small{{display:block;font-size:10.5px;color:var(--mute)}}
 .rest{{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}}.rest li{{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14.5px}}
-.rest li b{{font-weight:900;word-break:keep-all;white-space:nowrap}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
+.rest li b{{font-weight:900;word-break:keep-all;white-space:nowrap}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal}}
+.rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
 .rest li a{{white-space:nowrap;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
 .note{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--ink)}}
 .links{{display:flex;flex-wrap:wrap;gap:6px}}.links a{{font-size:12px;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}}.links a:after{{content:" →"}}
@@ -76,7 +77,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 </style></head><body>
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
-<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"])}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
+<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
 {chs}{secs}
 <section class="s"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
 <section class="s"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
