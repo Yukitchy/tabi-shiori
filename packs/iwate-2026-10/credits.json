@@ -52,5 +52,23 @@
   "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Orienoda&amp;action=edit",
   "lic": "CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Japan,Iwate,Miyako_city,Fishing_harbor.jpg"
+ },
+ "kouyou": {
+  "title": "Autumn leaves of Mount Hachimantai in October 2023 (2).jpg",
+  "artist": "<a href=\"//commons.wikimedia.org/wiki/User:%E6%8E%AC%E8%8C%B6\" title=\"User:掬茶\">掬",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Autumn_leaves_of_Mount_Hachimantai_in_October_2023_(2).jpg"
+ },
+ "hachimantai": {
+  "title": "Iwate-Akita Prefectural Road Route 23, in Kazuno, Akita.jpg",
+  "artist": "<a href=\"//commons.wikimedia.org/wiki/User:%E6%8E%AC%E8%8C%B6\" title=\"User:掬茶\">掬",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Iwate-Akita_Prefectural_Road_Route_23,_in_Kazuno,_Akita.jpg"
+ },
+ "koiwai": {
+  "title": "Koiwai-farm.jpg",
+  "artist": "FITM",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Koiwai-farm.jpg"
  }
 }

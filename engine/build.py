@@ -13,9 +13,20 @@ def build(slug):
     def photo(k):
         c=cr.get(k,{}); cap=f'<a href="{esc(c["page"])}" target="_blank" rel="noopener">{esc(c.get("title",""))}</a> {esc(c.get("lic",""))}' if c else ''
         return f'<figure class="photo"><img src="img/{k}.jpg" alt="" loading="lazy"><figcaption>{cap}</figcaption></figure>'
+    ch=d.get('choices')
+    chs=''
+    if ch:
+        chs+=f'<section class="s"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の3つを見て、気に入ったものを押してください。</div></section>'
+        for o in ch['options']:
+            chs+=(f'<section class="s"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
+                  f'<span class="badge">{esc(o["badge"])}　{esc(o["label"])}</span><h2>{o["h"]}</h2>{photo(o["photo"])}'
+                  f'<p class="lead">{esc(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
+                  f'{pts(o["pts"])}{links(o.get("links",[]))}'
+                  f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
     secs=''
     for s in d['sections']:
         secs+=f'<section class="s"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}<p class="lead">{esc(s["lead"])}</p>{pts(s["pts"])}{links(s.get("links",[]))}</section>'
+    picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
     car=d['car']; rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">予約 →</a></li>' for n,t,u in car['rows'])
     pack=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d['pack']['items'])
@@ -48,6 +59,14 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .hub h1{{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em;margin-top:6px}}.hub .who{{font-size:13.5px;color:var(--mute);max-width:26em}}
 .hub .photo{{width:100%}}.hint{{font-size:12px;color:var(--ash);text-align:center}}
 .end{{text-align:center;align-items:center}}.credit{{font-size:10.5px;color:var(--ash);line-height:1.7;max-width:420px;font-weight:500}}.credit a{{color:inherit}}
+.opt{{border:2px solid var(--line);border-radius:20px;padding:14px 14px 16px;display:grid;gap:10px;background:#fff}}
+.opt.on{{border-color:var(--ac);box-shadow:0 0 0 4px var(--wash)}}
+.badge{{display:inline-block;background:var(--wash);color:var(--ac);font-size:11.5px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.06em}}
+.meta{{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--mute)}}.meta span{{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 10px}}
+.pick{{width:100%;background:var(--ac);color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;box-shadow:0 4px 0 0 var(--shadow);cursor:pointer;font-family:inherit}}
+.pick:active{{transform:translateY(4px);box-shadow:none}}
+.opt.on .pick{{background:var(--ink);box-shadow:0 4px 0 0 #000}}
+.picked{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7}}
 .rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(50vh,380px);width:44px;pointer-events:none;z-index:5}}
 .rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-36px}}.rail .lab.b{{bottom:-36px}}
 .rail .track{{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#e9eef3;border-radius:999px}}
@@ -58,12 +77,18 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"])}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
-{secs}
+{chs}{secs}
 <section class="s"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
 <section class="s"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
 <section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>
 </div>
 <script>
+const PICKS={picks_json};
+const box=document.getElementById('picked');
+function apply(k){{if(!PICKS[k])return;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.k===k));
+ box.innerHTML='いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。';}}
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{{try{{localStorage.setItem('pick16',b.dataset.k)}}catch(e){{}};apply(b.dataset.k);box.scrollIntoView({{behavior:'smooth',block:'center'}});}}));
+try{{apply(localStorage.getItem('pick16'))}}catch(e){{}}
 const deck=document.getElementById('deck'),knob=document.getElementById('knob');
 const upd=()=>{{const r=deck.scrollTop/(deck.scrollHeight-deck.clientHeight||1);knob.style.top=(r*100)+'%';}};deck.addEventListener('scroll',upd,{{passive:true}});upd();
 </script></body></html>'''
