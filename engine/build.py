@@ -63,7 +63,9 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
 .nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}.nums dd small{{display:block;font-size:10.5px;color:var(--mute)}}
 .rest{{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}}.rest li{{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14.5px}}
-.rest li b{{font-weight:900;word-break:keep-all;overflow-wrap:break-word;min-width:0;flex:1 1 auto}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal;word-break:normal;overflow-wrap:anywhere}}
+.rest li b{{font-weight:900;word-break:keep-all;overflow-wrap:break-word;min-width:0;flex:1 1 auto}}
+.rest li:has(>span) b{{white-space:nowrap;flex:0 0 auto}}
+.rest li>span{{min-width:0}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal;word-break:normal;overflow-wrap:anywhere}}
 .rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
 .rest li a{{white-space:nowrap;flex:0 0 auto;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
 .tt{{margin:2px 0 0}}
