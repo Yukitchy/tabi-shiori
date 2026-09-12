@@ -92,16 +92,19 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .pick:active{{transform:translateY(4px);box-shadow:none}}
 .opt.on .pick{{background:var(--ink);box-shadow:0 4px 0 0 #000}}
 .picked{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7}}
-.rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(50vh,380px);width:44px;pointer-events:none;z-index:5}}
+.rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(56vh,420px);width:44px;pointer-events:none;z-index:5}}
 .rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-36px}}.rail .lab.b{{bottom:-36px}}
-.rail .track{{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#e9eef3;border-radius:999px}}
-.rail .klabel{{position:absolute;right:36px;top:0;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .25s;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
+.rail .track{{position:absolute;left:50%;top:0;bottom:0;width:14px;margin-left:-7px;background:#e7ecf2;border-radius:999px}}
+.rail .track:after{{content:"";position:absolute;left:50%;top:8px;bottom:8px;width:2px;margin-left:-1px;border-radius:2px;background:repeating-linear-gradient(180deg,#fff 0 9px,transparent 9px 18px)}}
+.rail .stop{{position:absolute;left:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:#fff;border:2px solid #c6d1dc;transition:background .3s,border-color .3s,transform .3s}}
+.rail .stop.on{{background:var(--ac);border-color:var(--ac);transform:scale(1.3)}}
+.rail .car{{position:absolute;left:50%;width:26px;height:40px;margin:-20px 0 0 -13px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.22))}}
+.rail .klabel{{position:absolute;right:38px;top:0;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .25s;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
 .rail .klabel.on{{opacity:1}}
-.rail .knob{{position:absolute;left:50%;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px #fff,0 3px 0 4px var(--shadow)}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
 </style></head><body>
-<div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
+<div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span><svg class="car" id="car" viewBox="0 0 26 40" aria-hidden="true"><rect x="1.5" y="4" width="23" height="33" rx="7" fill="var(--ac)"/><rect x="0" y="10" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="0" y="27" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="4" y="7" width="18" height="27" rx="5" fill="var(--ac)"/><path d="M6.5 12h13l-1.6-3.2a2 2 0 0 0-1.8-1.1H9.9a2 2 0 0 0-1.8 1.1L6.5 12z" fill="#eaf3fb"/><path d="M6.5 27h13l-1.6 3.2a2 2 0 0 1-1.8 1.1H9.9a2 2 0 0 1-1.8-1.1L6.5 27z" fill="#cfe2f2"/><rect x="5.5" y="14" width="15" height="11" rx="3" fill="#fff" opacity=".22"/><rect x="6" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/><rect x="16.4" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/></svg><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
 {pres}{chs}{secs}
@@ -116,17 +119,31 @@ function apply(k){{if(!PICKS[k])return;document.querySelectorAll('.opt').forEach
  box.innerHTML='いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。';}}
 document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{{try{{localStorage.setItem('pick16',b.dataset.k)}}catch(e){{}};apply(b.dataset.k);box.scrollIntoView({{behavior:'smooth',block:'center'}});}}));
 try{{apply(localStorage.getItem('pick16'))}}catch(e){{}}
-const deck=document.getElementById('deck'),knob=document.getElementById('knob'),klabel=document.getElementById('klabel');
-const secs=[...document.querySelectorAll('#deck .s')];
+const deck=document.getElementById('deck'),car=document.getElementById('car'),klabel=document.getElementById('klabel'),rail=document.querySelector('.rail');
+const secs=[...document.querySelectorAll('#deck .s')].filter(s=>s.dataset.clock);
+const range=()=>Math.max(1,deck.scrollHeight-deck.clientHeight);
+let stops=[];
+function build(){{
+ rail.querySelectorAll('.stop').forEach(e=>e.remove());stops=[];
+ secs.forEach(s=>{{
+  const p=Math.min(1,Math.max(0,(s.offsetTop+s.offsetHeight/2-deck.clientHeight/2)/range()));
+  const i=document.createElement('i');i.className='stop';i.style.top=(p*100)+'%';
+  rail.insertBefore(i,car);stops.push({{p,el:i}});
+ }});
+}}
 let raf=0;
-const upd=()=>{{raf=0;
- const r=deck.scrollTop/(deck.scrollHeight-deck.clientHeight||1);
- knob.style.top=(r*100)+'%';klabel.style.top=(r*100)+'%';
+function upd(){{raf=0;
+ const r=deck.scrollTop/range();
+ car.style.top=(r*100)+'%';klabel.style.top=(r*100)+'%';
+ stops.forEach(o=>o.el.classList.toggle('on',r>=o.p-0.004));
  const mid=deck.clientHeight/2;
  const cur=secs.find(s=>{{const b=s.getBoundingClientRect();return b.top<=mid&&b.bottom>=mid;}});
  const t=cur?cur.dataset.clock:'';
- klabel.textContent=t;klabel.classList.toggle('on',!!t);}};
-deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{{passive:true}});upd();
+ klabel.textContent=t;klabel.classList.toggle('on',!!t);
+}}
+deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{{passive:true}});
+addEventListener('resize',()=>{{build();upd();}});
+build();upd();
 </script></body></html>'''
     (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
 if __name__=='__main__':
