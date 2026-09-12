@@ -31,9 +31,17 @@ def build(slug):
                   f'<p class="lead">{esc(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
                   f'{pts(o["pts"])}{links(o.get("links",[]))}'
                   f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
+    def numsblk(L):
+        return '<dl class="nums">'+''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(bb)}<small>{esc(cc)}</small></dd></div>' for a,bb,cc in L)+'</dl>' if L else ''
+    def vid(v):
+        if not v: return ''
+        return (f'<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/{esc(v["id"])}?rel=0" title="{esc(v["cap"])}" '
+                f'loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
+                f'<p class="vcap">{esc(v["cap"])}</p>')
     def sec(s):
-        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}'
-                f'<p class="lead">{esc(s["lead"])}</p>{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
+        head = vid(s.get('video')) if s.get('video') else photo(s['photo'])
+        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
+                f'<p class="lead">{esc(s["lead"])}</p>{numsblk(s.get("nums",[]))}{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
     for s in d['sections']:
@@ -80,6 +88,9 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .tt li.ok b:before{{content:"○ ";color:var(--ash)}}
 .tt li.mid b:before{{content:"△ ";color:var(--ash)}}
 .tt li.no{{opacity:.5}}.tt li.no b:before{{content:"× ";color:var(--ash)}}
+.vid{{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}}
+.vid iframe{{position:absolute;inset:0;width:100%;height:100%;border:0}}
+.vcap{{font-size:11.5px;color:var(--ash);font-weight:500;margin-top:-8px}}
 .note{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--ink)}}
 .links{{display:flex;flex-wrap:wrap;gap:6px}}.links{{max-width:100%}}.links a{{font-size:12px;overflow-wrap:anywhere;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}}.links a:after{{content:" →"}}
 .hub{{text-align:center;align-items:center}}.hub .date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:18px;padding:6px 18px;border-radius:999px}}
