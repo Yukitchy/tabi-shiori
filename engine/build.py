@@ -48,10 +48,10 @@ def build(slug):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
 <style>
 :root{{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:{d["accent"]};--shadow:{d["accent_shadow"]};--wash:{d["accent_wash"]};color-scheme:light}}
-*{{box-sizing:border-box}}html,body{{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
+*{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
 h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}}
-#deck{{height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
-.s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;display:flex;flex-direction:column;justify-content:center;gap:14px;max-width:560px;margin:0 auto}}
+#deck{{height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
+.s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;max-width:min(560px,100%);overflow-x:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;margin:0 auto}}
 .eyebrow{{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}}
 .s h2{{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}}.s h2 em{{font-style:normal;color:var(--ac)}}.s h2 span,.who span{{white-space:nowrap}}
 .lead{{font-size:15px;color:var(--mute);line-height:1.75}}
@@ -63,9 +63,9 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
 .nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}.nums dd small{{display:block;font-size:10.5px;color:var(--mute)}}
 .rest{{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}}.rest li{{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14.5px}}
-.rest li b{{font-weight:900;word-break:keep-all;white-space:nowrap}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal}}
+.rest li b{{font-weight:900;word-break:keep-all;overflow-wrap:break-word;min-width:0;flex:1 1 auto}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal;word-break:normal;overflow-wrap:anywhere}}
 .rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
-.rest li a{{white-space:nowrap;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
+.rest li a{{white-space:nowrap;flex:0 0 auto;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
 .tt{{margin:2px 0 0}}
 .tt-cap{{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--ac);margin-bottom:6px}}
 .tt ul{{list-style:none;margin:0 0 14px;padding:0;border-top:2px solid var(--ink)}}
@@ -79,7 +79,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .tt li.mid b:before{{content:"△ ";color:var(--ash)}}
 .tt li.no{{opacity:.5}}.tt li.no b:before{{content:"× ";color:var(--ash)}}
 .note{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--ink)}}
-.links{{display:flex;flex-wrap:wrap;gap:6px}}.links a{{font-size:12px;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}}.links a:after{{content:" →"}}
+.links{{display:flex;flex-wrap:wrap;gap:6px}}.links{{max-width:100%}}.links a{{font-size:12px;overflow-wrap:anywhere;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}}.links a:after{{content:" →"}}
 .hub{{text-align:center;align-items:center}}.hub .date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:18px;padding:6px 18px;border-radius:999px}}
 .hub h1{{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em;margin-top:6px}}.hub .who{{font-size:13.5px;color:var(--mute);max-width:26em}}
 .hub .photo{{width:100%}}.hint{{font-size:12px;color:var(--ash);text-align:center}}
