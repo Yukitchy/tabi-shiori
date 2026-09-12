@@ -1,0 +1,50 @@
+{
+ "hero": {
+  "title": "Jyoudogahama.jpg",
+  "artist": "Junpei Satoh",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Jyoudogahama.jpg"
+ },
+ "kitayamazaki": {
+  "title": "北山崎第一展望台からの北山崎.jpg",
+  "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Jranar\" title=\"User:Jranar\">くろふね</a>",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%E5%8C%97%E5%B1%B1%E5%B4%8E%E7%AC%AC%E4%B8%80%E5%B1%95%E6%9C%9B%E5%8F%B0%E3%81%8B%E3%82%89%E3%81%AE%E5%8C%97%E5%B1%B1%E5%B4%8E.jpg"
+ },
+ "jodogahama": {
+  "title": "浄土ヶ浜の風景20220625-P1390448.jpg",
+  "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Jranar\" title=\"User:Jranar\">くろふね</a>",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%E6%B5%84%E5%9C%9F%E3%83%B6%E6%B5%9C%E3%81%AE%E9%A2%A8%E6%99%AF20220625-P1390448.jpg"
+ },
+ "ryusendo": {
+  "title": "Ryusendo Cave Underground Lake Cap 20201115.jpg",
+  "artist": "--<a href=\"https://ja.wikipedia.org/wiki/User:%E3%81%82%E3%81%8A%E3%82%82%E3%82%",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Ryusendo_Cave_Underground_Lake_Cap_20201115.jpg"
+ },
+ "kurosaki": {
+  "title": "KurosakiToudai2010.jpg",
+  "artist": "kumasan114",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:KurosakiToudai2010.jpg"
+ },
+ "sanriku": {
+  "title": "三陸鉄道 36-700形.jpg",
+  "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Kiha_railway&amp;action=",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%E4%B8%89%E9%99%B8%E9%89%84%E9%81%93_36-700%E5%BD%A2.jpg"
+ },
+ "reimen": {
+  "title": "Morioka Reimen.jpg",
+  "artist": "No machine-readable author provided. <a href=\"//commons.wikimedia.org/w/index.ph",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Morioka_Reimen.jpg"
+ },
+ "house": {
+  "title": "普代B邸（ADDress公式ページ）",
+  "artist": "ADDress",
+  "lic": "",
+  "page": "https://address.love/homes/530"
+ }
+}
