@@ -8,6 +8,14 @@ def build(slug):
     cr=json.load(open(P/'credits.json')) if (P/'credits.json').exists() else {}
     O=ROOT/'docs'/slug; (O/'img').mkdir(parents=True,exist_ok=True)
     for f in (P/'img').glob('*'): shutil.copy(f,O/'img'/f.name)
+    def tt(T):
+        out=''
+        for t in T:
+            out+=f'<div class="tt"><div class="tt-cap">{esc(t["cap"])}</div><ul>'
+            for cls,name,tm,memo in t['rows']:
+                out+=f'<li class="{cls}"><b>{esc(name)}</b><span class="tm">{esc(tm)}</span><small>{esc(memo)}</small></li>'
+            out+='</ul></div>'
+        return out
     pts=lambda L:'<ul class="pts">'+''.join(f'<li><i>{i+1}</i><span>{esc(a)}<small>{esc(b)}</small></span></li>' for i,(a,b) in enumerate(L))+'</ul>'
     links=lambda L:'<div class="links">'+''.join(f'<a href="{esc(u)}" target="_blank" rel="noopener">{esc(t)}</a>' for t,u in L)+'</div>' if L else ''
     def photo(k,eager=False):
@@ -23,9 +31,13 @@ def build(slug):
                   f'<p class="lead">{esc(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
                   f'{pts(o["pts"])}{links(o.get("links",[]))}'
                   f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
+    def sec(s):
+        return (f'<section class="s"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}'
+                f'<p class="lead">{esc(s["lead"])}</p>{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
+    pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
     for s in d['sections']:
-        secs+=f'<section class="s"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{photo(s["photo"])}<p class="lead">{esc(s["lead"])}</p>{pts(s["pts"])}{links(s.get("links",[]))}</section>'
+        secs+=sec(s)
     picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
     car=d['car']; rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">予約 →</a></li>' for n,t,u in car['rows'])
@@ -54,6 +66,18 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .rest li b{{font-weight:900;word-break:keep-all;white-space:nowrap}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal}}
 .rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
 .rest li a{{white-space:nowrap;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
+.tt{{margin:2px 0 0}}
+.tt-cap{{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--ac);margin-bottom:6px}}
+.tt ul{{list-style:none;margin:0 0 14px;padding:0;border-top:2px solid var(--ink)}}
+.tt li{{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 2px;border-bottom:1px solid var(--line);align-items:baseline}}
+.tt li b{{font-weight:900;font-size:14.5px;white-space:nowrap}}
+.tt li .tm{{font-weight:900;font-size:14.5px;font-variant-numeric:tabular-nums;white-space:nowrap}}
+.tt li small{{grid-column:1/-1;font-size:12.5px;color:var(--mute);font-weight:500;line-height:1.55}}
+.tt li.best{{background:var(--wash);border-radius:10px;padding:9px 8px}}
+.tt li.best b:before{{content:"◎ ";color:var(--ac)}}
+.tt li.ok b:before{{content:"○ ";color:var(--ash)}}
+.tt li.mid b:before{{content:"△ ";color:var(--ash)}}
+.tt li.no{{opacity:.5}}.tt li.no b:before{{content:"× ";color:var(--ash)}}
 .note{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--ink)}}
 .links{{display:flex;flex-wrap:wrap;gap:6px}}.links a{{font-size:12px;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}}.links a:after{{content:" →"}}
 .hub{{text-align:center;align-items:center}}.hub .date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:18px;padding:6px 18px;border-radius:999px}}
@@ -78,7 +102,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
-{chs}{secs}
+{pres}{chs}{secs}
 <section class="s"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
 <section class="s"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
 <section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>
