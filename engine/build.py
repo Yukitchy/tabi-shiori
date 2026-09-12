@@ -30,7 +30,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 #deck{{height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
 .s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;display:flex;flex-direction:column;justify-content:center;gap:14px;max-width:560px;margin:0 auto}}
 .eyebrow{{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}}
-.s h2{{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}}.s h2 em{{font-style:normal;color:var(--ac)}}
+.s h2{{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}}.s h2 em{{font-style:normal;color:var(--ac)}}.s h2 span,.who span{{white-space:nowrap}}
 .lead{{font-size:15px;color:var(--mute);line-height:1.75}}
 .photo{{margin:0;border-radius:20px;overflow:hidden;background:#e9eef3;aspect-ratio:16/10}}.photo img{{display:block;width:100%;height:100%;object-fit:cover}}
 .photo figcaption{{display:none}}
@@ -57,7 +57,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 </style></head><body>
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="knob" id="knob"></span><span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
-<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"])}<p class="who">{esc(c["who"])}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
+<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"])}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
 {secs}
 <section class="s"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
 <section class="s"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
