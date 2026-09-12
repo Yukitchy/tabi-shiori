@@ -49,7 +49,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .hub .photo{{width:100%}}.hint{{font-size:12px;color:var(--ash);text-align:center}}
 .end{{text-align:center;align-items:center}}.credit{{font-size:10.5px;color:var(--ash);line-height:1.7;max-width:420px;font-weight:500}}.credit a{{color:inherit}}
 .rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(50vh,380px);width:44px;pointer-events:none;z-index:5}}
-.rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-28px}}.rail .lab.b{{bottom:-28px}}
+.rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-36px}}.rail .lab.b{{bottom:-36px}}
 .rail .track{{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#e9eef3;border-radius:999px}}
 .rail .knob{{position:absolute;left:50%;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px #fff,0 3px 0 4px var(--shadow)}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
