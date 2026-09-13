@@ -58,7 +58,7 @@ def build(slug):
         spots=len({(round(i['lat']/.0009),round(i['lng']/.0011)) for i in gps})
         nP=sum(1 for i in items if i['kind']=='photo');nV=len(items)-nP
         album=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
-               f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSのある地点")])}</section>')
+               f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSあり")])}</section>')
         days={}
         for i in items: days.setdefault(i['taken'][:10],[]).append(i)
         for ymd,L in days.items():
