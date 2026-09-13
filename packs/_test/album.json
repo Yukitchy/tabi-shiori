@@ -1,0 +1,40 @@
+{
+ "items": [
+  {
+   "f": "001.mp4",
+   "kind": "video",
+   "src": "IMG_0004.MOV",
+   "taken": "2026-09-14T08:14",
+   "lat": null,
+   "lng": null,
+   "cap": ""
+  },
+  {
+   "f": "002.jpg",
+   "kind": "photo",
+   "src": "IMG_0001.JPG",
+   "taken": "2026-09-15T11:01",
+   "lat": 36.561299999999996,
+   "lng": 136.6562,
+   "cap": "ひがし茶屋街"
+  },
+  {
+   "f": "003.jpg",
+   "kind": "photo",
+   "src": "IMG_0002.JPG",
+   "taken": "2026-09-15T12:02",
+   "lat": 36.568000000000005,
+   "lng": 136.66799999999998,
+   "cap": ""
+  },
+  {
+   "f": "004.jpg",
+   "kind": "photo",
+   "src": "IMG_0003.JPG",
+   "taken": "2026-09-15T13:03",
+   "lat": null,
+   "lng": null,
+   "cap": ""
+  }
+ ]
+}

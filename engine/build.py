@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """tabi-shiori engine: packs/<slug>/trip.json + img/ -> docs/<slug>/index.html"""
-import json,sys,shutil,html,pathlib
+import json,sys,shutil,html,pathlib,datetime
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 def esc(s):return html.escape(s,quote=True)
 def build(slug):
@@ -46,6 +46,42 @@ def build(slug):
     secs=''
     for s in d['sections']:
         secs+=sec(s)
+    # --- アルバム（album.json があるときだけ） ---
+    album='';lfhead='';mapjs=''
+    AJ=P/'album.json'
+    items=json.load(open(AJ))['items'] if AJ.exists() else []
+    if items:
+        (O/'album').mkdir(parents=True,exist_ok=True)
+        for f in (P/'album').glob('*'): shutil.copy(f,O/'album'/f.name)
+        gps=[i for i in items if i.get('lat') is not None]
+        # ponytail: 100m格子でざっくり重複排除。厳密なクラスタリングが要るなら差し替え
+        spots=len({(round(i['lat']/.0009),round(i['lng']/.0011)) for i in gps})
+        nP=sum(1 for i in items if i['kind']=='photo');nV=len(items)-nP
+        album=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
+               f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSのある地点")])}</section>')
+        days={}
+        for i in items: days.setdefault(i['taken'][:10],[]).append(i)
+        for ymd,L in days.items():
+            lab=f'{int(ymd[5:7])}/{int(ymd[8:10])}';cells=''
+            for i in L:
+                k=i['f'][:3];cap=f'<figcaption>{esc(i.get("cap",""))}</figcaption>' if i.get('cap') else ''
+                cells+=(f'<figure class="w2"><video controls playsinline preload="none" poster="album/{k}.jpg" src="album/{k}.mp4"></video>{cap}</figure>'
+                        if i['kind']=='video' else
+                        f'<figure><a href="album/{k}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="album/{k}.jpg" alt=""></a>{cap}</figure>')
+            album+=f'<section class="s" data-clock="{lab}"><div class="eyebrow">{lab}</div><div class="grid">{cells}</div></section>'
+        if gps:
+            album+='<section class="s" data-clock="地図"><div class="eyebrow">地図</div><h2><em>行った</em><span>ところ</span></h2><div id="map"></div></section>'
+            lfhead=('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
+                    '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
+            MP=json.dumps([{'lat':i['lat'],'lng':i['lng'],'f':'album/'+i['f'][:3]+'.jpg','cap':i.get('cap','')} for i in gps],ensure_ascii=False)
+            mapjs=('\nconst MP='+MP+',MC='+json.dumps(d['accent'])+';(function(){var el=document.getElementById("map");if(!el||!window.L)return;'
+                   'var m=L.map(el,{scrollWheelZoom:false}),pts=MP.map(function(p){return [p.lat,p.lng]});'
+                   'L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; <a href=\\"https://www.openstreetmap.org/copyright\\">OpenStreetMap</a>"}).addTo(m);'
+                   'MP.forEach(function(p){L.circleMarker([p.lat,p.lng],{radius:7,weight:2,color:"#fff",fillColor:MC,fillOpacity:1}).addTo(m)'
+                   '.bindPopup(\'<img src="\'+p.f+\'" style="width:160px;display:block;border-radius:8px">\'+(p.cap?\'<div style="margin-top:4px">\'+p.cap+\'</div>\':""))});'
+                   'if(pts.length>1)L.polyline(pts,{color:MC,weight:3,opacity:.7}).addTo(m);'
+                   'var fit=function(){m.fitBounds(L.latLngBounds(pts),{padding:[30,30]})};fit();'
+                   'new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el);})();')
     picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
     car=d['car']; rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">予約 →</a></li>' for n,t,u in car['rows'])
@@ -56,7 +92,7 @@ def build(slug):
     railjs=json.dumps({'mk':mk,'a1':{'ac':d['accent'],'sh':d['accent_shadow'],'wa':d['accent_wash']},'a2':{'ac':ac2.get('accent',d['accent']),'sh':ac2.get('shadow',d['accent_shadow']),'wa':ac2.get('wash',d['accent_wash'])}},ensure_ascii=False)
     page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{esc(d["title"])}</title><meta name="robots" content="noindex"><meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">{lfhead}
 <style>
 :root{{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:{d["accent"]};--shadow:{d["accent_shadow"]};--wash:{d["accent_wash"]};color-scheme:light}}
 *{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
@@ -119,13 +155,17 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .rail .car{{position:absolute;left:50%;width:26px;height:40px;margin:-20px 0 0 -13px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.22))}}
 .rail .klabel{{position:absolute;right:38px;top:0;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .25s;box-shadow:0 1px 4px rgba(0,0,0,.18)}}
 .rail .klabel.on{{opacity:1}}
+.grid{{display:grid;grid-template-columns:1fr 1fr;gap:8px}}.grid figure{{margin:0;min-width:0}}.grid .w2{{grid-column:1/-1}}
+.grid img,.grid video{{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;background:#e9eef3}}.grid .w2 video{{aspect-ratio:16/9;background:#000}}
+.grid figcaption{{font-size:11.5px;color:var(--mute);font-weight:500;line-height:1.55;margin-top:5px}}
+#map{{height:62vh;border-radius:20px;overflow:hidden;background:#e9eef3}}#map img{{max-width:none}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
 </style></head><body>
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
-{pres}{chs}{secs}
+{pres}{chs}{secs}{album}
 <section class="s" data-clock="出発の前に"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
 <section class="s" data-clock="出発の前に"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
 <section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>
@@ -163,8 +203,60 @@ function upd(){{raf=0;
 }}
 deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{{passive:true}});
 addEventListener('resize',()=>{{build();upd();}});
-build();upd();
+build();upd();{mapjs}
 </script></body></html>'''
     (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
+def status(d):
+    """dates[1] が過ぎていれば done"""
+    return 'done' if d.get('dates',[''])[-1]<datetime.date.today().isoformat() else 'plan'
+def build_index(who='yuri',label='ゆりと'):
+    T=[]
+    for p in sorted((ROOT/'packs').iterdir()):
+        if not (p/'trip.json').exists(): continue
+        d=json.load(open(p/'trip.json'))
+        if d.get('with')!=who: continue
+        A=p/'album.json';T.append((d,p.name,json.load(open(A))['items'] if A.exists() else None))
+    T.sort(key=lambda t:t[0].get('dates',[''])[0])
+    days=sum((datetime.date.fromisoformat(d['dates'][1])-datetime.date.fromisoformat(d['dates'][0])).days+1 for d,_,_ in T if d.get('dates'))
+    shots=sum(1 for _,_,I in T if I for i in I if i['kind']=='photo')
+    cards=''
+    for d,slug,I in T:
+        done=status(d)=='done'
+        cards+=(f'<li class="card"><a href="../{slug}/"><img src="../{slug}/img/{d["cover"]["photo"]}.jpg" alt="" loading="lazy"></a>'
+                f'<div class="b"><span class="badge{" done" if done else ""}">{"行った" if done else "これから"}</span>'
+                f'<p class="dl">{esc(d["date_label"])}</p><h2>{esc(d["title"])}</h2>'
+                f'<div class="links"><a href="../{slug}/">しおり →</a>'
+                +(f'<a href="../{slug}/#album">アルバム →</a>' if I else '')+'</div></div></li>')
+    page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{label} 旅の記録</title><meta name="robots" content="noindex"><meta property="og:title" content="{label} 旅の記録">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<style>
+:root{{--bg:#fff;--card:#faf8f8;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e6e2e1;--ac:#e5382b;--shadow:#a8271d;--wash:#fde3df;color-scheme:light}}
+*{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
+h1,h2,p{{margin:0;line-height:1.2;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}}
+main{{max-width:min(560px,100%);margin:0 auto;padding:44px 22px 56px;display:grid;gap:26px}}
+.hub{{text-align:center;display:grid;gap:12px;justify-items:center}}
+.date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:16px;padding:6px 18px;border-radius:999px}}
+h1{{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em}}
+.nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
+.nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}
+.trips{{list-style:none;margin:0;padding:0;display:grid;gap:18px}}
+.card{{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}}
+.card>a{{display:block}}.card img{{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#eee}}
+.card .b{{padding:14px 16px 16px;display:grid;gap:7px;justify-items:start}}
+.badge{{background:var(--wash);color:var(--ac);font-size:11.5px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.06em}}
+.badge.done{{background:#efeceb;color:var(--ash)}}
+.dl{{font-size:12.5px;color:var(--mute);font-weight:700}}.card h2{{font-size:23px;font-weight:900;letter-spacing:-.02em}}
+.links{{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}}
+.links a{{font-size:12px;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 12px}}
+</style></head><body><main>
+<div class="hub"><span class="date">{label}</span><h1>旅の記録</h1>
+<dl class="nums"><div><dt>旅</dt><dd>{len(T)}回</dd></div><div><dt>日数</dt><dd>{days}日</dd></div><div><dt>写真</dt><dd>{shots}枚</dd></div></dl></div>
+<ul class="trips">{cards}</ul>
+</main></body></html>'''
+    O=ROOT/'docs'/who;O.mkdir(parents=True,exist_ok=True);(O/'index.html').write_text(page,encoding='utf-8');print('built',O/'index.html',len(page))
 if __name__=='__main__':
-    for s in sys.argv[1:] or [p.name for p in (ROOT/'packs').iterdir() if (p/'trip.json').exists()]: build(s)
+    a=sys.argv[1:]
+    if a!=['index']:
+        for s in [x for x in a if x!='index'] or [p.name for p in (ROOT/'packs').iterdir() if (p/'trip.json').exists()]: build(s)
+    build_index()
