@@ -279,12 +279,28 @@
    "day": "おまけ",
    "clock": "15日 おまけ",
    "h": "<em>追加</em>で<span>こんなのも</span>",
-   "photo": "noto",
-   "lead": "佑樹からの追加案。車があるので、遠出するならこれ。",
+   "photo": "kutani",
+   "lead": "佑樹からの追加案。雨の火曜にやっていて、車があれば全部いける。入れなくていい、おまけ。",
    "pts": [
     [
-     "のと里山ポケモン・ウィズ・ユー空港",
-     "8月にゆりが送ってくれたリールのコース。金沢から約1時間40分。帰りに和倉の能登ミルク（水木休）"
+     "カラオケ",
+     "7月にゆりが「一緒に行きたい」と言っていたやつ。片町に何軒もある"
+    ],
+    [
+     "国立工芸館（出羽町）",
+     "陶磁や漆の常設展。9:30〜17:30・月曜休・コレクション展¥300"
+    ],
+    [
+     "鈴木大拙館（本多町）",
+     "水鏡の庭は雨の日がいちばんきれい。9:30〜17:00・月曜休・¥310"
+    ],
+    [
+     "石川県立図書館（小立野）",
+     "円形の大閲覧室。火曜は9:00〜19:00・月曜休・無料。駐車場あり"
+    ],
+    [
+     "湯涌温泉 総湯 白鷺の湯",
+     "テルメの代わりに山の温泉なら。金沢から車30分。7:00〜22:00・第3木曜休・¥490"
     ],
     [
      "九谷光仙窯（野町）",
@@ -297,16 +313,28 @@
    ],
    "links": [
     [
-     "ポケモン空港（公式）",
-     "https://www.pokemon.jp/info/event/detail/20398.html"
+     "国立工芸館",
+     "https://www.momat.go.jp/craft-museum/"
     ],
     [
-     "ゆりのリール",
-     "https://www.instagram.com/reel/DbAUDVIPkFR/"
+     "鈴木大拙館",
+     "https://www.kanazawa-museum.jp/daisetz/"
+    ],
+    [
+     "石川県立図書館",
+     "https://www.library.pref.ishikawa.lg.jp/"
+    ],
+    [
+     "白鷺の湯",
+     "https://www.kanazawa-kankoukyoukai.or.jp/spot/detail_50100.html"
     ],
     [
      "九谷光仙窯",
      "https://www.kanazawa-kankoukyoukai.or.jp/spot/detail_50104.html"
+    ],
+    [
+     "福光屋 金沢店",
+     "https://www.fukumitsuya.co.jp/sake-shop/kanazawa/"
     ]
    ]
   },
