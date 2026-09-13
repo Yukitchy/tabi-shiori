@@ -8,7 +8,16 @@
  "accent_wash": "#fde3df",
  "rail": {
   "top": "14日",
-  "bottom": "16日"
+  "bottom": "16日",
+  "marker": [
+   "🍅",
+   "🍆"
+  ],
+  "accent2": {
+   "accent": "#6C4C8F",
+   "shadow": "#4a3266",
+   "wash": "#efe9f5"
+  }
  },
  "cover": {
   "photo": "hero",
