@@ -29,12 +29,6 @@
   "lic": "CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:E7%E3%83%BBE714-3.jpg"
  },
- "oden": {
-  "title": "金沢おでん勝一20241030 04.jpg",
-  "artist": "経済特区",
-  "lic": "CC0",
-  "page": "https://commons.wikimedia.org/wiki/File:%E9%87%91%E6%B2%A2%E3%81%8A%E3%81%A7%E3%82%93%E5%8B%9D%E4%B8%8020241030_04.jpg"
- },
  "noto": {
   "title": "Noto Airport 2024-02-16(5) as.jpg",
   "artist": "Wikimedia Commons",
@@ -46,5 +40,11 @@
   "artist": "金沢市",
   "lic": "CC BY 2.1 jp",
   "page": "https://commons.wikimedia.org/wiki/File:%E9%87%91%E6%B2%A221%E4%B8%96%E7%B4%80%E7%BE%8E%E8%A1%93%E9%A4%A8001.jpg"
+ },
+ "saize": {
+  "title": "Saizeriya Namba Ocat.jpg",
+  "artist": "Mr.ちゅらさん",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Saizeriya_Namba_Ocat.jpg"
  }
 }
