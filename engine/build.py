@@ -24,7 +24,7 @@ def build(slug):
     ch=d.get('choices')
     chs=''
     if ch:
-        chs+=f'<section class="s" data-clock="{esc(ch.get("clock",""))}"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の3つを見て、気に入ったものを押してください。</div></section>'
+        chs+=f'<section class="s" data-clock="{esc(ch.get("clock",""))}"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の案を見て、気に入ったものを押してください。</div></section>'
         for o in ch['options']:
             chs+=(f'<section class="s" data-clock="{esc(o.get("clock",""))}"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
                   f'<span class="badge">{esc(o["badge"])}　{esc(o["label"])}</span><h2>{o["h"]}</h2>{photo(o["photo"])}'
