@@ -212,6 +212,49 @@ build();upd();{mapjs}
 def status(d):
     """dates[1] が過ぎていれば done"""
     return 'done' if d.get('dates',[''])[-1]<datetime.date.today().isoformat() else 'plan'
+IDX_CSS = """
+:root{--bg:#fbfaf9;--ink:#1b1a19;--mute:#6b6664;--ash:#a9a29e;--line:#e7e2df;--ac:#e5382b;--paper:#fff;color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}
+h1,h2,p{margin:0;line-height:1.18;word-break:keep-all;overflow-wrap:anywhere}
+a{color:inherit}
+main{max-width:min(600px,100%);margin:0 auto;padding:0 20px 76px}
+.hero{padding:46px 0 4px;text-align:center}
+.stack{position:relative;height:min(64vw,330px);max-width:min(79%,360px);margin:0 auto 32px}
+.stack figure{position:absolute;inset:0;margin:0;padding:8px;background:var(--paper);border-radius:2px;box-shadow:0 12px 26px rgba(38,24,18,.17),0 2px 6px rgba(38,24,18,.1)}
+.stack img{display:block;width:100%;height:100%;object-fit:cover;background:#eee}
+.stack figure:nth-child(1){transform:rotate(-10deg) translate(-23%,5%) scale(.78)}
+.stack figure:nth-child(2){transform:rotate(8deg) translate(22%,-5%) scale(.78)}
+.stack figure:nth-child(3){transform:rotate(-2deg) scale(.97)}
+.tag{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:14px;letter-spacing:.04em;padding:5px 16px;border-radius:999px}
+h1{font-size:clamp(40px,12.5vw,62px);font-weight:900;letter-spacing:-.045em;margin:10px 0 18px}
+.nums{display:flex;margin:0 0 6px}
+.nums div{flex:1;padding:0 4px;border-left:1px solid var(--line)}
+.nums div:first-child{border-left:0}
+.nums dt{font-size:10.5px;color:var(--ash);letter-spacing:.1em;margin-bottom:3px}
+.nums dd{margin:0;font-size:29px;font-weight:900;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
+.nums i{font-style:normal;font-size:13px;color:var(--mute);margin-left:1px;letter-spacing:0}
+.trips{list-style:none;margin:0;padding:0}
+.year{display:flex;align-items:center;gap:14px;margin:34px 0 18px}
+.year span{font-size:38px;font-weight:900;color:var(--ash);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.year::after{content:"";flex:1;height:1px;background:var(--line)}
+.trip{margin:0 0 40px}
+.print{display:block;position:relative;padding:9px;background:var(--paper);border-radius:2px;text-decoration:none;box-shadow:0 12px 26px rgba(38,24,18,.15),0 2px 6px rgba(38,24,18,.09);transform:rotate(var(--r));transition:transform .4s cubic-bezier(.2,.8,.25,1),box-shadow .4s}
+.print img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eee}
+.stamp{position:absolute;right:22px;bottom:20px;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ac);text-shadow:0 0 7px rgba(229,56,43,.5)}
+.trip:hover .print,.trip:focus-within .print{transform:rotate(0) translateY(-5px);box-shadow:0 20px 40px rgba(38,24,18,.2),0 3px 8px rgba(38,24,18,.1)}
+.meta{padding:16px 4px 0}
+.when{font-size:12.5px;color:var(--mute);letter-spacing:.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.soon{background:var(--ac);color:#fff;font-size:11px;font-weight:900;padding:3px 9px;border-radius:999px;letter-spacing:.06em}
+.trip h2{font-size:26px;font-weight:900;letter-spacing:-.035em;margin:6px 0 0}
+.peek{display:flex;gap:6px;margin-top:13px}
+.peek a{display:block;flex:1;position:relative;border-radius:2px;overflow:hidden;background:#eee;aspect-ratio:1;text-decoration:none}
+.peek img{display:block;width:100%;height:100%;object-fit:cover}
+.peek b{position:absolute;inset:0;display:grid;place-items:center;background:rgba(27,26,25,.58);color:#fff;font-size:14px;font-weight:900;letter-spacing:-.02em}
+.go{display:inline-flex;align-items:center;gap:5px;margin-top:13px;font-size:12.5px;font-weight:900;text-decoration:none;border:1.6px solid var(--ink);border-radius:999px;padding:6px 14px}
+@media(prefers-reduced-motion:reduce){.print{transition:none}}
+"""
+
 def build_index(who='yuri',label='ゆりと'):
     T=[]
     for p in sorted((ROOT/'packs').iterdir()):
@@ -222,39 +265,36 @@ def build_index(who='yuri',label='ゆりと'):
     T.sort(key=lambda t:t[0].get('dates',[''])[0])
     days=sum((datetime.date.fromisoformat(d['dates'][1])-datetime.date.fromisoformat(d['dates'][0])).days+1 for d,_,_ in T if d.get('dates'))
     shots=sum(1 for _,_,I in T if I for i in I if i['kind']=='photo')
-    cards=''
+    def thumb(slug,it): return f'../{slug}/album/'+(it['f'] if it['kind']=='photo' else it['f'][:-4]+'.jpg')
+    heroes=[t for t in T if status(t[0])=='done'][-3:]
+    stack=''.join(f'<figure><img src="../{s}/img/{d["cover"]["photo"]}.jpg" alt=""></figure>' for d,s,_ in heroes)
+    cards='';year=None
     for d,slug,I in T:
-        done=status(d)=='done'
-        cards+=(f'<li class="card"><a href="../{slug}/"><img src="../{slug}/img/{d["cover"]["photo"]}.jpg" alt="" loading="lazy"></a>'
-                f'<div class="b"><span class="badge{" done" if done else ""}">{"行った" if done else "これから"}</span>'
-                f'<p class="dl">{esc(d["date_label"])}</p><h2>{esc(d["title"])}</h2>'
-                f'<div class="links"><a href="../{slug}/">しおり →</a>'
-                +(f'<a href="../{slug}/#album">アルバム →</a>' if I else '')+'</div></div></li>')
+        y=d['dates'][0][:4]
+        if y!=year: year=y;cards+=f'<li class="year"><span>{y}</span></li>'
+        rot=(-1.3,1.1,-.8,1.5)[len(cards)%4]
+        ymd=d['dates'][0].split('-');st=f"'{ymd[0][2:]} {ymd[1]} {ymd[2]}"
+        soon='' if status(d)=='done' else '<span class="soon">これから</span>'
+        peek=''
+        if I:
+            ph=[i for i in I if i['kind']!='video'] or I
+            if len(ph)>4:
+                pick=[ph[int((k+1)*len(ph)/5)] for k in range(4)]
+                rest=len(ph)-4
+            else: pick=ph;rest=0
+            cells=''.join(f'<a href="../{slug}/#album"><img src="{thumb(slug,it)}" alt="" loading="lazy">'
+                          +(f'<b>+{rest}</b>' if rest and n==len(pick)-1 else '')+'</a>' for n,it in enumerate(pick))
+            peek=f'<div class="peek">{cells}</div>'
+        cards+=(f'<li class="trip" style="--r:{rot}deg"><a class="print" href="../{slug}/">'
+                f'<img src="../{slug}/img/{d["cover"]["photo"]}.jpg" alt="" loading="lazy"><span class="stamp">{st}</span></a>'
+                f'<div class="meta"><p class="when">{esc(d["date_label"])}{soon}</p><h2>{esc(d["title"])}</h2>'
+                f'{peek}<a class="go" href="../{slug}/">しおりを開く →</a></div></li>')
     page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{label} 旅の記録</title><meta name="robots" content="noindex"><meta property="og:title" content="{label} 旅の記録">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
-<style>
-:root{{--bg:#fff;--card:#faf8f8;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e6e2e1;--ac:#e5382b;--shadow:#a8271d;--wash:#fde3df;color-scheme:light}}
-*{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
-h1,h2,p{{margin:0;line-height:1.2;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}}
-main{{max-width:min(560px,100%);margin:0 auto;padding:44px 22px 56px;display:grid;gap:26px}}
-.hub{{text-align:center;display:grid;gap:12px;justify-items:center}}
-.date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:16px;padding:6px 18px;border-radius:999px}}
-h1{{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em}}
-.nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
-.nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}
-.trips{{list-style:none;margin:0;padding:0;display:grid;gap:18px}}
-.card{{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}}
-.card>a{{display:block}}.card img{{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#eee}}
-.card .b{{padding:14px 16px 16px;display:grid;gap:7px;justify-items:start}}
-.badge{{background:var(--wash);color:var(--ac);font-size:11.5px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.06em}}
-.badge.done{{background:#efeceb;color:var(--ash)}}
-.dl{{font-size:12.5px;color:var(--mute);font-weight:700}}.card h2{{font-size:23px;font-weight:900;letter-spacing:-.02em}}
-.links{{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}}
-.links a{{font-size:12px;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 12px}}
-</style></head><body><main>
-<div class="hub"><span class="date">{label}</span><h1>旅の記録</h1>
-<dl class="nums"><div><dt>旅</dt><dd>{len(T)}回</dd></div><div><dt>日数</dt><dd>{days}日</dd></div><div><dt>写真</dt><dd>{shots}枚</dd></div></dl></div>
+<style>{IDX_CSS}</style></head><body><main>
+<div class="hero"><div class="stack">{stack}</div><span class="tag">{label}</span><h1>旅の記録</h1>
+<dl class="nums"><div><dt>旅</dt><dd>{len(T)}<i>回</i></dd></div><div><dt>日数</dt><dd>{days}<i>日</i></dd></div><div><dt>写真</dt><dd>{shots}<i>枚</i></dd></div></dl></div>
 <ul class="trips">{cards}</ul>
 </main></body></html>'''
     O=ROOT/'docs'/who;O.mkdir(parents=True,exist_ok=True);(O/'index.html').write_text(page,encoding='utf-8');print('built',O/'index.html',len(page))
