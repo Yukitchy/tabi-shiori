@@ -84,12 +84,15 @@ def build(slug):
                    'new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el);})();')
     picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
-    car=d['car']; rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">予約 →</a></li>' for n,t,u in car['rows'])
-    pack=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d['pack']['items'])
-    roles=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d['roles'])
+    car=d.get('car'); rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">予約 →</a></li>' for n,t,u in (car or {}).get('rows',[]))
+    pack=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d.get('pack',{}).get('items',[]))
+    roles=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d.get('roles',[]))
     rl=d['rail']; mk=rl.get('marker'); ac2=rl.get('accent2') or {}
     marker=(f'<span class="car emo" id="car">{esc(mk[0])}</span>' if mk else '<svg class="car" id="car" viewBox="0 0 26 40" aria-hidden="true">'+'<rect x="1.5" y="4" width="23" height="33" rx="7" fill="var(--ac)"/><rect x="0" y="10" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="0" y="27" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="4" y="7" width="18" height="27" rx="5" fill="var(--ac)"/><path d="M6.5 12h13l-1.6-3.2a2 2 0 0 0-1.8-1.1H9.9a2 2 0 0 0-1.8 1.1L6.5 12z" fill="#eaf3fb"/><path d="M6.5 27h13l-1.6 3.2a2 2 0 0 1-1.8 1.1H9.9a2 2 0 0 1-1.8-1.1L6.5 27z" fill="#cfe2f2"/><rect x="5.5" y="14" width="15" height="11" rx="3" fill="#fff" opacity=".22"/><rect x="6" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/><rect x="16.4" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/>'+'</svg>')
     railjs=json.dumps({'mk':mk,'a1':{'ac':d['accent'],'sh':d['accent_shadow'],'wa':d['accent_wash']},'a2':{'ac':ac2.get('accent',d['accent']),'sh':ac2.get('shadow',d['accent_shadow']),'wa':ac2.get('wash',d['accent_wash'])}},ensure_ascii=False)
+    carsec=f'''<section class="s" data-clock="出発の前に"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>''' if car else ''
+    packsec=f'''<section class="s" data-clock="出発の前に"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>''' if d.get('pack') else ''
+    endsec=f'''<section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
     page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{esc(d["title"])}</title><meta name="robots" content="noindex"><meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">{lfhead}
@@ -166,9 +169,9 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
 {pres}{chs}{secs}{album}
-<section class="s" data-clock="出発の前に"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>
-<section class="s" data-clock="出発の前に"><div class="eyebrow">準備</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">分担</div><ul class="rest">{roles}</ul></section>
-<section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>
+{carsec}
+{packsec}
+{endsec}
 </div>
 <script>
 const PICKS={picks_json};const RAIL={railjs};

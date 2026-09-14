@@ -38,6 +38,10 @@ def mdls_meta(p):
         except ValueError: return None
     return dt,num('kMDItemLatitude'),num('kMDItemLongitude')
 def meta(p):
+    sc=p.parent/'meta.json'  # 任意のサイドカー {ファイル名:{taken,lat,lng}}（Immichプレビュー等EXIFの無い素材用）
+    if sc.exists():
+        m=json.load(open(sc)).get(p.name)
+        if m: return datetime.datetime.strptime(m['taken'][:16],'%Y-%m-%dT%H:%M'),m.get('lat'),m.get('lng')
     dt,lat,lng=pil_meta(p) or (None,None,None)
     if dt is None or lat is None:
         m=mdls_meta(p);dt=dt or m[0];lat=m[1] if lat is None else lat;lng=m[2] if lng is None else lng
