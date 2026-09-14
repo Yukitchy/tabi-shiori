@@ -167,7 +167,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 </style></head><body>
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
-<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで1日目 → 2日目</p></section>
+<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">下にスクロールで {esc(d["rail"]["top"])} → {esc(d["rail"]["bottom"])}</p></section>
 {pres}{chs}{secs}{album}
 {carsec}
 {packsec}
