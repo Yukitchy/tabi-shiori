@@ -211,8 +211,9 @@ addEventListener('resize',()=>{{build();upd();}});
 build();upd();{mapjs}
 </script></body></html>'''
     (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
-def status(d):
-    """dates[1] が過ぎていれば done"""
+def status(d,has_album=False):
+    """アルバムがある＝もう行った。無ければ dates[1] が過ぎていれば done"""
+    if has_album: return 'done'
     return 'done' if d.get('dates',[''])[-1]<datetime.date.today().isoformat() else 'plan'
 MAP_JS = """
 (function(){
@@ -384,7 +385,7 @@ def build_index(who='yuri',label='ゆりと'):
         if y!=year: year=y;cards+=f'<li class="year"><span>{y}</span></li>'
         rot=(-1.3,1.1,-.8,1.5)[len(cards)%4]
         ymd=d['dates'][0].split('-');st=f"'{ymd[0][2:]} {ymd[1]} {ymd[2]}"
-        soon='' if status(d)=='done' else '<span class="soon">これから</span>'
+        soon='' if status(d,bool(I))=='done' else '<span class="soon">これから</span>'
         peek=''
         if I:
             ph=[i for i in I if i['kind']!='video'] or I
