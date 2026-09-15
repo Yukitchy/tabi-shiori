@@ -212,6 +212,20 @@ build();upd();{mapjs}
 def status(d):
     """dates[1] が過ぎていれば done"""
     return 'done' if d.get('dates',[''])[-1]<datetime.date.today().isoformat() else 'plan'
+IDX_JS = """
+var rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll("[data-n]").forEach(function(el){
+ var n=+el.dataset.n;
+ if(rm){el.textContent=n;return;}
+ var t0=null,dur=760+Math.min(n,300);
+ requestAnimationFrame(function step(ts){
+  if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/dur);
+  el.textContent=Math.round(n*(1-Math.pow(1-p,3)));
+  if(p<1)requestAnimationFrame(step);
+ });
+});
+"""
+
 IDX_CSS = """
 :root{--bg:#fbfaf9;--ink:#1b1a19;--mute:#6b6664;--ash:#a9a29e;--line:#e7e2df;--ac:#e5382b;--paper:#fff;color-scheme:light}
 *{box-sizing:border-box;min-width:0}
@@ -232,18 +246,19 @@ h1{font-size:clamp(40px,12.5vw,62px);font-weight:900;letter-spacing:-.045em;marg
 .nums div{flex:1;padding:0 4px;border-left:1px solid var(--line)}
 .nums div:first-child{border-left:0}
 .nums dt{font-size:10.5px;color:var(--ash);letter-spacing:.1em;margin-bottom:3px}
+.nums b{font-weight:900}
 .nums dd{margin:0;font-size:29px;font-weight:900;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
 .nums i{font-style:normal;font-size:13px;color:var(--mute);margin-left:1px;letter-spacing:0}
 .trips{list-style:none;margin:0;padding:0}
-.year{display:flex;align-items:center;gap:14px;margin:34px 0 18px}
+.year{display:flex;align-items:center;gap:14px;margin:26px 0 16px;position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 8px}
 .year span{font-size:38px;font-weight:900;color:var(--ash);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 .year::after{content:"";flex:1;height:1px;background:var(--line)}
-.trip{margin:0 0 40px}
+.trip{margin:0 0 14px}
 .print{display:block;position:relative;padding:9px;background:var(--paper);border-radius:2px;text-decoration:none;box-shadow:0 12px 26px rgba(38,24,18,.15),0 2px 6px rgba(38,24,18,.09);transform:rotate(var(--r));transition:transform .4s cubic-bezier(.2,.8,.25,1),box-shadow .4s}
 .print img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eee}
 .stamp{position:absolute;right:22px;bottom:20px;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ac);text-shadow:0 0 7px rgba(229,56,43,.5)}
 .trip:hover .print,.trip:focus-within .print{transform:rotate(0) translateY(-5px);box-shadow:0 20px 40px rgba(38,24,18,.2),0 3px 8px rgba(38,24,18,.1)}
-.meta{padding:16px 4px 0}
+.meta{padding:16px 4px 26px}
 .when{font-size:12.5px;color:var(--mute);letter-spacing:.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .soon{background:var(--ac);color:#fff;font-size:11px;font-weight:900;padding:3px 9px;border-radius:999px;letter-spacing:.06em}
 .trip h2{font-size:26px;font-weight:900;letter-spacing:-.035em;margin:6px 0 0}
@@ -252,7 +267,22 @@ h1{font-size:clamp(40px,12.5vw,62px);font-weight:900;letter-spacing:-.045em;marg
 .peek img{display:block;width:100%;height:100%;object-fit:cover}
 .peek b{position:absolute;inset:0;display:grid;place-items:center;background:rgba(27,26,25,.58);color:#fff;font-size:14px;font-weight:900;letter-spacing:-.02em}
 .go{display:inline-flex;align-items:center;gap:5px;margin-top:13px;font-size:12.5px;font-weight:900;text-decoration:none;border:1.6px solid var(--ink);border-radius:999px;padding:6px 14px}
+.gap{position:relative;height:var(--h);margin:0 0 14px 24px;display:flex;align-items:center}
+.gap::before{content:"";position:absolute;left:0;top:-6px;bottom:-6px;width:2px;background:repeating-linear-gradient(to bottom,var(--line) 0 5px,transparent 5px 12px)}
+.gap span{margin-left:15px;font-size:11.5px;color:var(--ash);letter-spacing:.07em;font-variant-numeric:tabular-nums}
+.since{margin-top:14px;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;font-size:11.5px;color:var(--ash);letter-spacing:.08em}
+.since b{color:var(--ink);font-size:15px;font-weight:900;margin:0 2px;font-variant-numeric:tabular-nums}
 @media(prefers-reduced-motion:reduce){.print{transition:none}}
+@media(prefers-reduced-motion:no-preference){
+.stack figure{animation:fan .85s cubic-bezier(.22,1,.36,1) both}
+.stack figure:nth-child(1){--fx:-23%;--fy:5%;--fr:-10deg;--fs:.78;animation-delay:.24s}
+.stack figure:nth-child(2){--fx:22%;--fy:-5%;--fr:8deg;--fs:.78;animation-delay:.14s}
+.stack figure:nth-child(3){--fx:0;--fy:0;--fr:-2deg;--fs:.97;animation-delay:0s}
+@keyframes fan{from{opacity:0;transform:rotate(0) translate(0,14px) scale(.84)}to{opacity:1;transform:rotate(var(--fr)) translate(var(--fx),var(--fy)) scale(var(--fs))}}
+@supports (animation-timeline:view()){
+.trip,.gap span{animation:lay .1s linear both;animation-timeline:view();animation-range:entry 2% cover 26%}
+@keyframes lay{from{opacity:0;transform:translateY(24px) scale(.965)}to{opacity:1;transform:none}}
+}}
 """
 
 def build_index(who='yuri',label='ゆりと'):
@@ -265,11 +295,23 @@ def build_index(who='yuri',label='ゆりと'):
     T.sort(key=lambda t:t[0].get('dates',[''])[0])
     days=sum((datetime.date.fromisoformat(d['dates'][1])-datetime.date.fromisoformat(d['dates'][0])).days+1 for d,_,_ in T if d.get('dates'))
     shots=sum(1 for _,_,I in T if I for i in I if i['kind']=='photo')
+    def gapword(n):
+        if n<=1: return '翌日'
+        if n<14: return f'{n}日後'
+        if n<29: return f'{round(n/7)}週間後'
+        return f'{max(1,round(n/30.4))}ヶ月後'
     def thumb(slug,it): return f'../{slug}/album/'+(it['f'] if it['kind']=='photo' else it['f'][:-4]+'.jpg')
+    first=T[0]['dates'][0].replace('-','.') if False else T[0][0]['dates'][0].replace('-','.')
+    since=(datetime.date.today()-datetime.date.fromisoformat(T[0][0]['dates'][0])).days
     heroes=[t for t in T if status(t[0])=='done'][-3:]
     stack=''.join(f'<figure><img src="../{s}/img/{d["cover"]["photo"]}.jpg" alt=""></figure>' for d,s,_ in heroes)
-    cards='';year=None
+    cards='';year=None;prev=None
     for d,slug,I in T:
+        cur=datetime.date.fromisoformat(d['dates'][0])
+        if prev:
+            n=(cur-prev).days
+            cards+=f'<li class="gap" style="--h:{int(min(118,24+n*.72))}px"><span>{gapword(n)}</span></li>'
+        prev=datetime.date.fromisoformat(d['dates'][1])
         y=d['dates'][0][:4]
         if y!=year: year=y;cards+=f'<li class="year"><span>{y}</span></li>'
         rot=(-1.3,1.1,-.8,1.5)[len(cards)%4]
@@ -294,9 +336,10 @@ def build_index(who='yuri',label='ゆりと'):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
 <style>{IDX_CSS}</style></head><body><main>
 <div class="hero"><div class="stack">{stack}</div><span class="tag">{label}</span><h1>旅の記録</h1>
-<dl class="nums"><div><dt>旅</dt><dd>{len(T)}<i>回</i></dd></div><div><dt>日数</dt><dd>{days}<i>日</i></dd></div><div><dt>写真</dt><dd>{shots}<i>枚</i></dd></div></dl></div>
+<dl class="nums"><div><dt>旅</dt><dd><b data-n="{len(T)}">0</b><i>回</i></dd></div><div><dt>日数</dt><dd><b data-n="{days}">0</b><i>日</i></dd></div><div><dt>写真</dt><dd><b data-n="{shots}">0</b><i>枚</i></dd></div></dl>
+<p class="since">{first} から <b data-n="{since}">0</b> 日</p></div>
 <ul class="trips">{cards}</ul>
-</main></body></html>'''
+</main><script>{IDX_JS}</script></body></html>'''
     O=ROOT/'docs'/who;O.mkdir(parents=True,exist_ok=True);(O/'index.html').write_text(page,encoding='utf-8');print('built',O/'index.html',len(page))
 if __name__=='__main__':
     a=sys.argv[1:]
