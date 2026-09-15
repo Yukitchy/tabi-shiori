@@ -95,7 +95,9 @@ def build(slug):
     endsec=f'''<section class="s end"><div class="eyebrow">おわり</div><h2>{esc(d["end"]["h"])}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
     page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{esc(d["title"])}</title><meta name="robots" content="noindex"><meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">{lfhead}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>{lfhead}
 <style>
 :root{{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:{d["accent"]};--shadow:{d["accent_shadow"]};--wash:{d["accent_wash"]};color-scheme:light}}
 *{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
@@ -212,6 +214,45 @@ build();upd();{mapjs}
 def status(d):
     """dates[1] が過ぎていれば done"""
     return 'done' if d.get('dates',[''])[-1]<datetime.date.today().isoformat() else 'plan'
+MAP_JS = """
+(function(){
+ var el=document.getElementById("gmap");if(!el||!window.L||!PINS.length)return;
+ var m=L.map(el,{scrollWheelZoom:false,zoomControl:true});
+ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(m);
+ var pts=PINS.map(function(p){return [p.lat,p.lng]});
+ var grp={};PINS.forEach(function(p){var k=Math.round(p.lat*1.8)+","+Math.round(p.lng*1.8);(grp[k]=grp[k]||[]).push(p)});
+ Object.keys(grp).forEach(function(k){var g=grp[k];if(g.length<2)return;
+  g.forEach(function(p,i){var a=Math.PI*2*i/g.length-Math.PI/2;
+   p.dy=p.lat+0.30*Math.sin(a);p.dx=p.lng+0.37*Math.cos(a)})});
+ var dpts=PINS.map(function(p){return [p.dy||p.lat,p.dx||p.lng]});
+ var line=L.polyline(pts,{color:"#e5382b",weight:2.5,opacity:.85}).addTo(m);
+ PINS.forEach(function(p){
+  L.marker([p.dy||p.lat,p.dx||p.lng],{icon:L.divIcon({className:"",iconSize:[25,25],iconAnchor:[12,12],
+   html:'<div class="pin">'+p.n+"</div>"})}).addTo(m)
+   .bindPopup('<div class="pop"><img src="'+p.img+'" alt=""><b>'+p.t+'</b><a href="#t'+p.n+'">この旅へ →</a></div>',{minWidth:126,autoPanPadding:[14,14]});
+ });
+ var jp=dpts.filter(function(q){return q[0]>30&&q[1]>125});
+ var fit=function(v){m.fitBounds(L.latLngBounds(v==="jp"&&jp.length?jp:dpts),{padding:[38,38]})};
+ var view="jp";fit(view);
+ document.querySelectorAll(".mapbar button").forEach(function(b){
+  b.onclick=function(){view=b.dataset.v;fit(view);
+   document.querySelectorAll(".mapbar button").forEach(function(o){o.setAttribute("aria-pressed",o===b)})};
+ });
+ var drawn=false,draw=function(){
+  var path=line.getElement();if(!path||drawn)return;drawn=true;
+  var L2=path.getTotalLength();
+  path.style.transition="none";path.style.strokeDasharray=L2;path.style.strokeDashoffset=L2;
+  path.getBoundingClientRect();
+  path.style.transition="stroke-dashoffset 1.6s cubic-bezier(.3,.8,.35,1)";path.style.strokeDashoffset=0;
+ };
+ new IntersectionObserver(function(es,o){es.forEach(function(e){
+  if(e.isIntersecting){m.invalidateSize();fit(view);
+   if(matchMedia("(prefers-reduced-motion: reduce)").matches){o.disconnect();return}
+   setTimeout(draw,320);o.disconnect()}})},{threshold:.25}).observe(el);
+})();
+"""
+
 IDX_JS = """
 var rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
 document.querySelectorAll("[data-n]").forEach(function(el){
@@ -249,11 +290,26 @@ h1{font-size:clamp(40px,12.5vw,62px);font-weight:900;letter-spacing:-.045em;marg
 .nums b{font-weight:900}
 .nums dd{margin:0;font-size:29px;font-weight:900;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
 .nums i{font-style:normal;font-size:13px;color:var(--mute);margin-left:1px;letter-spacing:0}
+.maph{text-align:center;font-size:12px;color:var(--ash);letter-spacing:.14em;margin:38px 0 11px}
+.mapwrap{padding:9px;background:var(--paper);border-radius:2px;box-shadow:0 12px 26px rgba(38,24,18,.15),0 2px 6px rgba(38,24,18,.09)}
+#gmap{height:min(78vw,340px);width:100%;background:#eeeae7}
+.mapbar{display:flex;gap:7px;justify-content:center;margin-top:12px}
+.mapbar button{font-family:inherit;font-size:12px;font-weight:900;color:var(--ash);background:none;border:1.6px solid var(--line);border-radius:999px;padding:7px 16px;cursor:pointer}
+.mapbar button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.mapnote{margin-top:10px;text-align:center;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;font-size:11px;color:var(--ash);letter-spacing:.08em}
+.pin{display:grid;place-items:center;width:25px;height:25px;border-radius:999px;background:var(--ac);color:#fff;font-family:"Zen Kaku Gothic New",sans-serif;font-size:11px;font-weight:900;border:2px solid #fff;box-shadow:0 2px 7px rgba(38,24,18,.35)}
+.leaflet-container{font-family:inherit;background:#eeeae7}
+.leaflet-tile-pane{filter:grayscale(.62) sepia(.16) saturate(.85) brightness(1.04) contrast(.94)}
+.leaflet-control-attribution{font-size:9px!important;background:rgba(255,255,255,.72)!important}
+.leaflet-bar a{color:var(--ink)!important}
+.pop{width:126px;text-align:center}.pop img{width:100%;border-radius:3px;display:block}
+.pop b{display:block;font-size:13px;margin-top:6px;letter-spacing:-.02em}
+.pop a{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:900;color:var(--ac);text-decoration:none}
 .trips{list-style:none;margin:0;padding:0}
 .year{display:flex;align-items:center;gap:14px;margin:26px 0 16px;position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 8px}
 .year span{font-size:38px;font-weight:900;color:var(--ash);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 .year::after{content:"";flex:1;height:1px;background:var(--line)}
-.trip{margin:0 0 14px}
+.trip{margin:0 0 14px;scroll-margin-top:74px}
 .print{display:block;position:relative;padding:9px;background:var(--paper);border-radius:2px;text-decoration:none;box-shadow:0 12px 26px rgba(38,24,18,.15),0 2px 6px rgba(38,24,18,.09);transform:rotate(var(--r));transition:transform .4s cubic-bezier(.2,.8,.25,1),box-shadow .4s}
 .print img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eee}
 .stamp{position:absolute;right:22px;bottom:20px;font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ac);text-shadow:0 0 7px rgba(229,56,43,.5)}
@@ -295,6 +351,14 @@ def build_index(who='yuri',label='ゆりと'):
     T.sort(key=lambda t:t[0].get('dates',[''])[0])
     days=sum((datetime.date.fromisoformat(d['dates'][1])-datetime.date.fromisoformat(d['dates'][0])).days+1 for d,_,_ in T if d.get('dates'))
     shots=sum(1 for _,_,I in T if I for i in I if i['kind']=='photo')
+    def mid(I):
+        la=sorted(i['lat'] for i in I if i.get('lat') is not None)
+        ln=sorted(i['lng'] for i in I if i.get('lng') is not None)
+        return (la[len(la)//2],ln[len(ln)//2]) if la else None
+    def km(a,b):
+        import math
+        p1,p2=math.radians(a[0]),math.radians(b[0]);dl=math.radians(b[1]-a[1])
+        return 6371*math.acos(max(-1,min(1,math.sin(p1)*math.sin(p2)+math.cos(p1)*math.cos(p2)*math.cos(dl))))
     def gapword(n):
         if n<=1: return '翌日'
         if n<14: return f'{n}日後'
@@ -305,13 +369,17 @@ def build_index(who='yuri',label='ゆりと'):
     since=(datetime.date.today()-datetime.date.fromisoformat(T[0][0]['dates'][0])).days
     heroes=[t for t in T if status(t[0])=='done'][-3:]
     stack=''.join(f'<figure><img src="../{s}/img/{d["cover"]["photo"]}.jpg" alt=""></figure>' for d,s,_ in heroes)
-    cards='';year=None;prev=None
+    cards='';year=None;prev=None;pins=[]
     for d,slug,I in T:
         cur=datetime.date.fromisoformat(d['dates'][0])
         if prev:
             n=(cur-prev).days
             cards+=f'<li class="gap" style="--h:{int(min(118,24+n*.72))}px"><span>{gapword(n)}</span></li>'
         prev=datetime.date.fromisoformat(d['dates'][1])
+        c=mid(I) if I else None
+        if c: pins.append({'n':len(pins)+1,'lat':c[0],'lng':c[1],'t':d['title'],'d':d['date_label'],
+                           'img':f'../{slug}/img/{d["cover"]["photo"]}.jpg'})
+        pn=pins[-1]['n'] if c else 0
         y=d['dates'][0][:4]
         if y!=year: year=y;cards+=f'<li class="year"><span>{y}</span></li>'
         rot=(-1.3,1.1,-.8,1.5)[len(cards)%4]
@@ -327,19 +395,27 @@ def build_index(who='yuri',label='ゆりと'):
             cells=''.join(f'<a href="../{slug}/#album"><img src="{thumb(slug,it)}" alt="" loading="lazy">'
                           +(f'<b>+{rest}</b>' if rest and n==len(pick)-1 else '')+'</a>' for n,it in enumerate(pick))
             peek=f'<div class="peek">{cells}</div>'
-        cards+=(f'<li class="trip" style="--r:{rot}deg"><a class="print" href="../{slug}/">'
+        cards+=(f'<li class="trip" id="t{pn}" style="--r:{rot}deg"><a class="print" href="../{slug}/">'
                 f'<img src="../{slug}/img/{d["cover"]["photo"]}.jpg" alt="" loading="lazy"><span class="stamp">{st}</span></a>'
                 f'<div class="meta"><p class="when">{esc(d["date_label"])}{soon}</p><h2>{esc(d["title"])}</h2>'
                 f'{peek}<a class="go" href="../{slug}/">しおりを開く →</a></div></li>')
+    dist=round(sum(km((pins[i]['lat'],pins[i]['lng']),(pins[i+1]['lat'],pins[i+1]['lng'])) for i in range(len(pins)-1)))
+    pins_json=json.dumps(pins,ensure_ascii=False)
     page=f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{label} 旅の記録</title><meta name="robots" content="noindex"><meta property="og:title" content="{label} 旅の記録">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>{IDX_CSS}</style></head><body><main>
 <div class="hero"><div class="stack">{stack}</div><span class="tag">{label}</span><h1>旅の記録</h1>
 <dl class="nums"><div><dt>旅</dt><dd><b data-n="{len(T)}">0</b><i>回</i></dd></div><div><dt>日数</dt><dd><b data-n="{days}">0</b><i>日</i></dd></div><div><dt>写真</dt><dd><b data-n="{shots}">0</b><i>枚</i></dd></div></dl>
 <p class="since">{first} から <b data-n="{since}">0</b> 日</p></div>
+<p class="maph">行ったところ</p>
+<div class="mapwrap"><div id="gmap"></div></div>
+<div class="mapbar"><button type="button" data-v="jp" aria-pressed="true">日本</button><button type="button" data-v="all" aria-pressed="false">世界</button></div>
+<p class="mapnote">{len(pins)}ヶ所 ・ つないだ線は {dist:,}km</p>
 <ul class="trips">{cards}</ul>
-</main><script>{IDX_JS}</script></body></html>'''
+</main><script>{IDX_JS}\nvar PINS={pins_json};{MAP_JS}</script></body></html>'''
     O=ROOT/'docs'/who;O.mkdir(parents=True,exist_ok=True);(O/'index.html').write_text(page,encoding='utf-8');print('built',O/'index.html',len(page))
 if __name__=='__main__':
     a=sys.argv[1:]
