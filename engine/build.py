@@ -20,6 +20,7 @@ body.selecting .grid img,body.selecting .grid video{opacity:.62}
 .grid figure.on .selb{background:var(--ac);border-color:#fff}
 .grid figure.on .selb:after{opacity:1}
 body.selecting .saveb{display:none}
+@media(hover:hover) and (pointer:fine){.saveb{opacity:0;transition:opacity .15s}.grid figure:hover .saveb,.saveb:focus-visible{opacity:1}}
 body.selecting .grid{padding-bottom:86px}
 #selbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--ink);color:#fff;padding:12px 14px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:10px;box-shadow:0 -2px 12px rgba(0,0,0,.25)}
 body.selecting #selbar{display:flex}
@@ -114,43 +115,59 @@ LIST_CSS = """
 :root{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:%(ac)s;--shadow:%(sh)s;--wash:%(wa)s;color-scheme:light}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 16px}
-header .date{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:13px;padding:3px 12px;border-radius:999px}
-header h1{margin:5px 0 0;font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.25}
-main{padding:16px}
+body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+.wrap{max-width:min(620px,100%%);margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.6) blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{padding-top:14px;padding-bottom:12px}
+header .date{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:13px;padding:4px 13px;border-radius:999px;letter-spacing:.02em}
+header h1{margin:7px 0 0;font-size:22px;font-weight:900;letter-spacing:-.025em;line-height:1.25}
+main{padding:22px 0 8px}
 .panel{display:none}
 .panel.on{display:block}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}
+.ptitle{font-size:clamp(26px,7vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1.15;margin:4px 0 2px}
+.ptitle em{font-style:normal;color:var(--ac)}
+.count{font-size:13px;color:var(--ash);font-weight:500;margin:0 0 16px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .grid figure{margin:0;position:relative}
 .grid img,.grid video{display:block;width:100%%;aspect-ratio:1;object-fit:cover;border-radius:14px;background:#e9eef3}
 .grid .w2{grid-column:1/-1}.grid .w2 video{aspect-ratio:16/9;background:#000}
 .grid figcaption{font-size:12px;color:var(--mute);font-weight:500;margin-top:4px}
-.tday{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:.08em;margin:18px 0 8px}
-.tday:first-child{margin-top:0}
-#map{height:calc(100vh - 210px);min-height:340px;border-radius:16px;overflow:hidden;background:#e9eef3}
+.tday{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px;padding-top:14px;border-top:2px solid var(--ink)}
+.tday:first-of-type{margin-top:6px}
+.tday b{font-size:15px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums}
+.tday span{font-size:14px;font-weight:700;color:var(--mute)}
+#map{height:calc(100vh - 250px);min-height:360px;border-radius:20px;overflow:hidden;background:#e9eef3}
 #map img{max-width:none}
-.flow{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.flow li{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}
-.flow img{width:86px;height:86px;object-fit:cover;border-radius:12px;background:#e9eef3;display:block}
-.flow .tm{font-size:13px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums}
-.flow h3{margin:2px 0 4px;font-size:17px;font-weight:900;line-height:1.35}
-.flow p{margin:0;font-size:14px;color:var(--mute);font-weight:500;line-height:1.7}
-.count{font-size:13px;color:var(--ash);font-weight:500;margin:0 0 10px}
-nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{font-family:inherit;background:none;border:0;padding:10px 4px 12px;cursor:pointer;color:var(--ash);font-weight:900;font-size:12px;display:grid;gap:3px;justify-items:center}
-nav button .ic{font-size:21px;line-height:1}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.flow li{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;cursor:pointer;transition:border-color .15s,transform .15s}
+.flow li:hover{border-color:var(--ac);transform:translateY(-1px)}
+.flow img{width:96px;height:96px;object-fit:cover;border-radius:14px;background:#e9eef3;display:block}
+.flow .tm{font-size:12px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.flow h3{margin:3px 0 5px;font-size:18px;font-weight:900;line-height:1.3;letter-spacing:-.02em}
+.flow p{margin:0;font-size:13.5px;color:var(--mute);font-weight:500;line-height:1.65}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.6) blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding:0 20px}
+nav button{position:relative;font-family:inherit;background:none;border:0;padding:16px 2px 15px;cursor:pointer;color:var(--ash);font-weight:900;font-size:14px;letter-spacing:.02em;white-space:nowrap}
+nav button:after{content:"";position:absolute;left:50%%;top:0;width:0;height:3px;background:var(--ac);border-radius:0 0 3px 3px;transition:width .18s,left .18s}
 nav button.on{color:var(--ac)}
+nav button.on:after{left:20%%;width:60%%}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:400px){nav .wrap{padding:0 8px}nav button{font-size:13px;letter-spacing:0}}
 """
 LIST_BIG = """
-header h1{font-size:23px}
-.flow h3{font-size:20px}
-.flow p{font-size:16.5px}
-.flow .tm{font-size:15px}
+header h1{font-size:25px}
+.flow h3{font-size:21px}
+.flow p{font-size:16px}
+.flow .tm{font-size:14px}
+.flow li{grid-template-columns:112px 1fr}
+.flow img{width:112px;height:112px}
 .grid figcaption{font-size:15px}
 .count{font-size:15px}
-nav button{font-size:14px}
-nav button .ic{font-size:23px}
+.eyebrow{font-size:15px}
+.tday b{font-size:18px}.tday span{font-size:17px}
+nav button{font-size:15px}
+@media(max-width:400px){nav button{font-size:13px;letter-spacing:0}}
 .saveb{font-size:15px;padding:9px 15px}
 .selhelp{font-size:15px}
 """
@@ -161,7 +178,10 @@ function show(k){
  panels.forEach(function(p){p.classList.toggle('on',p.dataset.t===k)});
  try{location.hash=k}catch(e){}
  scrollTo(0,0);
- if(k==='map'&&window.__map){window.__map.invalidateSize();window.__fit&&window.__fit();}
+ if(k==='map'&&window.__map){
+  var m=window.__map;
+  [0,120,400].forEach(function(t){setTimeout(function(){m.invalidateSize();window.__fit&&window.__fit();},t)});
+ }
 }
 tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.t)})});
 document.querySelectorAll('.flow li').forEach(function(li){
@@ -169,6 +189,7 @@ document.querySelectorAll('.flow li').forEach(function(li){
   var t=document.getElementById('t'+li.dataset.i);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});
 });
 show((location.hash||'#flow').slice(1)||'flow');
+addEventListener('hashchange',function(){show((location.hash||'#flow').slice(1)||'flow')});
 """
 
 def build_list(slug,d,items,O):
@@ -206,7 +227,7 @@ def build_list(slug,d,items,O):
     for head,grp in groups:
         if head:
             t,n,label=head
-            photogrid+=f'<div class="tday" id="t{n}">{esc(t)}　{esc(label)}</div>'
+            photogrid+=f'<div class="tday" id="t{n}"><b>{esc(t)}</b><span>{esc(label)}</span></div>'
         photogrid+='<div class="grid">'+''.join(cell(i) for i in grp)+'</div>'
 
     vg=''.join(cell(i) for i in videos)
@@ -235,21 +256,28 @@ def build_list(slug,d,items,O):
           '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>'
           f'<style>{css}</style></head><body>'
-          f'<header><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1></header><main>'
-          f'<section class="panel" data-t="flow"><p class="count">押すと、その時間の写真へ飛びます。</p><ul class="flow">{flow}</ul></section>'
-          f'<section class="panel" data-t="photo"><p class="count">写真 {len(photos)}枚</p>'
+          f'<header><div class="wrap"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1></div></header><main>'
+          f'<section class="panel" data-t="flow"><div class="wrap"><div class="eyebrow">9か所</div>'
+          f'<h2 class="ptitle"><em>今日</em>の流れ</h2><p class="count">押すと、その時間の写真へ飛びます。</p>'
+          f'<ul class="flow">{flow}</ul></div></section>'
+          f'<section class="panel" data-t="photo"><div class="wrap"><div class="eyebrow">アルバム</div>'
+          f'<h2 class="ptitle"><em>写真</em> {len(photos)}枚</h2>'
+          '<p class="count">1枚だけでいいときは、写真の右下の「保存」を押してください。</p>'
           '<button class="bigbtn" id="selmode" type="button">写真を選んで保存する</button>'
-          '<p class="selhelp">1枚だけでいいときは、写真の右下の「保存」を押してください。</p>'
-          f'{photogrid}</section>'
-          f'<section class="panel" data-t="video"><p class="count">動画 {len(videos)}本</p><div class="grid">{vg}</div></section>'
-          f'<section class="panel" data-t="map"><p class="count">写真の位置 {len(gps)}件</p><div id="map"></div></section>'
+          f'{photogrid}</div></section>'
+          f'<section class="panel" data-t="video"><div class="wrap"><div class="eyebrow">アルバム</div>'
+          f'<h2 class="ptitle"><em>動画</em> {len(videos)}本</h2><p class="count">押すと再生します。</p>'
+          f'<div class="grid">{vg}</div></div></section>'
+          f'<section class="panel" data-t="map"><div class="wrap"><div class="eyebrow">地図</div>'
+          f'<h2 class="ptitle"><em>行った</em>ところ</h2><p class="count">写真の位置 {len(gps)}件</p>'
+          f'<div id="map"></div></div></section>'
           '</main>'
           '<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
           '<button class="go" type="button" disabled>保存</button></div>'
-          '<nav><button data-t="flow"><span class="ic">🗓</span>今日の流れ</button>'
-          '<button data-t="photo"><span class="ic">🖼</span>写真</button>'
-          '<button data-t="video"><span class="ic">🎬</span>動画</button>'
-          '<button data-t="map"><span class="ic">📍</span>MAP</button></nav>'
+          '<nav><div class="wrap"><button data-t="flow">今日の流れ</button>'
+          '<button data-t="photo">写真</button>'
+          '<button data-t="video">動画</button>'
+          '<button data-t="map">MAP</button></div></nav>'
           f'<script>const SLUG={json.dumps(slug)},MEDIA="../album/";{mapjs}{LIST_JS}{SELECT_JS}</script></body></html>')
     (L/'index.html').write_text(page,encoding='utf-8'); print('built',L/'index.html',len(page))
 

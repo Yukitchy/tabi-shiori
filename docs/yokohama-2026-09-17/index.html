@@ -86,6 +86,7 @@ body.selecting .grid img,body.selecting .grid video{opacity:.62}
 .grid figure.on .selb{background:var(--ac);border-color:#fff}
 .grid figure.on .selb:after{opacity:1}
 body.selecting .saveb{display:none}
+@media(hover:hover) and (pointer:fine){.saveb{opacity:0;transition:opacity .15s}.grid figure:hover .saveb,.saveb:focus-visible{opacity:1}}
 body.selecting .grid{padding-bottom:86px}
 #selbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--ink);color:#fff;padding:12px 14px calc(12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:10px;box-shadow:0 -2px 12px rgba(0,0,0,.25)}
 body.selecting #selbar{display:flex}
