@@ -26,7 +26,7 @@
  },
  "cover": {
   "photo": "hero",
-  "who": "案内 YUKAさん（JAPOW）／ Global Friends のみなさん",
+  "who": "案内 YUKAさん（JAPOW）／ Global Friends のみなさん　写真 YUKAさん＆ユウキ",
   "nums": [
    [
     "歩いた時間",
@@ -40,8 +40,8 @@
    ],
    [
     "写真と動画",
-    "135",
-    "写真124・動画11"
+    "172",
+    "写真155・動画17"
    ]
   ]
  },
@@ -252,5 +252,6 @@
    ],
    "links": []
   }
- ]
+ ],
+ "text": "large"
 }
