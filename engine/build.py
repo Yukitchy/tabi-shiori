@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """tabi-shiori engine: packs/<slug>/trip.json + img/ -> docs/<slug>/index.html"""
-import json,sys,shutil,html,pathlib,datetime
+import json,sys,shutil,html,pathlib,datetime,re
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 def esc(s):return html.escape(s,quote=True)
 
 # --- アルバムの「選んで保存」（album.json があるページだけ出る） ---
 ALBUM_CSS='''
-.bigbtn{width:100%;background:var(--ac);color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;box-shadow:0 4px 0 0 var(--shadow);cursor:pointer;font-family:inherit}
+.bigbtn{display:block;text-align:center;text-decoration:none;width:100%;background:var(--ac);color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;box-shadow:0 4px 0 0 var(--shadow);cursor:pointer;font-family:inherit}
 .bigbtn:active{transform:translateY(4px);box-shadow:none}
 .selhelp{font-size:12px;color:var(--ash);text-align:center;font-weight:500}
 .grid figure{position:relative}
@@ -87,7 +87,7 @@ SELECT_JS='''
    var zip=new JSZip();
    for(var i=0;i<keys.length;i++){
     go.textContent='保存中 '+(i+1)+'/'+keys.length;
-    var r=await fetch('album/'+keys[i].k+'.'+keys[i].ext);
+    var r=await fetch(MEDIA+keys[i].k+'.'+keys[i].ext);
     zip.file(SLUG+'-'+keys[i].k+'.'+keys[i].ext,await r.blob());
    }
    go.textContent='まとめています…';
@@ -99,7 +99,7 @@ SELECT_JS='''
   }catch(err){
    go.textContent='1枚ずつ保存します';
    for(var j=0;j<keys.length;j++){
-    var a2=document.createElement('a');a2.href='album/'+keys[j].k+'.'+keys[j].ext;
+    var a2=document.createElement('a');a2.href=MEDIA+keys[j].k+'.'+keys[j].ext;
     a2.download=SLUG+'-'+keys[j].k+'.'+keys[j].ext;document.body.appendChild(a2);a2.click();a2.remove();
     await new Promise(function(r){setTimeout(r,350)});
    }
@@ -109,6 +109,150 @@ SELECT_JS='''
  paint();
 })();
 '''
+# --- 別タブの一覧ページ docs/<slug>/list/ （下タブで 今日の流れ/写真/動画/MAP を切替） ---
+LIST_CSS = """
+:root{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:%(ac)s;--shadow:%(sh)s;--wash:%(wa)s;color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 16px}
+header .date{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:13px;padding:3px 12px;border-radius:999px}
+header h1{margin:5px 0 0;font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.25}
+main{padding:16px}
+.panel{display:none}
+.panel.on{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid figure{margin:0;position:relative}
+.grid img,.grid video{display:block;width:100%%;aspect-ratio:1;object-fit:cover;border-radius:14px;background:#e9eef3}
+.grid .w2{grid-column:1/-1}.grid .w2 video{aspect-ratio:16/9;background:#000}
+.grid figcaption{font-size:12px;color:var(--mute);font-weight:500;margin-top:4px}
+.tday{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:.08em;margin:18px 0 8px}
+.tday:first-child{margin-top:0}
+#map{height:calc(100vh - 210px);min-height:340px;border-radius:16px;overflow:hidden;background:#e9eef3}
+#map img{max-width:none}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.flow li{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}
+.flow img{width:86px;height:86px;object-fit:cover;border-radius:12px;background:#e9eef3;display:block}
+.flow .tm{font-size:13px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums}
+.flow h3{margin:2px 0 4px;font-size:17px;font-weight:900;line-height:1.35}
+.flow p{margin:0;font-size:14px;color:var(--mute);font-weight:500;line-height:1.7}
+.count{font-size:13px;color:var(--ash);font-weight:500;margin:0 0 10px}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{font-family:inherit;background:none;border:0;padding:10px 4px 12px;cursor:pointer;color:var(--ash);font-weight:900;font-size:12px;display:grid;gap:3px;justify-items:center}
+nav button .ic{font-size:21px;line-height:1}
+nav button.on{color:var(--ac)}
+"""
+LIST_BIG = """
+header h1{font-size:23px}
+.flow h3{font-size:20px}
+.flow p{font-size:16.5px}
+.flow .tm{font-size:15px}
+.grid figcaption{font-size:15px}
+.count{font-size:15px}
+nav button{font-size:14px}
+nav button .ic{font-size:23px}
+.saveb{font-size:15px;padding:9px 15px}
+.selhelp{font-size:15px}
+"""
+LIST_JS = """
+var tabs=[...document.querySelectorAll('nav button')],panels=[...document.querySelectorAll('.panel')];
+function show(k){
+ tabs.forEach(function(b){b.classList.toggle('on',b.dataset.t===k)});
+ panels.forEach(function(p){p.classList.toggle('on',p.dataset.t===k)});
+ try{location.hash=k}catch(e){}
+ scrollTo(0,0);
+ if(k==='map'&&window.__map){window.__map.invalidateSize();window.__fit&&window.__fit();}
+}
+tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.t)})});
+document.querySelectorAll('.flow li').forEach(function(li){
+ li.addEventListener('click',function(){show('photo');
+  var t=document.getElementById('t'+li.dataset.i);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});
+});
+show((location.hash||'#flow').slice(1)||'flow');
+"""
+
+def build_list(slug,d,items,O):
+    L=O/'list'; L.mkdir(parents=True,exist_ok=True)
+    big = d.get('text')=='large'
+    photos=[i for i in items if i['kind']=='photo']
+    videos=[i for i in items if i['kind']=='video']
+    gps=[i for i in items if i.get('lat') is not None]
+
+    def cell(i,w2=False):
+        k=i['f'][:3]; ext='mp4' if i['kind']=='video' else 'jpg'
+        cap=f'<figcaption>{esc(i.get("cap",""))}</figcaption>' if i.get('cap') else ''
+        sv=f'<a class="saveb" href="../album/{k}.{ext}" download="{slug}-{k}.{ext}">保存</a>'
+        sb='<button class="selb" type="button" aria-pressed="false" aria-label="選ぶ"></button>'
+        if i['kind']=='video':
+            return (f'<figure class="w2" data-k="{k}" data-ext="mp4"><video controls playsinline preload="none" '
+                    f'poster="../album/{k}.jpg" src="../album/{k}.mp4"></video>{sb}{sv}{cap}</figure>')
+        return (f'<figure data-k="{k}" data-ext="jpg"><a href="../album/{k}.jpg" target="_blank" rel="noopener">'
+                f'<img loading="lazy" src="../album/{k}.jpg" alt=""></a>{sb}{sv}{cap}</figure>')
+
+    # 写真タブ: 行程の時刻で見出しを打つ
+    marks=[]
+    for n,sec in enumerate(d.get('sections',[])):
+        t=sec.get('day','')
+        if ':' in t: marks.append((t,n,re.sub('<[^>]+>','',sec.get('h',''))))
+    groups=[]  # 空の見出しを出さないよう、先に写真を各区間へ振り分ける
+    for i in photos:
+        hm=i['taken'][11:16]
+        cur=None
+        for t,n,label in marks:
+            if hm>=t: cur=(t,n,label)
+        if not groups or groups[-1][0]!=cur: groups.append([cur,[]])
+        groups[-1][1].append(i)
+    photogrid=''
+    for head,grp in groups:
+        if head:
+            t,n,label=head
+            photogrid+=f'<div class="tday" id="t{n}">{esc(t)}　{esc(label)}</div>'
+        photogrid+='<div class="grid">'+''.join(cell(i) for i in grp)+'</div>'
+
+    vg=''.join(cell(i) for i in videos)
+    flow=''
+    for n,sec in enumerate(d.get('sections',[])):
+        flow+=(f'<li data-i="{n}"><img loading="lazy" src="../img/{esc(sec["photo"])}.jpg" alt="">'
+               f'<div><div class="tm">{esc(sec.get("day",""))}</div><h3>{re.sub("<[^>]+>","",sec.get("h",""))}</h3>'
+               f'<p>{esc(sec.get("lead","")[:90])}{"…" if len(sec.get("lead",""))>90 else ""}</p></div></li>')
+
+    mapjs=''
+    if gps:
+        MP=json.dumps([{'lat':i['lat'],'lng':i['lng'],'f':'../album/'+i['f'][:3]+'.jpg'} for i in gps],ensure_ascii=False)
+        mapjs=('var MP='+MP+',MC='+json.dumps(d['accent'])+';(function(){var el=document.getElementById("map");if(!el||!window.L)return;'
+               'var m=L.map(el,{scrollWheelZoom:false}),pts=MP.map(function(p){return [p.lat,p.lng]});'
+               'L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(m);'
+               'MP.forEach(function(p){L.circleMarker([p.lat,p.lng],{radius:7,weight:2,color:"#fff",fillColor:MC,fillOpacity:1}).addTo(m)'
+               '.bindPopup(\'<img src="\'+p.f+\'" style="width:160px;display:block;border-radius:8px">\')});'
+               'if(pts.length>1)L.polyline(pts,{color:MC,weight:3,opacity:.7}).addTo(m);'
+               'window.__map=m;window.__fit=function(){m.fitBounds(L.latLngBounds(pts),{padding:[26,26]})};window.__fit();})();')
+
+    css=(LIST_CSS % {'ac':d['accent'],'sh':d['accent_shadow'],'wa':d['accent_wash']})+ALBUM_CSS+(LIST_BIG if big else '')
+    page=('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
+          '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
+          f'<title>{esc(d["title"])} — 一覧</title><meta name="robots" content="noindex">'
+          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">'
+          '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
+          '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>'
+          f'<style>{css}</style></head><body>'
+          f'<header><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1></header><main>'
+          f'<section class="panel" data-t="flow"><p class="count">押すと、その時間の写真へ飛びます。</p><ul class="flow">{flow}</ul></section>'
+          f'<section class="panel" data-t="photo"><p class="count">写真 {len(photos)}枚</p>'
+          '<button class="bigbtn" id="selmode" type="button">写真を選んで保存する</button>'
+          '<p class="selhelp">1枚だけでいいときは、写真の右下の「保存」を押してください。</p>'
+          f'{photogrid}</section>'
+          f'<section class="panel" data-t="video"><p class="count">動画 {len(videos)}本</p><div class="grid">{vg}</div></section>'
+          f'<section class="panel" data-t="map"><p class="count">写真の位置 {len(gps)}件</p><div id="map"></div></section>'
+          '</main>'
+          '<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
+          '<button class="go" type="button" disabled>保存</button></div>'
+          '<nav><button data-t="flow"><span class="ic">🗓</span>今日の流れ</button>'
+          '<button data-t="photo"><span class="ic">🖼</span>写真</button>'
+          '<button data-t="video"><span class="ic">🎬</span>動画</button>'
+          '<button data-t="map"><span class="ic">📍</span>MAP</button></nav>'
+          f'<script>const SLUG={json.dumps(slug)},MEDIA="../album/";{mapjs}{LIST_JS}{SELECT_JS}</script></body></html>')
+    (L/'index.html').write_text(page,encoding='utf-8'); print('built',L/'index.html',len(page))
+
 def build(slug):
     P=ROOT/'packs'/slug; d=json.load(open(P/'trip.json'))
     cr=json.load(open(P/'credits.json')) if (P/'credits.json').exists() else {}
@@ -165,7 +309,8 @@ def build(slug):
         nP=sum(1 for i in items if i['kind']=='photo');nV=len(items)-nP
         album=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
                f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSあり")])}'
-               '<button class="bigbtn" id="selmode" type="button">写真を選んで保存する</button>'
+               '<a class="bigbtn" href="list/" target="_blank" rel="noopener">写真と動画を一覧で見る</a>'
+               '<button class="bigbtn" id="selmode" type="button" style="margin-top:8px">写真を選んで保存する</button>'
                '<p class="selhelp">1枚だけでいいときは、写真の右下の「保存」を押してください。</p></section>')
         days={}
         for i in items: days.setdefault(i['taken'][:10],[]).append(i)
@@ -195,7 +340,7 @@ def build(slug):
                    'new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el);})();')
     albumcss=ALBUM_CSS if items else ''
     bigcss=BIG_CSS if d.get('text')=='large' else ''
-    selectjs=('\nconst SLUG='+json.dumps(slug)+';'+SELECT_JS) if items else ''
+    selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="album/";'+SELECT_JS) if items else ''
     selbar=('<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
             '<button class="go" type="button" disabled>保存</button></div>') if items else ''
     picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
@@ -329,6 +474,7 @@ addEventListener('resize',()=>{{build();upd();}});
 build();upd();{mapjs}{selectjs}
 </script></body></html>'''
     (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
+    if items: build_list(slug,d,items,O)
 def status(d,has_album=False):
     """アルバムがある＝もう行った。無ければ dates[1] が過ぎていれば done"""
     if has_album: return 'done'
