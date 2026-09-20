@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """tabi-shiori engine: packs/<slug>/trip.json + img/ -> docs/<slug>/index.html"""
-import json,sys,shutil,html,pathlib,datetime,re
+import json,sys,shutil,html,pathlib,datetime,re,hashlib
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 def esc(s):return html.escape(s,quote=True)
 
@@ -281,6 +281,47 @@ def build_list(slug,d,items,O):
           f'<script>const SLUG={json.dumps(slug)},MEDIA="../album/";{mapjs}{LIST_JS}{SELECT_JS}</script></body></html>')
     (L/'index.html').write_text(page,encoding='utf-8'); print('built',L/'index.html',len(page))
 
+MON = ("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC")
+
+BRAND_CSS = """
+.sig{position:relative;padding:44px 22px 74px;max-width:min(560px,100%);margin:0 auto;text-align:center;scroll-snap-align:start}
+.sig:before{content:"";position:absolute;left:22px;right:22px;top:0;border-top:1px solid var(--line)}
+.sig .mark{position:absolute;right:64px;top:-54px;width:96px;height:96px;border:2.5px solid var(--ac);border-radius:50%;
+ opacity:.34;transform:rotate(-13deg);display:grid;place-content:center;gap:2px;color:var(--ac);pointer-events:none}
+.sig .mark b{font-size:9.5px;letter-spacing:.14em;font-weight:900;display:block}
+.sig .mark i{font-style:normal;font-size:14px;font-weight:900;letter-spacing:.02em;display:block}
+.sig .mark s{text-decoration:none;font-size:7.5px;letter-spacing:.1em;display:block;opacity:.85}
+.sig .by{position:relative;margin:0;font-size:15px;font-weight:700;color:var(--mute)}
+.sig .by b{color:var(--ink);font-weight:900;font-size:19px;display:block;margin-top:3px;letter-spacing:-.01em}
+.sig .ct{margin:14px 0 0;font-size:13px;font-weight:900;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.sig .ct a{color:var(--ac);text-decoration:none;border-bottom:1.5px solid var(--wash);padding-bottom:1px}
+.sig .ct span{color:var(--line)}
+.sig .cr{margin:16px 0 0;font-size:10.5px;color:var(--ash);font-weight:500;line-height:1.7}
+"""
+
+def brandsig(slug, lang, built):
+    """Visible credit + contact at the foot of every page, plus an invisible build
+    fingerprint. ponytail: a fingerprint proves a copy came from here, it cannot
+    stop one — anything shipped to a browser is readable."""
+    f = ROOT/'brand.json'
+    if not f.exists(): return '', '', ''
+    b = json.load(open(f, encoding='utf-8')); t = b.get(lang) or b['ja']
+    year = built[:4]
+    fp = hashlib.sha256(f"{slug}|{built}|{b['name']}".encode()).hexdigest()[:12]
+    meta = (f'<meta name="author" content="{esc(b["name"])}">'
+            f'<meta name="copyright" content="© {year} {esc(b["name"])}. All rights reserved.">'
+            f'<link rel="author" href="{esc(b["site"])}">')
+    stamp = f'{int(built[8:10])} {MON[int(built[5:7])-1]}'
+    sig = (f'<footer class="sig" data-build="{fp}">'
+           f'<div class="mark" aria-hidden="true"><b>{esc(b["place"]).upper()}</b>'
+           f'<i>{stamp}</i><s>{year} · {fp[:6]}</s></div>'
+           f'<p class="by">{esc(t["by"])}<b>{esc(b["name"])}</b></p>'
+           f'<p class="ct"><a href="{esc(b["site"])}" target="_blank" rel="noopener">{esc(b["site_label"])}</a>'
+           f'<span>·</span><a href="mailto:{esc(b["mail"])}">{esc(b["mail"])}</a></p>'
+           f'<p class="cr">© {year} {esc(b["name"])}. {esc(t["note"])}</p></footer>'
+           f'<!-- tabi-shiori · {slug} · built {built} · © {year} {b["name"]} · {b["site"]} · sig {fp} -->')
+    return meta, sig, BRAND_CSS
+
 def build(slug):
     P=ROOT/'packs'/slug; d=json.load(open(P/'trip.json'))
     cr=json.load(open(P/'credits.json')) if (P/'credits.json').exists() else {}
@@ -388,9 +429,11 @@ def build(slug):
     railjs=json.dumps({'mk':mk,'a1':{'ac':d['accent'],'sh':d['accent_shadow'],'wa':d['accent_wash']},'a2':{'ac':ac2.get('accent',d['accent']),'sh':ac2.get('shadow',d['accent_shadow']),'wa':ac2.get('wash',d['accent_wash'])}},ensure_ascii=False)
     carsec=f'''<section class="s" data-clock="{esc(T["pre"])}"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>''' if car else ''
     packsec=f'''<section class="s" data-clock="{esc(T["pre"])}"><div class="eyebrow">{esc(T["prep"])}</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">{esc(T["roles"])}</div><ul class="rest">{roles}</ul></section>''' if d.get('pack') else ''
+    BUILT=datetime.date.today().isoformat()
+    bmeta,bsig,bcss=brandsig(slug,LANG,BUILT)
     endsec=f'''<section class="s end"><div class="eyebrow">{esc(T["end"])}</div><h2>{d["end"]["h"]}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
     page=f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{esc(d["title"])}</title><meta name="robots" content="noindex"><meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
+<title>{esc(d["title"])}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>{lfhead}
@@ -462,7 +505,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 #map{{height:62vh;border-radius:20px;overflow:hidden;background:#e9eef3}}#map img{{max-width:none}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
-{albumcss}{bigcss}
+{albumcss}{bcss}{bigcss}
 </style></head><body>
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
@@ -471,6 +514,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 {carsec}
 {packsec}
 {endsec}
+{bsig}
 </div>
 {selbar}
 <script>

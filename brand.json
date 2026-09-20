@@ -1,0 +1,17 @@
+{
+ "name": "Yuuki@Anime Sensei Tours",
+ "site": "https://www.animesenseijp.com/",
+ "site_label": "animesenseijp.com",
+ "mail": "hello@animesenseijp.com",
+ "place": "Tokyo",
+ "ja": {
+  "by": "つくった人",
+  "note": "このページと組み方はユウキのオリジナルです。丸ごとの転載・複製はご遠慮ください。",
+  "cta": "こういうページが要るときは声をかけてください。"
+ },
+ "en": {
+  "by": "Made for you by",
+  "note": "This page and its layout are original work. Please do not republish or copy them.",
+  "cta": "Need a page like this? Get in touch."
+ }
+}
