@@ -1,0 +1,523 @@
+{
+ "slug": "hakone-2026-09-21",
+ "lang": "en",
+ "dates": [
+  "2026-09-21",
+  "2026-09-22"
+ ],
+ "title": "Rick & Linda in Hakone",
+ "date_label": "Mon Sep 21 – Tue Sep 22",
+ "og_desc": "Typhoon Dujuan passes offshore today. Indoors at Kinnotake Tonosawa, then the full Hakone loop tomorrow.",
+ "accent": "#c8341f",
+ "accent_shadow": "#8f2416",
+ "accent_wash": "#fde6e1",
+ "rail": {
+  "top": "MON",
+  "bottom": "TUE",
+  "marker": [
+   "🚞",
+   "⛩️"
+  ],
+  "accent2": {
+   "accent": "#1f6fa8",
+   "shadow": "#14506f",
+   "wash": "#e2eff7"
+  }
+ },
+ "cover": {
+  "photo": "hero",
+  "who": "",
+  "nums": [
+   [
+    "TODAY",
+    "Rain",
+    "move early"
+   ],
+   [
+    "TOMORROW",
+    "Clear",
+    "the full loop"
+   ],
+   [
+    "TYPHOON",
+    "Gone",
+    "by 6 AM Tue"
+   ]
+  ]
+ },
+ "pre_sections": [
+  {
+   "day": "THE STORM",
+   "clock": "Mon",
+   "h": "<em>Typhoon Dujuan</em> <span>stays offshore</span>",
+   "photo": "train",
+   "lead": "Japan Meteorological Agency, 6:00 AM Monday. Typhoon No. 25 is 210 km southwest of Hachijojima, moving north-northeast at 20 km/h. Central pressure 965 hPa, sustained winds 35 m/s. It does not make landfall. It passes east of Tokyo, over the sea.",
+   "nums": [
+    [
+     "CLOSEST",
+     "6 PM",
+     "120 km off Chiba"
+    ],
+    [
+     "PRESSURE",
+     "965",
+     "hPa"
+    ],
+    [
+     "GONE BY",
+     "6 AM",
+     "Tuesday"
+    ]
+   ],
+   "pts": [
+    [
+     "Hakone is on the far side",
+     "The strong winds are over Chiba and the Izu Islands. Hakone sits west of the track, about as far from the eye as Kanto gets."
+    ],
+    [
+     "What Hakone actually gets is rain",
+     "Heavy, with thunder, from late morning until early evening. The risk here is rain on mountain roads and rail, not wind."
+    ],
+    [
+     "Trains on your route were running normally at 7:12 AM",
+     "Tokaido Line, Odakyu Romancecar and the Hakone-Tozan line all on schedule. Every suspension is east of you: Chiba, and a few mountain lines west of Tokyo from the afternoon."
+    ],
+    [
+     "One Hakone bus is out all day",
+     "The Odawara sightseeing loop bus \"Umemaru-go\" is suspended for the whole of Monday. Nothing you need."
+    ]
+   ],
+   "links": [
+    [
+     "JMA live track (English)",
+     "https://www.data.jma.go.jp/multi/cyclone/cyclone_detail.html?id=61&lang=en"
+    ],
+    [
+     "JR East train status (English)",
+     "https://traininfo.jreast.co.jp/train_info/e/kanto.aspx"
+    ],
+    [
+     "Hakone transport status",
+     "https://www.hakonenavi.jp/english/transportation/info/"
+    ]
+   ]
+  },
+  {
+   "day": "THE ONE DECISION",
+   "clock": "Mon AM",
+   "h": "<em>Go this morning,</em> <span>not this afternoon</span>",
+   "photo": "museum",
+   "lead": "Tokyo to Tonosawa is about two hours. Do it before the rain peaks and the rest of the day takes care of itself.",
+   "pts": [
+    [
+     "Tokyo or Shinagawa → Odawara",
+     "Tokaido Line, roughly 1 hour 20 minutes. The Odakyu Romancecar from Shinjuku is the other way in."
+    ],
+    [
+     "Odawara → Hakone-Yumoto → Tonosawa",
+     "Hakone-Tozan Line. Tonosawa is one stop past Yumoto, and the ryokan is a 3 minute walk from the station."
+    ],
+    [
+     "If the Tozan line stops for rain",
+     "Take a taxi from Odawara Station straight to the hotel, about 10 to 15 minutes. Do not wait at the station for a train that may not come."
+    ],
+    [
+     "Check-in and then stop moving",
+     "Everything below happens under one roof."
+    ]
+   ],
+   "links": [
+    [
+     "Kinnotake Tonosawa (English)",
+     "https://kinnotake-resorts.com/kinnotake-tonosawa/en/"
+    ]
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "day": "MONDAY",
+   "clock": "Mon PM",
+   "h": "<em>The ryokan</em> <span>is the plan</span>",
+   "photo": "ryokan",
+   "lead": "Kinnotake Tonosawa is built into the forest above the Hayakawa river. Every room has its own open-air hot spring bath, so the weather outside is somebody else's problem. Times below are from the ryokan's own site.",
+   "nums": [
+    [
+     "YOUR ROOM",
+     "Onsen",
+     "private, open-air"
+    ],
+    [
+     "GYM",
+     "24 h",
+     "free"
+    ],
+    [
+     "POOL & SAUNA",
+     "60 min",
+     "¥3,000 each"
+    ]
+   ],
+   "pts": [
+    [
+     "Your own open-air bath",
+     "Every room at Kinnotake Tonosawa has one. Rain on a private rotenburo is the good version of this day, not the consolation prize."
+    ],
+    [
+     "Private pool and sauna — book it",
+     "15:00–22:00, last start 21:00. One party at a time, 60 minutes, ¥3,000 per person. Reserve at the 3rd floor front desk after check-in. Sauna kit free, swimsuit rental ¥3,000."
+    ],
+    [
+     "Gym, open around the clock",
+     "Nine machines, free, open 24 hours except 9:30–10:30 for cleaning. Wear ¥1,500 and shoes ¥1,000 to rent if you did not pack any."
+    ],
+    [
+     "The lounge",
+     "Drinks and books, looking into the forest. Candles at night."
+    ]
+   ]
+  },
+  {
+   "day": "MONDAY",
+   "clock": "Mon PM",
+   "h": "<em>The Moon Spa</em> <span>is the answer</span>",
+   "photo": "spa",
+   "lead": "A converted old house in the grounds, all done by hand. They start by asking how you are and build the treatment from that. Ask the front desk to book as soon as you check in — there are only so many slots and everyone in the building has the same idea today.",
+   "nums": [
+    [
+     "BODY",
+     "60 min",
+     "¥22,000"
+    ],
+    [
+     "FOR TWO",
+     "120 min",
+     "¥84,000"
+    ],
+    [
+     "FEET ONLY",
+     "60 min",
+     "¥20,000"
+    ]
+   ],
+   "pts": [
+    [
+     "Body treatment",
+     "60 min ¥22,000 / 90 min ¥28,000 / 120 min ¥35,000. You pick the oil by smell at the start."
+    ],
+    [
+     "Onsen facial",
+     "60 min, ¥23,000 basic or ¥26,000 for the aging-care versions. Uses Hakone hot spring water."
+    ],
+    [
+     "Reflexology, fully clothed",
+     "60 min ¥20,000. Feet and head. This is the one that puts you to sleep — a good choice after a hard travel day."
+    ],
+    [
+     "ZEN TOJI, the couples course",
+     "120 min, ¥84,000 for the two of you. You choose the herbs, soak in a private herbal bath in the detached building, then body and mini-facial. This only exists here."
+    ],
+    [
+     "Add-ons",
+     "Private herbal bath 30 min ¥12,000, mini facial 30 min ¥12,000, extra 30 min ¥8,000."
+    ]
+   ],
+   "links": [
+    [
+     "The Moon Spa menu",
+     "https://kinnotake-resorts.com/kinnotake-tonosawa/facility/spa/"
+    ]
+   ]
+  },
+  {
+   "day": "MONDAY",
+   "clock": "Mon night",
+   "h": "<em>Dinner,</em> <span>then the bar</span>",
+   "photo": "gora",
+   "lead": "Three ways to eat without going outside, and a bar that opens when the rain has stopped mattering.",
+   "pts": [
+    [
+     "Dining room",
+     "Seatings at 17:30 or 19:30, closes 21:30. Breakfast at 7:30, 8:00, 8:30 or 9:00, closes 10:00."
+    ],
+    [
+     "Teppanyaki Zen, on the grounds",
+     "Seatings 17:00 / 18:00 / 19:00 / 20:00, two and a half hours at the table, closes 22:00. Ishigaki Island premium beef cooked in front of you. Worth booking today rather than tomorrow."
+    ],
+    [
+     "Bar Bamboo",
+     "21:00 to midnight, last order 23:30. Whisky, wine, sake, cocktails. ¥1,100 per person cover. One travel listing says the bar is paused, so confirm at the front desk when you check in."
+    ]
+   ],
+   "tt": [
+    {
+     "cap": "MONDAY, ROUGHLY",
+     "rows": [
+      [
+       "best",
+       "Leave Tokyo",
+       "by 10:00",
+       "Before the rain peaks. This is the only time-critical thing today."
+      ],
+      [
+       "",
+       "Arrive Tonosawa",
+       "~12:00",
+       "3 minute walk from the station to the ryokan."
+      ],
+      [
+       "best",
+       "Book spa + pool",
+       "at check-in",
+       "3rd floor front desk. Slots go fast on a rained-in day."
+      ],
+      [
+       "",
+       "Private pool & sauna",
+       "15:00–22:00",
+       "60 minutes, one party at a time."
+      ],
+      [
+       "",
+       "Your own rotenburo",
+       "any time",
+       "It is in your room."
+      ],
+      [
+       "",
+       "Dinner",
+       "17:30 or 19:30",
+       "Or Teppanyaki Zen from 17:00."
+      ],
+      [
+       "",
+       "Bar Bamboo",
+       "21:00–24:00",
+       "Confirm it is open."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "day": "TUESDAY",
+   "clock": "Tue AM",
+   "h": "<em>The storm is gone.</em> <span>Do the loop</span>",
+   "photo": "torii",
+   "lead": "Tuesday's forecast is cloudy with some sun. The Hakone loop runs anticlockwise on four different kinds of transport and ends back at your door — train, cable car, ropeway, boat, bus. Note that Tuesday Sep 22 is a national holiday in Japan, so holiday timetables apply and it will be busy.",
+   "nums": [
+    [
+     "FREE PASS",
+     "¥6,000",
+     "2 days, adult"
+    ],
+    [
+     "VEHICLES",
+     "5",
+     "train, cable, rope, boat, bus"
+    ],
+    [
+     "MUSEUM",
+     "¥2,000",
+     "¥1,800 online"
+    ]
+   ],
+   "pts": [
+    [
+     "Buy the Hakone Free Pass first",
+     "¥6,000 per adult for two days, from Odawara or from Hakone-Yumoto — same price either way. It covers the Tozan train, the Tozan buses on the designated routes, the cable car, the ropeway and the pirate ship. Romancecar limited-express fees are not included."
+    ],
+    [
+     "Tonosawa → Chokoku-no-Mori",
+     "Hakone-Tozan Line, 31 to 39 minutes, about four trains an hour in the morning. The switchbacks up the mountain are part of the ride."
+    ],
+    [
+     "Hakone Open-Air Museum",
+     "9:00–17:00, last entry 16:30, open every day. ¥2,000 at the gate, ¥1,800 if you buy online first. Sculpture across an open hillside, plus a Picasso building. Give it two hours."
+    ]
+   ],
+   "links": [
+    [
+     "Hakone Free Pass",
+     "https://www.hakonenavi.jp/english/ticket/freepass/"
+    ],
+    [
+     "Open-Air Museum",
+     "https://www.hakone-oam.or.jp/en/"
+    ]
+   ]
+  },
+  {
+   "day": "TUESDAY",
+   "clock": "Tue midday",
+   "h": "<em>Up the mountain,</em> <span>over the crater</span>",
+   "photo": "ropeway",
+   "lead": "From Gora you change to a funicular, then to a gondola that crosses directly over a live volcanic vent. This is the part people remember.",
+   "nums": [
+    [
+     "CABLE CAR",
+     "11 min",
+     "Gora → Sounzan"
+    ],
+    [
+     "ROPEWAY",
+     "9–17",
+     "every ~1 min"
+    ],
+    [
+     "BLACK EGGS",
+     "¥500",
+     "4 eggs"
+    ]
+   ],
+   "pts": [
+    [
+     "Gora → Sounzan cable car",
+     "11 minutes straight up the hillside."
+    ],
+    [
+     "Sounzan → Owakudani ropeway",
+     "About 10 minutes, cars roughly every minute, running 9:00–17:00 in September. On a clear stretch Mt Fuji appears behind you."
+    ],
+    [
+     "Get off at Owakudani",
+     "Steam vents, sulphur, and the black eggs — boiled in the hot spring until the shells turn black. ¥500 for four at the Kuro-tamago-kan, sold 9:00–16:40. Local lore says each one adds seven years to your life."
+    ],
+    [
+     "Owakudani → Ubako → Togendai",
+     "About 10 minutes each, changing cars at Owakudani. Lake Ashi opens up in front of you on the way down."
+    ],
+    [
+     "The one thing that can close",
+     "The ropeway stops at wind speeds of 30 m/s or more, and in bad weather generally. Check the status page over breakfast before you commit to the route."
+    ]
+   ],
+   "links": [
+    [
+     "Ropeway status",
+     "https://www.hakonenavi.jp/english/transportation/info/"
+    ],
+    [
+     "Owakudani black eggs",
+     "https://owakudani.com/enjoy/"
+    ]
+   ]
+  },
+  {
+   "day": "TUESDAY",
+   "clock": "Tue PM",
+   "h": "<em>Across the lake</em> <span>on a pirate ship</span>",
+   "photo": "cruise",
+   "lead": "It is exactly as silly as it sounds, and the view is genuinely the best on the lake. Covered by the Free Pass.",
+   "pts": [
+    [
+     "Togendai → Motohakone-ko",
+     "The operator puts the Togendai to Hakone-machi / Motohakone crossing at about 25 to 40 minutes. ¥1,200 one way if you were paying, which you are not."
+    ],
+    [
+     "Sit outside if it is dry",
+     "Fuji is behind you on the way across, the torii is ahead of you as you come in."
+    ],
+    [
+     "Hakone Shrine, 10 minutes' walk from the pier",
+     "Cedar avenue up to the shrine. The amulet office is open 8:15–17:00 and the treasure hall takes visitors 9:00–16:00. Opening hours for the grounds themselves are not published — in practice you walk in."
+    ],
+    [
+     "The torii in the water",
+     "The Peace Torii stands in the lake below the shrine. There is usually a queue to stand in front of it. Worth it."
+    ]
+   ],
+   "links": [
+    [
+     "Hakone Sightseeing Cruise",
+     "https://www.hakonenavi.jp/english/hakone-kankosen/"
+    ],
+    [
+     "Hakone Shrine",
+     "https://hakonejinja.or.jp/access/"
+    ]
+   ]
+  },
+  {
+   "day": "TUESDAY",
+   "clock": "Tue evening",
+   "h": "<em>Back down</em> <span>to the bath</span>",
+   "photo": "eggs",
+   "lead": "One bus closes the loop. No backtracking, no repeated legs.",
+   "pts": [
+    [
+     "Motohakone-ko → Hakone-Yumoto",
+     "Hakone-Tozan bus, H route, from stop 1 at the pier. ¥1,210 if you were paying — the Free Pass covers it. Via Ashinoyu and Miyanoshita, down the old mountain road."
+    ],
+    [
+     "Hakone-Yumoto → Tonosawa",
+     "One stop on the Tozan line, or a short taxi. Then the bath in your room."
+    ],
+    [
+     "If the ropeway is shut",
+     "Skip the mountain and go indoors instead: Pola Museum of Art 9:00–17:00, ¥2,200. Hakone Glass Forest 10:00–17:30, ¥1,800. Okada Museum 9:00–17:00, ¥2,800. All reachable on the Free Pass buses."
+    ]
+   ],
+   "tt": [
+    {
+     "cap": "TUESDAY, THE LOOP",
+     "rows": [
+      [
+       "best",
+       "Tonosawa → Chokoku-no-Mori",
+       "31–39 min",
+       "Tozan line, ~4 trains an hour."
+      ],
+      [
+       "",
+       "Open-Air Museum",
+       "9:00–17:00",
+       "¥2,000 gate / ¥1,800 online. Allow 2 hours."
+      ],
+      [
+       "",
+       "Gora → Sounzan",
+       "11 min",
+       "Cable car."
+      ],
+      [
+       "best",
+       "Sounzan → Owakudani",
+       "~10 min",
+       "Ropeway over the vents. Black eggs, ¥500 for 4."
+      ],
+      [
+       "",
+       "Owakudani → Togendai",
+       "~20 min",
+       "Change cars at Owakudani."
+      ],
+      [
+       "best",
+       "Togendai → Motohakone-ko",
+       "25–40 min",
+       "Pirate ship across Lake Ashi."
+      ],
+      [
+       "",
+       "Hakone Shrine + torii",
+       "~1 hour",
+       "10 min walk from the pier."
+      ],
+      [
+       "",
+       "Motohakone-ko → Hakone-Yumoto",
+       "bus, H route",
+       "Stop 1. Then one stop to Tonosawa."
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "end": {
+  "h": "<em>Two days,</em> <span>no wasted one</span>",
+  "lead": "Today the weather makes the decision for you and the ryokan is a good place to lose an afternoon. Tomorrow the storm is out at sea and Hakone does what it is famous for. Check the transport status page over breakfast before you set out — that is the only thing that can change the plan."
+ },
+ "credit": "Weather: Japan Meteorological Agency, 6:00 JST 21 Sep 2026. Transport: Yahoo! Transit / Odakyu Hakone, 7:12 JST 21 Sep. Times, prices and hours from the operators' own sites, checked 21 Sep 2026. Photos: Wikimedia Commons contributors and Kinnotake Resorts."
+}
