@@ -1,0 +1,137 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Keyくんとお母さんの 九州 日帰り6案</title><meta name="robots" content="noindex"><meta name="author" content="Yuuki@Anime Sensei Tours"><meta name="copyright" content="© 2026 Yuuki@Anime Sensei Tours. All rights reserved."><link rel="author" href="https://www.animesenseijp.com/"><meta property="og:title" content="Keyくんとお母さんの 九州 日帰り6案"><meta property="og:description" content="別府3案＋九州3案。福岡からレンタカーで行く日帰りコースを6つ並べて選べるページ。"><meta property="og:image" content="img/hero.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:#e5382b;--shadow:#a8271d;--wash:#fde3df;color-scheme:light}
+*{box-sizing:border-box;min-width:0}html,body{margin:0;overflow-x:hidden;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}h1,h2{line-height:1.15;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}
+#deck{height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.s{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;max-width:min(560px,100%);overflow-x:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}
+.s h2{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}.s h2 em{font-style:normal;color:var(--ac)}.s h2 span,.who span{white-space:nowrap}
+.lead{font-size:15px;color:var(--mute);line-height:1.75}
+.photo{margin:0;border-radius:20px;overflow:hidden;background:#e9eef3;aspect-ratio:16/10}.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo figcaption{display:none}
+.pts{list-style:none;margin:0;padding:0;display:grid;gap:10px}.pts li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:16px;line-height:1.5}
+.pts li i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--ac);color:#fff;font-weight:900;font-size:12px;display:inline-flex;align-items:center;justify-content:center;margin-top:3px}
+.pts li small{display:block;font-size:12.5px;color:var(--mute);font-weight:500;line-height:1.6}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}.nums div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}
+.nums dt{font-size:10.5px;color:var(--ash);letter-spacing:.06em}.nums dd{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}.nums dd small{display:block;font-size:10.5px;color:var(--mute)}
+.rest{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}.rest li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14.5px}
+.rest li b{font-weight:900;word-break:keep-all;overflow-wrap:break-word;min-width:0;flex:1 1 auto}
+.rest li:has(>span) b{white-space:nowrap;flex:0 0 auto}
+.rest li>span{min-width:0}.rest li span{color:var(--mute);font-size:12.5px;text-align:right}.rest li b small{white-space:normal;word-break:normal;overflow-wrap:anywhere}
+.rest li small{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}
+.rest li a{white-space:nowrap;flex:0 0 auto;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}
+.tt{margin:2px 0 0}
+.tt-cap{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--ac);margin-bottom:6px}
+.tt ul{list-style:none;margin:0 0 14px;padding:0;border-top:2px solid var(--ink)}
+.tt li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 2px;border-bottom:1px solid var(--line);align-items:baseline}
+.tt li b{font-weight:900;font-size:14.5px;white-space:nowrap}
+.tt li .tm{font-weight:900;font-size:14.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tt li small{grid-column:1/-1;font-size:12.5px;color:var(--mute);font-weight:500;line-height:1.55}
+.tt li.best{background:var(--wash);border-radius:10px;padding:9px 8px}
+.tt li.best b:before{content:"◎ ";color:var(--ac)}
+.tt li.ok b:before{content:"○ ";color:var(--ash)}
+.tt li.mid b:before{content:"△ ";color:var(--ash)}
+.tt li.no{opacity:.5}.tt li.no b:before{content:"× ";color:var(--ash)}
+.vid{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vcap{font-size:11.5px;color:var(--ash);font-weight:500;margin-top:-8px}
+.note{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:6px}.links{max-width:100%}.links a{font-size:12px;overflow-wrap:anywhere;font-weight:900;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px}.links a:after{content:" →"}
+.hub{text-align:center;align-items:center}.hub .date{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:18px;padding:6px 18px;border-radius:999px}
+.hub h1{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em;margin-top:6px}.hub .who{font-size:13.5px;color:var(--mute);max-width:26em}
+.hub .photo{width:100%}.hint{font-size:12px;color:var(--ash);text-align:center}
+.end{text-align:center;align-items:center}.credit{font-size:10.5px;color:var(--ash);line-height:1.7;max-width:420px;font-weight:500}.credit a{color:inherit}
+.opt{border:2px solid var(--line);border-radius:20px;padding:14px 14px 16px;display:grid;gap:10px;background:#fff}
+.opt.on{border-color:var(--ac);box-shadow:0 0 0 4px var(--wash)}
+.badge{display:inline-block;background:var(--wash);color:var(--ac);font-size:11.5px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.06em}
+.meta{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--mute)}.meta span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.pick{width:100%;background:var(--ac);color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;box-shadow:0 4px 0 0 var(--shadow);cursor:pointer;font-family:inherit}
+.pick:active{transform:translateY(4px);box-shadow:none}
+.opt.on .pick{background:var(--ink);box-shadow:0 4px 0 0 #000}
+.picked{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7}
+.rail{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(56vh,420px);width:44px;pointer-events:none;z-index:5}
+.rail .lab{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}.rail .lab.t{top:-36px}.rail .lab.b{bottom:-36px}
+.rail .track{position:absolute;left:50%;top:0;bottom:0;width:14px;margin-left:-7px;background:#e7ecf2;border-radius:999px}
+.rail .track:after{content:"";position:absolute;left:50%;top:8px;bottom:8px;width:2px;margin-left:-1px;border-radius:2px;background:repeating-linear-gradient(180deg,#fff 0 9px,transparent 9px 18px)}
+.rail .stop{position:absolute;left:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:#fff;border:2px solid #c6d1dc;transition:background .3s,border-color .3s,transform .3s}
+.rail .stop.on{background:var(--ac);border-color:var(--ac);transform:scale(1.3)}
+.rail .car.emo{font-size:28px;line-height:40px;text-align:center;filter:none}
+:root{transition:--ac .3s}
+.rail .car{position:absolute;left:50%;width:26px;height:40px;margin:-20px 0 0 -13px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.22))}
+.rail .klabel{position:absolute;right:38px;top:0;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:10.5px;font-weight:900;padding:4px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .25s;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.rail .klabel.on{opacity:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid figure{margin:0;min-width:0}.grid .w2{grid-column:1/-1}
+.grid img,.grid video{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;background:#e9eef3}.grid .w2 video{aspect-ratio:16/9;background:#000}
+.grid figcaption{font-size:11.5px;color:var(--mute);font-weight:500;line-height:1.55;margin-top:5px}
+#map{height:62vh;border-radius:20px;overflow:hidden;background:#e9eef3}#map img{max-width:none}
+@media(max-width:480px){.s{padding-right:56px}}
+@media(prefers-reduced-motion:reduce){#deck{scroll-behavior:auto}}
+.langsw{position:fixed;top:10px;right:10px;z-index:8;display:flex;gap:6px}
+.langsw a{background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:12px;font-weight:900;text-decoration:none;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+
+.sig{position:relative;padding:44px 22px 74px;max-width:min(560px,100%);margin:0 auto;text-align:center;scroll-snap-align:start}
+.sig:before{content:"";position:absolute;left:22px;right:22px;top:0;border-top:1px solid var(--line)}
+.sig .mark{position:absolute;right:64px;top:-54px;width:96px;height:96px;border:2.5px solid var(--ac);border-radius:50%;
+ opacity:.34;transform:rotate(-13deg);display:grid;place-content:center;gap:2px;color:var(--ac);pointer-events:none}
+.sig .mark b{font-size:9.5px;letter-spacing:.14em;font-weight:900;display:block}
+.sig .mark i{font-style:normal;font-size:14px;font-weight:900;letter-spacing:.02em;display:block}
+.sig .mark s{text-decoration:none;font-size:7.5px;letter-spacing:.1em;display:block;opacity:.85}
+.sig .by{position:relative;margin:0;font-size:15px;font-weight:700;color:var(--mute)}
+.sig .by b{color:var(--ink);font-weight:900;font-size:19px;display:block;margin-top:3px;letter-spacing:-.01em}
+.sig .ct{margin:14px 0 0;font-size:13px;font-weight:900;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.sig .ct a{color:var(--ac);text-decoration:none;border-bottom:1.5px solid var(--wash);padding-bottom:1px}
+.sig .ct span{color:var(--line)}
+.sig .cr{margin:16px 0 0;font-size:10.5px;color:var(--ash);font-weight:500;line-height:1.7}
+
+</style></head><body>
+<div class="langsw"><a href="../kyushu-key-2026-09-zh/">中文</a></div>
+<div class="rail" aria-hidden="true"><span class="lab t">朝</span><span class="track"></span><span class="klabel" id="klabel"></span><span class="car emo" id="car">🚗</span><span class="lab b">夜</span></div>
+<div id="deck">
+<section class="s hub"><span class="date">福岡発・車で日帰り</span><h1>Keyくんとお母さんの 九州 日帰り6案</h1><figure class="photo"><img src="img/hero.jpg" alt="" loading="eager" fetchpriority="high"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Oita-Smoky_Steam_of_Beppu_Hot_Springs-xl.jpg" target="_blank" rel="noopener">Oita-Smoky Steam of Beppu Hot Springs-xl.jpg</a> CC BY 4.0</figcaption></figure><p class="who"></p><dl class="nums"><div><dt>案</dt><dd>6<small>から選ぶ</small></dd></div><div><dt>全部</dt><dd>日帰り<small>福岡発</small></dd></div><div><dt>移動</dt><dd>レンタカー<small>運転はKeyくん</small></dd></div></dl><p class="hint">下にスクロールで 朝 → 夜</p></section>
+<section class="s" data-clock="はじめに"><div class="eyebrow">先に1つだけ</div><h2><em>運転できるか</em><span>先に確かめて</span></h2><figure class="photo"><img src="img/hero.jpg" alt="" loading="lazy" ><figcaption><a href="https://commons.wikimedia.org/wiki/File:Oita-Smoky_Steam_of_Beppu_Hot_Springs-xl.jpg" target="_blank" rel="noopener">Oita-Smoky Steam of Beppu Hot Springs-xl.jpg</a> CC BY 4.0</figcaption></figure><p class="lead">どの案も車が前提なので、ここだけは出発前に潰しておいてください。日本でレンタカーを運転するには、ジュネーブ条約方式の国際運転免許証（または日本の免許）が要ります。香港発給の国際運転免許証は使えます。<b>中国本土の免許証＋翻訳文だけでは日本では運転できません。</b> 運転するのがKeyくんなら香港の免許で国際免許を取っていれば大丈夫です。</p><ul class="pts"><li><i>1</i><span>国際運転免許証<small>香港発給のものは日本で有効。パスポートと一緒に必ず持ち歩く</small></span></li><li><i>2</i><span>ETCカード<small>レンタカー屋でETCカードも一緒に借りる。高速代が安くなるし、別府湾スマートICはETC専用</small></span></li><li><i>3</i><span>服装（9月下旬〜10月）<small>大分の平年値で日中25〜26℃、朝晩は15〜19℃。薄手＋脱ぎ着できる上着。鶴見岳や由布院まで行くなら風よけを1枚</small></span></li><li><i>4</i><span>10月31日は別府を避ける<small>東京ディズニーリゾートのスペシャルパレードが別府市街である日。交通規制で普段の所要時間が当てにならない</small></span></li></ul><div class="links"><a href="https://www.npa.go.jp/policies/application/license_renewal/QA.html" target="_blank" rel="noopener">警察庁・外国免許の扱い</a></div></section><section class="s" data-clock="えらぶ"><div class="eyebrow">6つの案</div><h2><em>どれか1つ</em><span>押してください</span></h2><p class="lead">下に6案あります。上の3つが別府、下の3つが別府以外の九州です。気に入ったものの「この案にする」を押すと、ここに残ります。押しても何も送信されないので、気軽に押し比べてください。</p><div class="picked" id="picked">まだ選んでいません。下の案を見て、気に入ったものを押してください。</div></section><section class="s" data-clock="別府 ①"><div class="opt" data-k="a" id="opt-a"><span class="badge">別府 ①　地獄めぐり王道</span><h2><em>青い湯と</em><span>湯けむりを</span><span>見て回る</span></h2><figure class="photo"><img src="img/a_jigoku.jpg" alt="" loading="lazy" ><figcaption><a href="https://commons.wikimedia.org/wiki/File:Umi_Jigoku_(Sea_Hell)_in_Beppu.jpg" target="_blank" rel="noopener">Umi Jigoku (Sea Hell) in Beppu.jpg</a> CC0</figcaption></figure><p class="lead">別府でいちばん有名な景色を、歩く距離を短くして回る案です。地獄は7つありますが全部は回りません。駐車場が各地獄の目の前にあって全部無料なので、車を停める→見る→また乗る、の繰り返しで済みます。お湯には入らないので、着替えも要りません。</p><div class="meta"><span>運転 片道1時間45分</span><span>7:30発 → 17:30帰着</span></div><ul class="pts"><li><i>1</i><span>7:30 博多駅を出る<small>福岡都市高速→太宰府IC→九州道→大分道→別府IC。太宰府IC〜別府ICはETC 3,440円・127.9km・約1時間31分。都市高速630円と合わせて片道4,070円</small></span></li><li><i>2</i><span>9:30 海地獄<small>コバルトブルーの湯。8:00-17:00・年中無休。単独500円、共通券なら2,400円で7か所。無料駐車230台。貸出車いす3台（予約不可）</small></span></li><li><i>3</i><span>10:30 かまど地獄<small>1丁目から6丁目まで見て回る仕掛け。足湯と飲泉あり。単独500円、無料駐車35台</small></span></li><li><i>4</i><span>11:15 湯けむり展望台<small>無料・8:00-21:00。街じゅうから湯気が上がる別府らしい眺め。駐車8台しかないので満車なら素通りでいい</small></span></li><li><i>5</i><span>11:45 地獄蒸し工房 鉄輪で昼<small>地面から出る蒸気で自分で蒸す。10:00-19:00(LO18:00)・第3水曜休・予約不可。釜代は小15分400円＋食材代。無料駐車26台。隣のポケットパークに無料の足湯</small></span></li><li><i>6</i><span>13:30 血の池地獄 → 龍巻地獄<small>鉄輪から車で10分。赤い池と間欠泉。龍巻は噴き出すまで待つので30〜50分みておく。どちらも無料駐車あり</small></span></li><li><i>7</i><span>15:00 岡本屋売店<small>明礬温泉の地獄蒸しプリン。持ち帰り486円・店内495円。8:30-18:30・無休。※同じ岡本屋の「山の湯」と明礬地獄遊歩道は休業中</small></span></li><li><i>8</i><span>15:45 別府IC → 17:30 博多<small>高速代は往復で8,140円ほど（平日・割引なし）</small></span></li></ul><div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;destination=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;travelmode=driving&amp;waypoints=%E6%B5%B7%E5%9C%B0%E7%8D%84%7C%E3%81%8B%E3%81%BE%E3%81%A9%E5%9C%B0%E7%8D%84%7C%E5%88%A5%E5%BA%9C%E5%B8%82%E6%B9%AF%E3%81%91%E3%82%80%E3%82%8A%E5%B1%95%E6%9C%9B%E5%8F%B0%7C%E5%9C%B0%E7%8D%84%E8%92%B8%E3%81%97%E5%B7%A5%E6%88%BF+%E9%89%84%E8%BC%AA%7C%E8%A1%80%E3%81%AE%E6%B1%A0%E5%9C%B0%E7%8D%84%7C%E5%B2%A1%E6%9C%AC%E5%B1%8B%E5%A3%B2%E5%BA%97" target="_blank" rel="noopener">この順路をGoogleマップで開く</a><a href="https://www.beppu-jigoku.com/fee/index.html" target="_blank" rel="noopener">別府地獄めぐり 公式</a><a href="https://www.city.beppu.oita.jp/sisetu/sangyou_kankou/11kankou_11-17jikgokumushi.html" target="_blank" rel="noopener">地獄蒸し工房 鉄輪（別府市）</a><a href="https://jigoku-prin.com/" target="_blank" rel="noopener">岡本屋売店</a></div><button class="pick" data-k="a">この案にする</button></div></section><section class="s" data-clock="別府 ②"><div class="opt" data-k="b" id="opt-b"><span class="badge">別府 ②　貸切風呂でゆっくり</span><h2><em>他の人と</em><span>一緒にならない</span><span>お風呂</span></h2><figure class="photo"><img src="img/b_mushi.jpg" alt="" loading="lazy" ><figcaption><a href="https://commons.wikimedia.org/wiki/File:2023-04-03_Myoban_Onsen%E3%80%81%E6%98%8E%E7%A4%AC%E6%B8%A9%E6%B3%89_%E5%9C%B0%E7%8D%84%E8%92%B8%E3%81%97_DSCF0013.jpg" target="_blank" rel="noopener">2023-04-03 Myoban Onsen、明礬温泉 地獄蒸し DSCF0013.jpg</a> CC BY-SA 4.0</figcaption></figure><p class="lead">日本の大浴場は裸で他人と入るので、抵抗があるなら「家族風呂・貸切風呂」を使う手があります。部屋ごと1時間いくらで借り切れて、親子2人だけで入れます。この案は貸切風呂を1回しっかり入って、あとは食べ歩きと見学。歩く距離がいちばん短い案です。</p><div class="meta"><span>運転 片道2時間</span><span>8:00発 → 17:45帰着</span></div><ul class="pts"><li><i>1</i><span>8:00 博多駅を出る<small>別府ICまで約1時間45分。明礬から回るなら別府湾スマートIC（ETC専用）で降りる手もある</small></span></li><li><i>2</i><span>10:20 みょうばん湯の里<small>わら葺きの湯の花小屋の見学は無料（9:00-18:00）。貸切風呂はわら葺き4棟で1時間2,000円（1棟だけ2,500円）。10:00-19:00・受付18:00まで。<b>予約できず当日受付順</b>なので、着いたらまず名前を書く</small></span></li><li><i>3</i><span>12:00 岡本屋売店で軽く昼<small>車で3分。温玉うどん770円、地獄蒸したまごサンド770円、とり天カレー1,320円。締めに地獄蒸しプリン486円。8:30-18:30・無休</small></span></li><li><i>4</i><span>13:30 鉄輪へ降りる<small>明礬から10〜15分。地獄蒸し工房の隣のポケットパークに無料の足湯。靴下を脱ぐだけなので、お母さんが温泉に慣れる練習にもなる</small></span></li><li><i>5</i><span>14:30 海地獄を1つだけ<small>単独500円。7つ回らず、いちばんきれいな1つだけ見る。無料駐車230台。8:00-17:00</small></span></li><li><i>6</i><span>15:30 湯けむり展望台<small>無料。車を停めて5分見るだけ。土日祝は19:00-21:00にライトアップ</small></span></li><li><i>7</i><span>16:00 別府IC → 17:45 博多<small>貸切風呂が取れなかった時の代わり: 別府桜湯（別府ICすぐ・貸切20室・60分2,000〜3,000円・電話予約可・「鴛鴦桜」はバリアフリー表記）</small></span></li></ul><div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;destination=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;travelmode=driving&amp;waypoints=%E3%81%BF%E3%82%87%E3%81%86%E3%81%B0%E3%82%93%E6%B9%AF%E3%81%AE%E9%87%8C%7C%E5%B2%A1%E6%9C%AC%E5%B1%8B%E5%A3%B2%E5%BA%97%7C%E5%9C%B0%E7%8D%84%E8%92%B8%E3%81%97%E5%B7%A5%E6%88%BF+%E9%89%84%E8%BC%AA%7C%E6%B5%B7%E5%9C%B0%E7%8D%84%7C%E5%88%A5%E5%BA%9C%E5%B8%82%E6%B9%AF%E3%81%91%E3%82%80%E3%82%8A%E5%B1%95%E6%9C%9B%E5%8F%B0" target="_blank" rel="noopener">この順路をGoogleマップで開く</a><a href="https://yuno-hana.jp/kazoku_spring/" target="_blank" rel="noopener">みょうばん湯の里 貸切湯</a><a href="https://www.sakurayu.net/?page_id=7" target="_blank" rel="noopener">別府桜湯（予約用）</a><a href="https://www.hyotan-onsen.com/sp/onsen/family.html" target="_blank" rel="noopener">ひょうたん温泉 家族風呂</a></div><button class="pick" data-k="b">この案にする</button></div></section><section class="s" data-clock="別府 ③"><div class="opt" data-k="c" id="opt-c"><span class="badge">別府 ③　別府＋由布院</span><h2><em>山を越えて</em><span>由布院まで</span><span>足を伸ばす</span></h2><figure class="photo"><img src="img/c_kinrin.jpg" alt="" loading="lazy" ><figcaption><a href="https://commons.wikimedia.org/wiki/File:Lake_Kinrin_20221022-1.jpg" target="_blank" rel="noopener">Lake Kinrin 20221022-1.jpg</a> CC BY-SA 4.0</figcaption></figure><p class="lead">別府は1〜2か所に絞って、山を越えて由布院へ行く案です。車があるからできる回り方で、景色がいちばん変わります。そのぶん運転は長く、歩く距離も増えるので、お母さんの足に自信があるならこれ。</p><div class="meta"><span>運転 合計4時間ほど</span><span>7:30発 → 18:15帰着</span></div><ul class="pts"><li><i>1</i><span>9:15 別府ICを降りる<small>ICから別府ロープウェイまで車5分。無料駐車約250台</small></span></li><li><i>2</i><span>9:30 別府ロープウェイ（鶴見岳）<small>9〜10月は9:00-17:30、上り最終17:00。往復1,800円、<b>70歳以上は1,700円</b>（年齢の分かるものを持って行く）。片道約10分・20〜30分間隔。両駅に車いす用の階段昇降機あり。悪天候で運休することがある</small></span></li><li><i>3</i><span>11:00 海地獄<small>単独500円。無料駐車230台。8:00-17:00・年中無休</small></span></li><li><i>4</i><span>12:00 鉄輪か別府市街で昼<small>地獄蒸し工房 鉄輪（10:00-19:00・第3水曜休）か、別府冷麺の六盛 松原本店（冷麺並990円・11:30-14:00・水曜休・スープが終わると早じまい）</small></span></li><li><i>5</i><span>13:30 由布院へ<small>一般道で45〜60分。山道は霧が出ることがある</small></span></li><li><i>6</i><span>14:30 金鱗湖と湯の坪街道<small>湖だけなら30〜45分、街道も歩くなら90〜120分。セイワパーク金鱗湖は26台・平日1回400円/土日祝900円。<b>前払いのキャッシュレス専用で現金不可</b>。湖に近い駐車場を選ぶと歩く量が減る</small></span></li><li><i>7</i><span>16:30 湯布院IC → 18:15 博多<small>由布院は夕方に駐車場から出る車で混む。16:30には動き出しておく</small></span></li></ul><div class="links"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;destination=%E5%8D%9A%E5%A4%9A%E9%A7%85&amp;travelmode=driving&amp;waypoints=%E5%88%A5%E5%BA%9C%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4%7C%E6%B5%B7%E5%9C%B0%E7%8D%84%7C%E5%9C%B0%E7%8D%84%E8%92%B8%E3%81%97%E5%B7%A5%E6%88%BF+%E9%89%84%E8%BC%AA%7C%E9%87%91%E9%B1%97%E6%B9%96" target="_blank" rel="noopener">この順路をGoogleマップで開く</a><a href="https://www.beppu-ropeway.co.jp/price/" target="_blank" rel="noopener">別府ロープウェイ 公式</a><a href="https://www.visit-oita.jp/spots/detail/4362" target="_blank" rel="noopener">金鱗湖（大分県公式）</a><a href="https://www.6-sei.com/" target="_blank" rel="noopener">六盛 松原本店</a></div><button class="pick" data-k="c">この案にする</button></div></section>
+
+
+<section class="s end"><div class="eyebrow">おわり</div><h2>どれでも、車があれば1日で回れます</h2><p class="lead">決まったら教えてください。その案だけの詳しいしおり（時刻表・店の予約・駐車場の入口まで）を作ります。</p><p class="credit">料金・営業時間は2026年9月23日に各施設の公式サイトで確認したものです。休業や臨時変更があるので、行く前にもう一度公式で確かめてください。写真は Wikimedia Commons のクリエイティブ・コモンズ画像です。</p></section>
+<footer class="sig" data-build="d640da845a3f"><div class="mark" aria-hidden="true"><b>TOKYO</b><i>23 SEP</i><s>2026 · d640da</s></div><p class="by">つくった人<b>Yuuki@Anime Sensei Tours</b></p><p class="ct"><a href="https://www.animesenseijp.com/" target="_blank" rel="noopener">animesenseijp.com</a><span>·</span><a href="mailto:hello@animesenseijp.com">hello@animesenseijp.com</a></p><p class="cr">© 2026 Yuuki@Anime Sensei Tours. このページと組み方はユウキのオリジナルです。丸ごとの転載・複製はご遠慮ください。</p></footer><!-- tabi-shiori · kyushu-key-2026-09 · built 2026-09-23 · © 2026 Yuuki@Anime Sensei Tours · https://www.animesenseijp.com/ · sig d640da845a3f -->
+</div>
+
+<script>
+const PICKS={"a": {"label": "地獄めぐり王道", "next17": "海・かまど・血の池の3つに絞って、昼は地獄蒸し"}, "b": {"label": "貸切風呂でゆっくり", "next17": "わら葺きの貸切風呂に1時間、あとは明礬と鉄輪をゆっくり"}, "c": {"label": "別府＋由布院", "next17": "鶴見岳のロープウェイと金鱗湖、別府は海地獄だけ"}};const RAIL={"mk": ["🚗"], "a1": {"ac": "#e5382b", "sh": "#a8271d", "wa": "#fde3df"}, "a2": {"ac": "#1d7a8c", "sh": "#135764", "wa": "#e0f0f3"}};
+const box=document.getElementById('picked');
+function apply(k){if(!PICKS[k])return;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.k===k));
+ box.innerHTML='いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。';}
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{try{localStorage.setItem('pick16',b.dataset.k)}catch(e){};apply(b.dataset.k);box.scrollIntoView({behavior:'smooth',block:'center'});}));
+try{apply(localStorage.getItem('pick16'))}catch(e){}
+const deck=document.getElementById('deck'),car=document.getElementById('car'),klabel=document.getElementById('klabel'),rail=document.querySelector('.rail');
+const secs=[...document.querySelectorAll('#deck .s')].filter(s=>s.dataset.clock);
+const range=()=>Math.max(1,deck.scrollHeight-deck.clientHeight);
+let stops=[];
+function build(){
+ rail.querySelectorAll('.stop').forEach(e=>e.remove());stops=[];
+ secs.forEach(s=>{
+  const p=Math.min(1,Math.max(0,(s.offsetTop+s.offsetHeight/2-deck.clientHeight/2)/range()));
+  const i=document.createElement('i');i.className='stop';i.style.top=(p*100)+'%';
+  rail.insertBefore(i,car);stops.push({p,el:i});
+ });
+}
+let raf=0;
+function upd(){raf=0;
+ const r=deck.scrollTop/range();
+ car.style.top=(r*100)+'%';klabel.style.top=(r*100)+'%';
+ const A=r<0.5?RAIL.a1:RAIL.a2;const rs=document.documentElement.style;rs.setProperty('--ac',A.ac);rs.setProperty('--shadow',A.sh);rs.setProperty('--wash',A.wa);
+ if(RAIL.mk)car.textContent=r<0.5?RAIL.mk[0]:RAIL.mk[1];
+ stops.forEach(o=>o.el.classList.toggle('on',r>=o.p-0.004));
+ const mid=deck.clientHeight/2;
+ const cur=secs.find(s=>{const b=s.getBoundingClientRect();return b.top<=mid&&b.bottom>=mid;});
+ const t=cur?cur.dataset.clock:'';
+ klabel.textContent=t;klabel.classList.toggle('on',!!t);
+}
+deck.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(upd);},{passive:true});
+addEventListener('resize',()=>{build();upd();});
+build();upd();
+</script></body></html>

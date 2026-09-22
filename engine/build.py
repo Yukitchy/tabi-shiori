@@ -3,6 +3,7 @@
 import json,sys,shutil,html,pathlib,datetime,re,hashlib
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 def esc(s):return html.escape(s,quote=True)
+def emp(s):return re.sub(r"\*\*(.+?)\*\*",r"<b>\1</b>",esc(s))
 
 # --- アルバムの「選んで保存」（album.json があるページだけ出る） ---
 ALBUM_CSS='''
@@ -114,7 +115,7 @@ SELECT_JS='''
 LIST_CSS = """
 :root{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:%(ac)s;--shadow:%(sh)s;--wash:%(wa)s;color-scheme:light}
 *{box-sizing:border-box;min-width:0}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:{fontstack}"Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .wrap{max-width:min(620px,100%%);margin:0 auto;padding:0 20px}
 header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.6) blur(10px);border-bottom:1px solid var(--line)}
@@ -252,7 +253,7 @@ def build_list(slug,d,items,O):
     page=('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
           '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
           f'<title>{esc(d["title"])} — 一覧</title><meta name="robots" content="noindex">'
-          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">'
+          '{fontlink}'
           '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>'
           f'<style>{css}</style></head><body>'
@@ -322,13 +323,23 @@ def brandsig(slug, lang, built):
            f'<!-- tabi-shiori · {slug} · built {built} · © {year} {b["name"]} · {b["site"]} · sig {fp} -->')
     return meta, sig, BRAND_CSS
 
+LABELS={
+ 'ja':{'end':'おわり','pre':'出発の前に','prep':'準備','roles':'分担','book':'予約 →','scroll':'下にスクロールで','car':'車',
+       'pick':"'いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。'",
+       'nopick':'まだ選んでいません。下の案を見て、気に入ったものを押してください。'},
+ 'en':{'end':'FINALLY','pre':'BEFORE YOU GO','prep':'PACKING','roles':'WHO DOES WHAT','book':'Book →','scroll':'Scroll down:','car':'CAR',
+       'pick':"'You picked <b>'+PICKS[k].label+'</b>. '+PICKS[k].next17+'.<br>To change it, press another plan.'",
+       'nopick':'Nothing picked yet. Look through the plans below and press the one you like.'},
+ 'zh':{'end':'最后','pre':'出发之前','prep':'准备','roles':'分工','book':'预约 →','scroll':'向下滑动：','car':'车',
+       'pick':"'你现在选的是 <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>想换的话，按另一个方案的「就选这个」。'",
+       'nopick':'还没有选。看看下面的方案，按你喜欢的那个。'},
+}
+
 def build(slug):
     P=ROOT/'packs'/slug; d=json.load(open(P/'trip.json'))
     cr=json.load(open(P/'credits.json')) if (P/'credits.json').exists() else {}
     LANG=d.get('lang','ja')
-    T=({'end':'FINALLY','pre':'BEFORE YOU GO','prep':'PACKING','roles':'WHO DOES WHAT','book':'Book →','scroll':'Scroll down:'}
-       if LANG=='en' else
-       {'end':'おわり','pre':'出発の前に','prep':'準備','roles':'分担','book':'予約 →','scroll':'下にスクロールで'})
+    T=LABELS.get(LANG,LABELS['ja'])
     O=ROOT/'docs'/slug; (O/'img').mkdir(parents=True,exist_ok=True)
     for f in (P/'img').glob('*'): shutil.copy(f,O/'img'/f.name)
     def tt(T):
@@ -339,7 +350,7 @@ def build(slug):
                 out+=f'<li class="{cls}"><b>{esc(name)}</b><span class="tm">{esc(tm)}</span><small>{esc(memo)}</small></li>'
             out+='</ul></div>'
         return out
-    pts=lambda L:'<ul class="pts">'+''.join(f'<li><i>{i+1}</i><span>{esc(a)}<small>{esc(b)}</small></span></li>' for i,(a,b) in enumerate(L))+'</ul>'
+    pts=lambda L:'<ul class="pts">'+''.join(f'<li><i>{i+1}</i><span>{esc(a)}<small>{emp(b)}</small></span></li>' for i,(a,b) in enumerate(L))+'</ul>'
     links=lambda L:'<div class="links">'+''.join(f'<a href="{esc(u)}" target="_blank" rel="noopener">{esc(t)}</a>' for t,u in L)+'</div>' if L else ''
     def photo(k,eager=False):
         c=cr.get(k,{}); cap=f'<a href="{esc(c["page"])}" target="_blank" rel="noopener">{esc(c.get("title",""))}</a> {esc(c.get("lic",""))}' if c else ''
@@ -347,11 +358,11 @@ def build(slug):
     ch=d.get('choices')
     chs=''
     if ch:
-        chs+=f'<section class="s" data-clock="{esc(ch.get("clock",""))}"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{esc(ch["lead"])}</p><div class="picked" id="picked">まだ選んでいません。下の案を見て、気に入ったものを押してください。</div></section>'
+        chs+=f'<section class="s" data-clock="{esc(ch.get("clock",""))}"><div class="eyebrow">{esc(ch["day"])}</div><h2>{ch["h"]}</h2><p class="lead">{emp(ch["lead"])}</p><div class="picked" id="picked">{esc(T["nopick"])}</div></section>'
         for o in ch['options']:
             chs+=(f'<section class="s" data-clock="{esc(o.get("clock",""))}"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
                   f'<span class="badge">{esc(o["badge"])}　{esc(o["label"])}</span><h2>{o["h"]}</h2>{photo(o["photo"])}'
-                  f'<p class="lead">{esc(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
+                  f'<p class="lead">{emp(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
                   f'{pts(o["pts"])}{links(o.get("links",[]))}'
                   f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
     def numsblk(L):
@@ -364,7 +375,7 @@ def build(slug):
     def sec(s):
         head = vid(s.get('video')) if s.get('video') else photo(s['photo'])
         return (f'<section class="s" data-clock="{esc(s.get("clock",""))}"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
-                f'<p class="lead">{esc(s["lead"])}</p>{numsblk(s.get("nums",[]))}{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
+                f'<p class="lead">{emp(s["lead"])}</p>{numsblk(s.get("nums",[]))}{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
     for s in d['sections']:
@@ -416,9 +427,7 @@ def build(slug):
     selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="album/";'+SELECT_JS) if items else ''
     selbar=('<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
             '<button class="go" type="button" disabled>保存</button></div>') if items else ''
-    pickmsg=(json.dumps("'You picked <b>'+PICKS[k].label+'</b>. '+PICKS[k].next17+'.'")[1:-1].replace('\\"','"')
-             if LANG=='en' else
-             "'いま選んでいるのは <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>変えたいときは別の案の「この案にする」を押してください。'")
+    pickmsg=T['pick']
     picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
     car=d.get('car'); rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">{esc(T["book"])}</a></li>' for n,t,u in (car or {}).get('rows',[]))
@@ -427,11 +436,17 @@ def build(slug):
     rl=d['rail']; mk=rl.get('marker'); ac2=rl.get('accent2') or {}
     marker=(f'<span class="car emo" id="car">{esc(mk[0])}</span>' if mk else '<svg class="car" id="car" viewBox="0 0 26 40" aria-hidden="true">'+'<rect x="1.5" y="4" width="23" height="33" rx="7" fill="var(--ac)"/><rect x="0" y="10" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="0" y="27" width="26" height="5" rx="2.5" fill="var(--shadow)"/><rect x="4" y="7" width="18" height="27" rx="5" fill="var(--ac)"/><path d="M6.5 12h13l-1.6-3.2a2 2 0 0 0-1.8-1.1H9.9a2 2 0 0 0-1.8 1.1L6.5 12z" fill="#eaf3fb"/><path d="M6.5 27h13l-1.6 3.2a2 2 0 0 1-1.8 1.1H9.9a2 2 0 0 1-1.8-1.1L6.5 27z" fill="#cfe2f2"/><rect x="5.5" y="14" width="15" height="11" rx="3" fill="#fff" opacity=".22"/><rect x="6" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/><rect x="16.4" y="4.6" width="3.6" height="2.2" rx="1.1" fill="#fff8d8"/>'+'</svg>')
     railjs=json.dumps({'mk':mk,'a1':{'ac':d['accent'],'sh':d['accent_shadow'],'wa':d['accent_wash']},'a2':{'ac':ac2.get('accent',d['accent']),'sh':ac2.get('shadow',d['accent_shadow']),'wa':ac2.get('wash',d['accent_wash'])}},ensure_ascii=False)
-    carsec=f'''<section class="s" data-clock="{esc(T["pre"])}"><div class="eyebrow">車</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{esc(car["note"])}</p></section>''' if car else ''
+    carsec=f'''<section class="s" data-clock="{esc(T["pre"])}"><div class="eyebrow">{esc(T["car"])}</div><h2>{car["h"]}</h2><p class="lead">{esc(car["lead"])}</p><ul class="rest">{rows}</ul><p class="note">{emp(car["note"])}</p></section>''' if car else ''
     packsec=f'''<section class="s" data-clock="{esc(T["pre"])}"><div class="eyebrow">{esc(T["prep"])}</div><h2>{esc(d["pack"]["h"])}</h2><ul class="rest">{pack}</ul><div class="eyebrow" style="margin-top:8px">{esc(T["roles"])}</div><ul class="rest">{roles}</ul></section>''' if d.get('pack') else ''
     BUILT=datetime.date.today().isoformat()
+    FONT_JA='https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap'
+    FONT_SC='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;900&display=swap'
+    fontlink=(f'<link rel="stylesheet" href="{FONT_JA}"><link rel="stylesheet" href="{FONT_SC}">'
+              if LANG=='zh' else f'<link rel="stylesheet" href="{FONT_JA}">')
+    fontstack='"Noto Sans SC","Zen Kaku Gothic New",' if LANG=='zh' else '"Zen Kaku Gothic New",'
+    langsw=('<div class="langsw">'+''.join(f'<a href="{esc(u)}">{esc(t)}</a>' for t,u in d.get('alt',[]))+'</div>') if d.get('alt') else ''
     bmeta,bsig,bcss=brandsig(slug,LANG,BUILT)
-    endsec=f'''<section class="s end"><div class="eyebrow">{esc(T["end"])}</div><h2>{d["end"]["h"]}</h2><p class="lead">{esc(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
+    endsec=f'''<section class="s end"><div class="eyebrow">{esc(T["end"])}</div><h2>{d["end"]["h"]}</h2><p class="lead">{emp(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
     page=f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{esc(d["title"])}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
@@ -505,8 +520,11 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 #map{{height:62vh;border-radius:20px;overflow:hidden;background:#e9eef3}}#map img{{max-width:none}}
 @media(max-width:480px){{.s{{padding-right:56px}}}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
+.langsw{{position:fixed;top:10px;right:10px;z-index:8;display:flex;gap:6px}}
+.langsw a{{background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:12px;font-weight:900;text-decoration:none;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}}
 {albumcss}{bcss}{bigcss}
 </style></head><body>
+{langsw}
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
 <div id="deck">
 <section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">{esc(T["scroll"])} {esc(d["rail"]["top"])} → {esc(d["rail"]["bottom"])}</p></section>
