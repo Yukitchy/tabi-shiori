@@ -1,0 +1,38 @@
+{
+ "hero": {
+  "title": "Hamarikyu Gardens.jpg",
+  "artist": "Eddy23",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hamarikyu_Gardens.jpg"
+ },
+ "garden": {
+  "title": "Hamarikyu garden 110925 1.jpg",
+  "artist": "Ulf Klingström",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hamarikyu_garden_110925_1.jpg"
+ },
+ "museum": {
+  "title": "Tokyo National Museum, Honkan 2010.jpg",
+  "artist": "Wiiii",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tokyo_National_Museum,_Honkan_2010.jpg"
+ },
+ "tower": {
+  "title": "Tokyo Tower observation deck.jpg",
+  "artist": "Kirs10",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tokyo_Tower_observation_deck.jpg"
+ },
+ "palace": {
+  "title": "Imperial Palace East Gardens (8999122101).jpg",
+  "artist": "Guilhem Vellut from Annecy, France",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Imperial_Palace_East_Gardens_(8999122101).jpg"
+ },
+ "boat": {
+  "title": "Yakatabune Sumida 1.jpg",
+  "artist": "Nurg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Yakatabune_Sumida_1.jpg"
+ }
+}
