@@ -329,7 +329,8 @@ LABELS={
        'nopick':'まだ選んでいません。下の案を見て、気に入ったものを押してください。'},
  'en':{'end':'FINALLY','pre':'BEFORE YOU GO','prep':'PACKING','roles':'WHO DOES WHAT','book':'Book →','scroll':'Scroll down:','car':'CAR',
        'pick':"'You picked <b>'+PICKS[k].label+'</b>. '+PICKS[k].next17+'.<br>To change it, press another plan.'",
-       'nopick':'Nothing picked yet. Look through the plans below and press the one you like.'},
+       'nopick':'Nothing picked yet. Look through the plans below and press the one you like.',
+       'pickfor':'Pick for ','slothead':'Your picks so far:','slotfoot':'Send me a screenshot of this box, or just the numbers. To change one, press another option for the same day.'},
  'zh':{'end':'最后','pre':'出发之前','prep':'准备','roles':'分工','book':'预约 →','scroll':'向下滑动：','car':'车',
        'pick':"'你现在选的是 <b>'+PICKS[k].label+'</b>。'+PICKS[k].next17+'。<br>想换的话，按另一个方案的「就选这个」。'",
        'nopick':'还没有选。看看下面的方案，按你喜欢的那个。'},
@@ -355,6 +356,8 @@ def build(slug):
     def photo(k,eager=False):
         c=cr.get(k,{}); cap=f'<a href="{esc(c["page"])}" target="_blank" rel="noopener">{esc(c.get("title",""))}</a> {esc(c.get("lic",""))}' if c else ''
         return f'<figure class="photo"><img src="img/{k}.jpg" alt="" loading="{"eager" if eager else "lazy"}" {"fetchpriority=\"high\"" if eager else ""}><figcaption>{cap}</figcaption></figure>'
+    def numsblk(L):
+        return '<dl class="nums">'+''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(bb)}<small>{esc(cc)}</small></dd></div>' for a,bb,cc in L)+'</dl>' if L else ''
     ch=d.get('choices')
     chs=''
     if ch:
@@ -362,11 +365,13 @@ def build(slug):
         for o in ch['options']:
             chs+=(f'<section class="s" data-clock="{esc(o.get("clock",""))}"><div class="opt" data-k="{esc(o["key"])}" id="opt-{esc(o["key"])}">'
                   f'<span class="badge">{esc(o["badge"])}　{esc(o["label"])}</span><h2>{o["h"]}</h2>{photo(o["photo"])}'
-                  f'<p class="lead">{emp(o["lead"])}</p><div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>'
-                  f'{pts(o["pts"])}{links(o.get("links",[]))}'
-                  f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button></div></section>')
-    def numsblk(L):
-        return '<dl class="nums">'+''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(bb)}<small>{esc(cc)}</small></dd></div>' for a,bb,cc in L)+'</dl>' if L else ''
+                  f'<p class="lead">{emp(o["lead"])}</p>'
+                  +(f'<div class="meta"><span>{esc(o["drive"])}</span><span>{esc(o["arrive"])}</span></div>' if o.get('drive') else numsblk(o.get('nums',[])))
+                  +f'{pts(o["pts"])}{links(o.get("links",[]))}'
+                  # days がある案は日ごとにボタンを出す（1ページで2日ぶん選ばせる用）
+                  +(''.join(f'<button class="pick" data-k="{esc(o["key"])}" data-d="{esc(dd)}">{esc(T["pickfor"])}{esc(dd)}</button>' for dd in o['days'])
+                    if o.get('days') else f'<button class="pick" data-k="{esc(o["key"])}">この案にする</button>')
+                  +'</div></section>')
     def vid(v):
         if not v: return ''
         return (f'<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/{esc(v["id"])}?rel=0" title="{esc(v["cap"])}" '
@@ -428,7 +433,7 @@ def build(slug):
     selbar=('<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
             '<button class="go" type="button" disabled>保存</button></div>') if items else ''
     pickmsg=T['pick']
-    picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o['next17']} for o in (ch['options'] if ch else [])},ensure_ascii=False)
+    picks_json=json.dumps({o['key']:{'label':o['label'],'next17':o.get('next17','')} for o in (ch['options'] if ch else [])},ensure_ascii=False)
     c=d['cover']; nums=''.join(f'<div><dt>{esc(a)}</dt><dd>{esc(b)}<small>{esc(cc)}</small></dd></div>' for a,b,cc in c['nums'])
     car=d.get('car'); rows=''.join(f'<li><b>{esc(n)}<small>{esc(t)}</small></b><a href="{esc(u)}" target="_blank" rel="noopener">{esc(T["book"])}</a></li>' for n,t,u in (car or {}).get('rows',[]))
     pack=''.join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a,b in d.get('pack',{}).get('items',[]))
@@ -501,7 +506,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .meta{{display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--mute)}}.meta span{{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 10px}}
 .pick{{width:100%;background:var(--ac);color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;border:0;box-shadow:0 4px 0 0 var(--shadow);cursor:pointer;font-family:inherit}}
 .pick:active{{transform:translateY(4px);box-shadow:none}}
-.opt.on .pick{{background:var(--ink);box-shadow:0 4px 0 0 #000}}
+.opt .pick+.pick{{margin-top:8px}}.pick.on,.opt.on .pick{{background:var(--ink);box-shadow:0 4px 0 0 #000}}
 .picked{{background:var(--wash);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7}}
 .rail{{position:fixed;right:10px;top:50%;transform:translateY(-50%);height:min(56vh,420px);width:44px;pointer-events:none;z-index:5}}
 .rail .lab{{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:900}}.rail .lab.t{{top:-36px}}.rail .lab.b{{bottom:-36px}}
@@ -540,8 +545,19 @@ const PICKS={picks_json};const RAIL={railjs};
 const box=document.getElementById('picked');
 function apply(k){{if(!PICKS[k])return;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('on',o.dataset.k===k));
  box.innerHTML={pickmsg};}}
+if(document.querySelector('.pick[data-d]')){{
+ // 日ごとに選ぶモード: {{日: 案key}} をページ別に保存
+ const SK='picks:'+{json.dumps(slug)},SLOTS=[...new Set([...document.querySelectorAll('.pick[data-d]')].map(b=>b.dataset.d))];let P={{}};
+ try{{P=JSON.parse(localStorage.getItem(SK))||{{}}}}catch(e){{}}
+ const draw=()=>{{document.querySelectorAll('.pick[data-d]').forEach(b=>b.classList.toggle('on',P[b.dataset.d]===b.dataset.k));
+  const got=SLOTS.filter(d=>PICKS[P[d]]);
+  box.innerHTML=got.length?{json.dumps(T.get('slothead',''))}+'<br>'+got.map(d=>d+': <b>'+PICKS[P[d]].label+'</b>').join('<br>')+'<br><small>'+{json.dumps(T.get('slotfoot',''))}+'</small>':{json.dumps(T['nopick'])};}};
+ document.querySelectorAll('.pick[data-d]').forEach(b=>b.addEventListener('click',()=>{{P[b.dataset.d]=b.dataset.k;try{{localStorage.setItem(SK,JSON.stringify(P))}}catch(e){{}};draw();box.scrollIntoView({{behavior:'smooth',block:'center'}});}}));
+ draw();
+}}else{{
 document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{{try{{localStorage.setItem('pick16',b.dataset.k)}}catch(e){{}};apply(b.dataset.k);box.scrollIntoView({{behavior:'smooth',block:'center'}});}}));
 try{{apply(localStorage.getItem('pick16'))}}catch(e){{}}
+}}
 const deck=document.getElementById('deck'),car=document.getElementById('car'),klabel=document.getElementById('klabel'),rail=document.querySelector('.rail');
 const secs=[...document.querySelectorAll('#deck .s')].filter(s=>s.dataset.clock);
 const range=()=>Math.max(1,deck.scrollHeight-deck.clientHeight);

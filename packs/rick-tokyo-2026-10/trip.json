@@ -7,7 +7,7 @@
  ],
  "title": "Rick & Linda — Tokyo, Oct 5 & 6",
  "date_label": "Mon Oct 5 · Tue Oct 6",
- "og_desc": "Five slow-paced options for the two Tokyo days. Pick one for each day and tell me the numbers.",
+ "og_desc": "Five slow-paced options for the two Tokyo days. Press one for each day.",
  "accent": "#2c6e63",
  "accent_shadow": "#1b463f",
  "accent_wash": "#e3f0ed",
@@ -31,7 +31,7 @@
    [
     "OCT 5",
     "Mon",
-    "from noon"
+    "sushi at noon"
    ],
    [
     "OCT 6",
@@ -50,8 +50,8 @@
    "day": "HOW TO USE THIS",
    "clock": "Read first",
    "photo": "garden",
-   "h": "<em>Pick one</em> <span>for each day</span>",
-   "lead": "Five options below. Every one of them is built the same way: taxi to the door, a seat at every stop, nothing that needs standing in a line. Read them, then send me two numbers — for example \"Oct 5 = 3, Oct 6 = 2\". That is all I need to start booking.",
+   "h": "<em>Read this</em> <span>before you pick</span>",
+   "lead": "Oct 5 starts with sushi at noon. After that, and for Oct 6, you choose from the five options below. Every one of them is built the same way: taxi to the door, a seat at every stop, nothing that needs standing in a line.",
    "nums": [
     [
      "OPTIONS",
@@ -60,7 +60,7 @@
     ],
     [
      "YOUR JOB",
-     "2 numbers",
+     "2 picks",
      "one per day"
     ],
     [
@@ -75,8 +75,8 @@
      "Tokyo museums close on Mondays, and one of them closes on Tuesdays instead. Each option says which day it can run. Options 1 and 5 work on either day."
     ],
     [
-     "Oct 5 starts at noon",
-     "You are at Toyosu at 5:30 that morning, and I have something until late morning. Lunch at 12:00 is the start of that day."
+     "Oct 5 starts with sushi at noon",
+     "Lunch at the sushi place in Hibiya we went to last time, near your hotel. You are at Toyosu at 5:30 that morning, so rest at the hotel before lunch."
     ],
     [
      "Oct 6 can start whenever you like",
@@ -94,279 +94,313 @@
    "links": []
   }
  ],
- "sections": [
-  {
-   "day": "OPTION 1",
-   "clock": "Oct 5 or Oct 6",
-   "photo": "garden",
-   "h": "<em>A garden on the bay,</em> <span>then the fish market</span>",
-   "lead": "Hamarikyu is a 17th-century shogun's garden sitting between the skyscrapers and the water, with tidal ponds that rise and fall with Tokyo Bay. Paths are flat and there are benches the whole way. Then a short taxi ride to Tsukiji for food.",
-   "nums": [
-    [
-     "ENTRY",
-     "¥300",
-     "¥150 if 65+"
-    ],
-    [
-     "OPEN",
-     "9:00–17:00",
-     "daily, last entry 16:30"
-    ],
-    [
-     "WALKING",
-     "About 1 km",
-     "flat, benches throughout"
-    ]
-   ],
-   "pts": [
-    [
-     "Taxi to the Otemon gate",
-     "We are dropped at the gate. From there the pond is a few minutes on the level."
-    ],
-    [
-     "The tea house on the island",
-     "There is a tea house out on the water, reached by a wooden bridge. If it is open that day we stop for matcha and a sweet, sitting down, looking at the pond. I will confirm before we go — I am not promising it until I have."
-    ],
-    [
-     "300-year-old pine",
-     "One tree near the entrance was planted in 1709 and is held up by a forest of wooden props. It is the thing people photograph."
-    ],
-    [
-     "Tsukiji outer market afterwards",
-     "Ten minutes by taxi. This is the old market's shopping street — the wholesale part moved to Toyosu, but the food stalls and knife shops stayed. Most shops open on Monday and Tuesday. We eat sitting down, not standing in the street."
-    ]
-   ],
-   "links": [
-    [
-     "Hamarikyu Gardens (official)",
-     "https://www.tokyo-park.or.jp/park/hama-rikyu/index.html"
-    ],
-    [
-     "Tsukiji outer market (official)",
-     "https://www.tsukiji.or.jp/calendar/"
-    ]
-   ]
-  },
-  {
-   "day": "OPTION 2",
-   "clock": "Oct 6 only — closed Mondays",
-   "photo": "museum",
-   "h": "<em>The national collection,</em> <span>indoors and seated</span>",
-   "lead": "The Tokyo National Museum in Ueno holds the largest collection of Japanese art in the world — swords, armour, screens, Buddhist sculpture, 12th-century scrolls. It is the single best indoor day in Tokyo if walking is the problem, because there are benches in almost every room.",
-   "nums": [
-    [
-     "ENTRY",
-     "¥1,000",
-     "free at 70 and over"
-    ],
-    [
-     "OPEN",
-     "9:30–17:00",
-     "closed Mondays"
-    ],
-    [
-     "WALKING",
-     "Your choice",
-     "sit down whenever"
-    ]
-   ],
-   "pts": [
-    [
-     "Taxi stops at the front steps",
-     "No station, no stairs up from a platform."
-    ],
-    [
-     "We do one building, not five",
-     "The main building alone is a full afternoon. Skipping the rest is the plan, not a compromise."
-    ],
-    [
-     "Wheelchairs are lent free at the entrance",
-     "Worth knowing. Using one for two hours inside a museum is not a decision about your health, it is a decision about how much of the collection you get to see."
-    ],
-    [
-     "Garden and cafe on site",
-     "There is a cafe in the main building and a garden behind it, so the breaks happen without leaving."
-    ],
-    [
-     "Why not Monday",
-     "The museum is closed on Mondays. So is the Nezu Museum, and so are the Imperial Palace gardens. Monday is the reason options 3 and 5 exist."
-    ]
-   ],
-   "links": [
-    [
-     "Tokyo National Museum (official)",
-     "https://www.tnm.jp/modules/r_free_page/index.php?id=113"
-    ]
-   ]
-  },
-  {
-   "day": "OPTION 3",
-   "clock": "Oct 5 only — closed Tuesdays",
-   "photo": "tower",
-   "h": "<em>One small museum,</em> <span>then the view</span>",
-   "lead": "The Suntory Museum of Art sits inside Tokyo Midtown in Roppongi. It is deliberately small — lacquer, glass, textiles, ceramics, one floor, quiet. Then a short taxi to Tokyo Tower and the main deck, 150 metres up, with seats and a cafe at the window.",
-   "nums": [
-    [
-     "MUSEUM",
-     "Open Mon",
-     "closed Tuesdays"
-    ],
-    [
-     "TOWER",
-     "9:00–23:00",
-     "every day of the year"
-    ],
-    [
-     "WALKING",
-     "Almost none",
-     "lifts at both"
-    ]
-   ],
-   "pts": [
-    [
-     "Lunch first, at noon",
-     "We start with a proper sit-down lunch at Midtown, then walk a few minutes indoors to the museum. Nothing outdoors between them."
-    ],
-    [
-     "The museum is one floor",
-     "That is why it is on this list. You can see all of it without deciding what to skip, and there is a tea room inside."
-    ],
-    [
-     "Tokyo Tower is a lift, not a climb",
-     "Taxi to the door, lift to the main deck. Admission is about 1,500 yen a person — I will confirm the exact figure before we go."
-    ],
-    [
-     "Stay for the light",
-     "If you want, we time the tower for late afternoon and watch the city switch its lights on. The deck has seating along the glass."
-    ],
-    [
-     "Exhibition and admission",
-     "What is showing at the museum in October decides the ticket price. I will check it and tell you before you commit to this one."
-    ]
-   ],
-   "links": [
-    [
-     "Suntory Museum of Art (official)",
-     "https://www.suntory.co.jp/sma/basicinfo/"
-    ],
-    [
-     "Tokyo Tower (official)",
-     "https://www.tokyotower.co.jp/fee/"
-    ]
-   ]
-  },
-  {
-   "day": "OPTION 4",
-   "clock": "Oct 6 only — closed Mon & Fri",
-   "photo": "palace",
-   "h": "<em>Inside the castle,</em> <span>where the city started</span>",
-   "lead": "The East Gardens are the old inner keep of Edo Castle — the stone foundation of the main tower is still there, and you can stand on it. It is free, it is in the middle of Tokyo, and almost nobody hurries. Wide flat lawns, benches, one gentle slope.",
-   "nums": [
-    [
-     "ENTRY",
-     "Free",
-     "no ticket needed"
-    ],
-    [
-     "OPEN",
-     "9:00–16:30",
-     "closed Mon and Fri"
-    ],
-    [
-     "WALKING",
-     "About 1.5 km",
-     "flat, one gentle slope"
-    ]
-   ],
-   "pts": [
-    [
-     "Taxi to the Otemon gate",
-     "We are dropped at the main gate and picked up at the same one. No station walk at either end."
-    ],
-    [
-     "The tower that burned in 1657",
-     "The keep of Edo Castle stood here and was never rebuilt after the fire. The stone base survives. It is a short ramp up and the view over the lawn is the reward."
-    ],
-    [
-     "The guard houses",
-     "Two original wooden buildings from the shogun's time are still standing inside the gate, and you can go in."
-    ],
-    [
-     "Rest house halfway",
-     "There is a covered rest house with seats and toilets roughly in the middle of the route, so the walk is split in two."
-    ],
-    [
-     "Afterwards, Marunouchi",
-     "Five minutes by taxi to the brick station building and a long unhurried coffee. Or straight back to the hotel if you have had enough."
-    ]
-   ],
-   "links": [
-    [
-     "Imperial Palace East Gardens — closing days (official)",
-     "https://www.kunaicho.go.jp/visit/higashigyoen/gyoen-close.html"
-    ]
-   ]
-  },
-  {
-   "day": "OPTION 5",
-   "clock": "Either evening — add to any day",
-   "photo": "boat",
-   "h": "<em>Dinner on a boat,</em> <span>sitting still for two hours</span>",
-   "lead": "A yakatabune is a low wooden-roofed boat with tatami seating and a kitchen on board. You board, you sit, dinner is served course by course, and the boat moves down the Sumida and out into Tokyo Bay and back. About two and a half hours in which you do not stand up unless you want to.",
-   "nums": [
-    [
-     "ON BOARD",
-     "About 2.5 h",
-     "seated the whole time"
-    ],
-    [
-     "MINIMUM",
-     "2 people",
-     "shared boats run nightly"
-    ],
-    [
-     "PRICE",
-     "To confirm",
-     "tell me and I will get it"
-    ]
-   ],
-   "pts": [
-    [
-     "This is the least demanding thing on the page",
-     "It is also the one most people remember. Tempura fried in front of you, the Skytree and the Rainbow Bridge going past the window."
-    ],
-    [
-     "Boarding has steps",
-     "A short gangway and a step down into the boat. This is the one thing to be honest about with your back. I will tell the boat in advance and they will help you on and off — they do it every night."
-    ],
-    [
-     "Two operators run shared boats",
-     "Harumiya and Amitatsu both take parties of two on a shared boat. I will get you the price and the departure point once you say you want this."
-    ],
-    [
-     "It goes on top of a day, not instead of one",
-     "Pick option 1, 2, 3 or 4 for the daytime and add this to the evening if you want. Or do this alone and rest all day."
-    ],
-    [
-     "Tables have floor wells",
-     "Most boats have a sunken well under the table so your legs hang down, as at a normal chair. I will book one that does."
-    ]
-   ],
-   "links": [
-    [
-     "Harumiya (official)",
-     "https://www.harumiya.co.jp/"
-    ],
-    [
-     "Amitatsu shared boats (official)",
-     "https://www.amitatsu.jp/noriai/"
-    ]
-   ]
-  }
- ],
+ "sections": [],
  "end": {
-  "h": "<em>Send me two numbers</em> <span>and I will do the rest</span>",
-  "lead": "Oct 5 can be option 1, 3 or 5. Oct 6 can be option 1, 2, 4 or 5. If none of them appeal, say so and I will build something else — or we cancel a day, which is a perfectly good answer too. And tell me how your back is that week, because it changes how much I put in."
+  "h": "<em>Press your picks</em> <span>and send me the box</span>",
+  "lead": "Oct 5 can be option 1 or 3. Oct 6 can be option 1, 2 or 4. The boat can go on either evening. A screenshot of the box above is all I need. If none of them appeal, say so and I will build something else — or we cancel a day, which is a perfectly good answer too."
  },
- "credit": "Opening days, hours and admission taken from each place's own site, checked 23 Sep 2026. The items marked \"to confirm\" are the ones I have not verified yet and will not promise until I have. Photos: Wikimedia Commons contributors."
+ "credit": "Opening days, hours and admission taken from each place's own site, checked 23 Sep 2026. The items marked \"to confirm\" are the ones I have not verified yet and will not promise until I have. Photos: Wikimedia Commons contributors.",
+ "choices": {
+  "day": "PICK",
+  "clock": "Pick",
+  "h": "<em>Press one</em> <span>for each day</span>",
+  "lead": "Each option has a button for the day it can run. Press one for Oct 5 and one for Oct 6. The dinner boat is extra and goes on top of a day. The box below keeps what you pressed. Nothing is sent.",
+  "options": [
+   {
+    "key": "1",
+    "badge": "OPTION 1",
+    "label": "1. Hamarikyu garden + Tsukiji",
+    "h": "<em>A garden on the bay,</em> <span>then the fish market</span>",
+    "photo": "garden",
+    "lead": "Hamarikyu is a 17th-century shogun's garden sitting between the skyscrapers and the water, with tidal ponds that rise and fall with Tokyo Bay. Paths are flat and there are benches the whole way. Then a short taxi ride to Tsukiji for food.",
+    "nums": [
+     [
+      "ENTRY",
+      "¥300",
+      "¥150 if 65+"
+     ],
+     [
+      "OPEN",
+      "9:00–17:00",
+      "daily, last entry 16:30"
+     ],
+     [
+      "WALKING",
+      "About 1 km",
+      "flat, benches throughout"
+     ]
+    ],
+    "pts": [
+     [
+      "Taxi to the Otemon gate",
+      "We are dropped at the gate. From there the pond is a few minutes on the level."
+     ],
+     [
+      "The tea house on the island",
+      "There is a tea house out on the water, reached by a wooden bridge. If it is open that day we stop for matcha and a sweet, sitting down, looking at the pond. I will confirm before we go — I am not promising it until I have."
+     ],
+     [
+      "300-year-old pine",
+      "One tree near the entrance was planted in 1709 and is held up by a forest of wooden props. It is the thing people photograph."
+     ],
+     [
+      "Tsukiji outer market afterwards",
+      "Ten minutes by taxi. This is the old market's shopping street — the wholesale part moved to Toyosu, but the food stalls and knife shops stayed. Most shops open on Monday and Tuesday. We eat sitting down, not standing in the street."
+     ]
+    ],
+    "links": [
+     [
+      "Hamarikyu Gardens (official)",
+      "https://www.tokyo-park.or.jp/park/hama-rikyu/index.html"
+     ],
+     [
+      "Tsukiji outer market (official)",
+      "https://www.tsukiji.or.jp/calendar/"
+     ]
+    ],
+    "clock": "Oct 5 or Oct 6",
+    "days": [
+     "Oct 5",
+     "Oct 6"
+    ]
+   },
+   {
+    "key": "2",
+    "badge": "OPTION 2",
+    "label": "2. Tokyo National Museum",
+    "h": "<em>The national collection,</em> <span>indoors and seated</span>",
+    "photo": "museum",
+    "lead": "The Tokyo National Museum in Ueno holds the largest collection of Japanese art in the world — swords, armour, screens, Buddhist sculpture, 12th-century scrolls. It is the single best indoor day in Tokyo if walking is the problem, because there are benches in almost every room.",
+    "nums": [
+     [
+      "ENTRY",
+      "¥1,000",
+      "free at 70 and over"
+     ],
+     [
+      "OPEN",
+      "9:30–17:00",
+      "closed Mondays"
+     ],
+     [
+      "WALKING",
+      "Your choice",
+      "sit down whenever"
+     ]
+    ],
+    "pts": [
+     [
+      "Taxi stops at the front steps",
+      "No station, no stairs up from a platform."
+     ],
+     [
+      "We do one building, not five",
+      "The main building alone is a full afternoon. Skipping the rest is the plan, not a compromise."
+     ],
+     [
+      "Wheelchairs are lent free at the entrance",
+      "Worth knowing. Using one for two hours inside a museum is not a decision about your health, it is a decision about how much of the collection you get to see."
+     ],
+     [
+      "Garden and cafe on site",
+      "There is a cafe in the main building and a garden behind it, so the breaks happen without leaving."
+     ],
+     [
+      "Why not Monday",
+      "The museum is closed on Mondays. So is the Nezu Museum, and so are the Imperial Palace gardens. Monday is the reason options 3 and 5 exist."
+     ]
+    ],
+    "links": [
+     [
+      "Tokyo National Museum (official)",
+      "https://www.tnm.jp/modules/r_free_page/index.php?id=113"
+     ]
+    ],
+    "clock": "Oct 6 only — closed Mondays",
+    "days": [
+     "Oct 6"
+    ]
+   },
+   {
+    "key": "3",
+    "badge": "OPTION 3",
+    "label": "3. Suntory Museum + Tokyo Tower",
+    "h": "<em>One small museum,</em> <span>then the view</span>",
+    "photo": "tower",
+    "lead": "The Suntory Museum of Art sits inside Tokyo Midtown in Roppongi. It is deliberately small — lacquer, glass, textiles, ceramics, one floor, quiet. Then a short taxi to Tokyo Tower and the main deck, 150 metres up, with seats and a cafe at the window.",
+    "nums": [
+     [
+      "MUSEUM",
+      "Open Mon",
+      "closed Tuesdays"
+     ],
+     [
+      "TOWER",
+      "9:00–23:00",
+      "every day of the year"
+     ],
+     [
+      "WALKING",
+      "Almost none",
+      "lifts at both"
+     ]
+    ],
+    "pts": [
+     [
+      "After the sushi lunch",
+      "Taxi from Hibiya to Midtown, about 10 minutes. From the drop-off to the museum is indoors."
+     ],
+     [
+      "The museum is one floor",
+      "That is why it is on this list. You can see all of it without deciding what to skip, and there is a tea room inside."
+     ],
+     [
+      "Tokyo Tower is a lift, not a climb",
+      "Taxi to the door, lift to the main deck. Admission is about 1,500 yen a person — I will confirm the exact figure before we go."
+     ],
+     [
+      "Stay for the light",
+      "If you want, we time the tower for late afternoon and watch the city switch its lights on. The deck has seating along the glass."
+     ],
+     [
+      "Exhibition and admission",
+      "What is showing at the museum in October decides the ticket price. I will check it and tell you before you commit to this one."
+     ]
+    ],
+    "links": [
+     [
+      "Suntory Museum of Art (official)",
+      "https://www.suntory.co.jp/sma/basicinfo/"
+     ],
+     [
+      "Tokyo Tower (official)",
+      "https://www.tokyotower.co.jp/fee/"
+     ]
+    ],
+    "clock": "Oct 5 only — closed Tuesdays",
+    "days": [
+     "Oct 5"
+    ]
+   },
+   {
+    "key": "4",
+    "badge": "OPTION 4",
+    "label": "4. Edo Castle East Gardens",
+    "h": "<em>Inside the castle,</em> <span>where the city started</span>",
+    "photo": "palace",
+    "lead": "The East Gardens are the old inner keep of Edo Castle — the stone foundation of the main tower is still there, and you can stand on it. It is free, it is in the middle of Tokyo, and almost nobody hurries. Wide flat lawns, benches, one gentle slope.",
+    "nums": [
+     [
+      "ENTRY",
+      "Free",
+      "no ticket needed"
+     ],
+     [
+      "OPEN",
+      "9:00–16:30",
+      "closed Mon and Fri"
+     ],
+     [
+      "WALKING",
+      "About 1.5 km",
+      "flat, one gentle slope"
+     ]
+    ],
+    "pts": [
+     [
+      "Taxi to the Otemon gate",
+      "We are dropped at the main gate and picked up at the same one. No station walk at either end."
+     ],
+     [
+      "The tower that burned in 1657",
+      "The keep of Edo Castle stood here and was never rebuilt after the fire. The stone base survives. It is a short ramp up and the view over the lawn is the reward."
+     ],
+     [
+      "The guard houses",
+      "Two original wooden buildings from the shogun's time are still standing inside the gate, and you can go in."
+     ],
+     [
+      "Rest house halfway",
+      "There is a covered rest house with seats and toilets roughly in the middle of the route, so the walk is split in two."
+     ],
+     [
+      "Afterwards, Marunouchi",
+      "Five minutes by taxi to the brick station building and a long unhurried coffee. Or straight back to the hotel if you have had enough."
+     ]
+    ],
+    "links": [
+     [
+      "Imperial Palace East Gardens — closing days (official)",
+      "https://www.kunaicho.go.jp/visit/higashigyoen/gyoen-close.html"
+     ]
+    ],
+    "clock": "Oct 6 only — closed Mon & Fri",
+    "days": [
+     "Oct 6"
+    ]
+   },
+   {
+    "key": "5",
+    "badge": "OPTION 5",
+    "label": "5. Dinner on a boat",
+    "h": "<em>Dinner on a boat,</em> <span>sitting still for two hours</span>",
+    "photo": "boat",
+    "lead": "A yakatabune is a low wooden-roofed boat with tatami seating and a kitchen on board. You board, you sit, dinner is served course by course, and the boat moves down the Sumida and out into Tokyo Bay and back. About two and a half hours in which you do not stand up unless you want to.",
+    "nums": [
+     [
+      "ON BOARD",
+      "About 2.5 h",
+      "seated the whole time"
+     ],
+     [
+      "MINIMUM",
+      "2 people",
+      "shared boats run nightly"
+     ],
+     [
+      "PRICE",
+      "To confirm",
+      "tell me and I will get it"
+     ]
+    ],
+    "pts": [
+     [
+      "This is the least demanding thing on the page",
+      "It is also the one most people remember. Tempura fried in front of you, the Skytree and the Rainbow Bridge going past the window."
+     ],
+     [
+      "Boarding has steps",
+      "A short gangway and a step down into the boat. This is the one thing to be honest about with your back. I will tell the boat in advance and they will help you on and off — they do it every night."
+     ],
+     [
+      "Two operators run shared boats",
+      "Harumiya and Amitatsu both take parties of two on a shared boat. I will get you the price and the departure point once you say you want this."
+     ],
+     [
+      "It goes on top of a day, not instead of one",
+      "Pick option 1, 2, 3 or 4 for the daytime and add this to the evening if you want. Or do this alone and rest all day."
+     ],
+     [
+      "Tables have floor wells",
+      "Most boats have a sunken well under the table so your legs hang down, as at a normal chair. I will book one that does."
+     ]
+    ],
+    "links": [
+     [
+      "Harumiya (official)",
+      "https://www.harumiya.co.jp/"
+     ],
+     [
+      "Amitatsu shared boats (official)",
+      "https://www.amitatsu.jp/noriai/"
+     ]
+    ],
+    "clock": "Either evening — add to any day",
+    "days": [
+     "Oct 5 evening",
+     "Oct 6 evening"
+    ]
+   }
+  ]
+ }
 }
