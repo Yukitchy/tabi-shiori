@@ -1,0 +1,262 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wonder Live Notes</title><meta name="robots" content="noindex">
+<meta property="og:title" content="Wonder Live — Feb 27, 2027 · notes for Michael"><meta property="og:image" content="img/ogp50.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e2571f'/%3E%3Ctext x='32' y='44' font-size='30' font-family='Arial Black,sans-serif' text-anchor='middle' fill='%23fff'%3E50%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--paper:#fbfaf7;--ink:#141414;--org:#e2571f}
+body{font-family:"Zen Kaku Gothic New",system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+html[lang="ja"] body{word-break:auto-phrase}
+.wrap{max-width:1240px;margin:0 auto;padding:0 26px}
+nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 26px;border-bottom:1px solid #ddd;font-weight:700;font-size:11px;letter-spacing:.16em}
+nav .l{display:flex;gap:22px}
+nav .r{display:flex;justify-content:flex-end;align-items:center}
+nav b{font-family:"Archivo Black",sans-serif;font-size:15px;letter-spacing:.02em}
+.lang{display:flex;border:1.5px solid var(--ink)}
+.lang button{font:inherit;font-weight:900;font-size:11px;letter-spacing:.14em;border:0;background:transparent;color:var(--ink);padding:6px 13px;cursor:pointer}
+.lang button.on{background:var(--ink);color:var(--paper)}
+.mast{font-family:"Archivo Black",sans-serif;font-size:clamp(40px,14.4vw,215px);line-height:.82;letter-spacing:-.02em;padding:26px 0 8px;white-space:nowrap}
+.deck{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-weight:700;font-size:11px;letter-spacing:.16em;padding-bottom:16px}
+.deck .hot{color:var(--org)}
+
+.car{position:relative;overflow:hidden;background:#1b1b1b}
+.track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.slide{position:relative;flex:0 0 100%;height:min(56vh,470px)}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.slide .hit{position:absolute;inset:0;z-index:1;display:block}
+.slide.linked:hover img{transform:scale(1.025)}
+.slide.linked .cap h2:after{content:"\2197";font-size:.62em;margin-left:.3em;vertical-align:.32em;opacity:.85}
+.slide:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.12) 52%,rgba(0,0,0,.30) 100%)}
+.cap{position:absolute;z-index:2;pointer-events:none;left:0;right:0;bottom:0;padding:22px 26px 24px;color:#fff}
+.cap .k{font-weight:900;font-size:10px;letter-spacing:.2em;background:#fff;color:var(--ink);padding:5px 10px;display:inline-block}
+.cap .k.hot{background:var(--org);color:#fff}
+.cap h2{font-family:"Archivo Black",sans-serif;font-size:clamp(22px,3.4vw,50px);line-height:1.04;letter-spacing:-.01em;margin:12px 0 6px}
+html[lang="ja"] .cap h2{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;letter-spacing:-.02em}
+.cap .m{font-weight:700;font-size:12px;text-wrap:pretty;letter-spacing:.12em;opacity:.92}
+.arw{position:absolute;z-index:5;top:50%;transform:translateY(-50%);width:46px;height:46px;border:0;border-radius:999px;background:rgba(255,255,255,.92);cursor:pointer;font-size:19px;font-weight:900;line-height:1;color:var(--ink);display:grid;place-items:center;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.arw:hover{background:#fff}
+.arw:active{transform:translateY(-50%) scale(.92)}
+.arw.p{left:14px}.arw.n{right:14px}
+.dots{position:absolute;z-index:5;top:14px;right:20px;display:flex;gap:7px;touch-action:manipulation}
+.dots i{width:22px;height:16px;display:block;cursor:pointer;position:relative}
+.dots i:before{content:"";position:absolute;left:0;right:0;top:6px;height:3px;background:rgba(255,255,255,.45)}
+.dots i.on:before{background:#fff}
+.fl{position:absolute;z-index:4;top:16px;left:20px;background:rgba(255,255,255,.9);font-weight:900;font-size:10px;letter-spacing:.16em;padding:7px 12px}
+
+.featttl{display:grid;grid-template-columns:1fr 320px;gap:34px;align-items:start;padding:26px 0 42px;border-bottom:1px solid #ddd}
+.featttl h2{font-family:"Archivo Black",sans-serif;font-weight:400;font-size:clamp(24px,3.1vw,42px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+html[lang="ja"] .featttl h2{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;line-height:1.16;letter-spacing:-.02em}
+.featttl h2 em{font-style:normal;color:var(--org)}
+.featttl p{font-weight:700;font-size:13px;line-height:1.95;color:#4a4a4a}
+.nb{white-space:nowrap}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #ddd}
+.col{padding:26px 24px;border-right:1px solid #ddd}
+.col:last-child{border-right:0}
+.col .k{font-weight:900;font-size:10px;letter-spacing:.18em;color:var(--org);padding-bottom:12px;border-bottom:1px solid #ddd;margin-bottom:16px}
+.ent{padding:14px 0;border-bottom:1px dotted #ccc}
+.ent:last-child{border-bottom:0}
+.ent .d{font-family:"Archivo Black",sans-serif;font-size:15px;letter-spacing:.01em}
+.ent h3{font-weight:900;font-size:16px;line-height:1.4;margin:5px 0 4px}
+.ent a{color:inherit;text-decoration:none;display:block}
+.ent a h3:after{content:"\2197";font-size:.78em;color:var(--org);margin-left:.35em;vertical-align:.08em}
+.ent a:hover h3{text-decoration:underline;text-underline-offset:3px}
+.ent a:focus-visible{outline:2px solid var(--org);outline-offset:3px}
+.ent p{font-weight:700;font-size:11px;color:#6a6a6a;line-height:1.75}
+.ent .s{display:inline-block;font-weight:900;font-size:10px;letter-spacing:.1em;margin-top:8px;padding:4px 9px;border:1px solid var(--ink)}
+.ent .s.hot{background:var(--org);border-color:var(--org);color:#fff}
+.ent .s.ex{border-style:dashed;color:#8a8a8a;border-color:#bbb}
+.sec{font-weight:900;font-size:10px;letter-spacing:.18em;color:#8a8a8a;padding:30px 0 0}
+.foot{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:30px 0 40px}
+.foot .k{font-weight:900;font-size:10px;letter-spacing:.18em;color:var(--org);margin-bottom:12px}
+.foot p{font-weight:700;font-size:12px;line-height:2;color:#4a4a4a}
+.foot b{color:var(--org)}
+.credits{border-top:1px solid #ddd;padding:20px 0 70px}
+.credits .k{font-weight:900;font-size:10px;letter-spacing:.18em;color:#8a8a8a;margin-bottom:10px}
+.credits p{font-weight:700;font-size:11px;line-height:2;color:#8a8a8a}
+@media(max-width:620px){nav{grid-template-columns:auto 1fr;gap:10px;padding:12px 18px}nav .l{display:none}.wrap{padding:0 18px}.cap{padding:18px 18px 20px}.arw{width:40px;height:40px}}
+@media(max-width:880px){.cols{grid-template-columns:1fr}.col{border-right:0;border-bottom:1px solid #ddd}.featttl,.foot{grid-template-columns:1fr}}
+.ja{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;font-size:.82em;letter-spacing:0;color:#8a8a8a;margin-top:3px;line-height:1.7;word-break:auto-phrase}
+.cap .ja,.cap .m .ja{color:rgba(255,255,255,.78)}
+h3 .ja{font-size:.78em}
+.featttl h2 .ja{font-size:.5em;line-height:1.5;margin-top:10px;letter-spacing:-.01em}
+.songs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #ddd}
+.song{padding:22px 24px;border-right:1px solid #ddd;border-bottom:1px dotted #ccc}
+.song:nth-child(3n){border-right:0}
+.song .who{font-weight:900;font-size:10px;letter-spacing:.18em;color:var(--org)}
+.song h3{font-weight:900;font-size:19px;line-height:1.35;margin:6px 0 4px}
+.song p{font-weight:700;font-size:12px;color:#5a5a5a;line-height:1.75}
+.song .lk{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.song .lk a{font-weight:900;font-size:10px;letter-spacing:.12em;padding:6px 10px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none}
+.song .lk a.yt{background:var(--ink);color:var(--paper)}
+.song .lk a:hover{background:var(--org);border-color:var(--org);color:#fff}
+.song .src{font-size:10px;color:#9a9a9a;margin-top:8px}
+.song .src a{color:inherit}
+.tl{border-bottom:1px solid #ddd}
+.tl .row{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:16px 0;border-bottom:1px dotted #ccc}
+.tl .row:last-child{border-bottom:0}
+.tl .t{font-family:"Archivo Black",sans-serif;font-size:22px;letter-spacing:.01em}
+.tl .row.hot .t{color:var(--org)}
+.tl h3{font-weight:900;font-size:16px;line-height:1.4}
+.tl p{font-weight:700;font-size:12px;color:#5a5a5a;line-height:1.75;margin-top:3px}
+.h{font-family:"Archivo Black",sans-serif;font-size:clamp(26px,4vw,48px);line-height:1;letter-spacing:-.01em;padding:44px 0 6px}
+.h .ja{font-size:.36em;margin-top:8px}
+.intro{font-weight:700;font-size:13px;line-height:1.9;color:#4a4a4a;max-width:760px;padding-bottom:22px}
+.song.wide{grid-column:span 2}
+@media(max-width:880px){.songs{grid-template-columns:1fr}.song{border-right:0}.song.wide{grid-column:auto}}
+@media(max-width:620px){.tl .row{grid-template-columns:1fr;gap:4px}}
+</style></head><body>
+<nav>
+<div class="l"><a href="#who" style="color:inherit;text-decoration:none">WHO</a><a href="#songs" style="color:inherit;text-decoration:none">SONGS</a><a href="#day" style="color:inherit;text-decoration:none">THE DAY</a><a href="#ticket" style="color:inherit;text-decoration:none">TICKETS</a></div>
+<b>MORI YUKINOJO 50th</b>
+<div class="r"><span style="font-size:10px;color:#8a8a8a">EN · 日本語訳つき</span></div>
+</nav>
+<div class="wrap">
+<div class="mast">FEB 27</div>
+<div class="deck">
+<span>NOTES FOR MICHAEL &amp; YUUKI — MORI YUKINOJO 50th ANNIVERSARY WONDER LIVE<span class="ja">Michael と Yuuki のためのしおり — 森雪之丞 50th Anniversary Wonder Live</span></span>
+<span>SAT 27 FEB 2027 · TACHIKAWA STAGE GARDEN · DOORS 17:00 / START 18:00<span class="ja">2027年2月27日（土）・立川ステージガーデン・17:00開場／18:00開演</span></span>
+<span class="hot">WE WON 2 SEATS<span class="ja">2席当選</span></span>
+</div>
+<div class="car" id="car">
+<span class="fl">WHO IS ON STAGE THAT NIGHT</span>
+<div class="dots" id="dots"></div>
+<div class="track" id="track">
+<div class="slide linked"><img src="img/kv-yukinojo.jpg" style="object-position:50% 18%" alt="">
+<a class="hit" href="https://www.mori-yukinojo.com/50th/music/" target="_blank" rel="noopener" aria-label="Official 50th site"></a>
+<div class="cap"><span class="k hot">2 SEATS WON</span><h2>MORI YUKINOJO<br>50th ANNIVERSARY WONDER LIVE</h2><div class="m">SAT 27 FEB 2027 · TACHIKAWA STAGE GARDEN<span class="ja">2027年2月27日（土）・立川ステージガーデン</span></div></div></div>
+<div class="slide linked"><img src="img/kv-kageyama.jpg" style="object-position:50% 30%" alt="">
+<a class="hit" href="https://www.mori-yukinojo.com/50th/music/" target="_blank" rel="noopener" aria-label="Official 50th site"></a>
+<div class="cap"><span class="k">PERFORMING</span><h2>HIRONOBU KAGEYAMA<span class="ja">影山ヒロノブ</span></h2><div class="m">"CHA-LA HEAD-CHA-LA" · "WE GOTTA POWER"</div></div></div>
+<div class="slide linked"><img src="img/kv-jam.jpg" style="object-position:50% 30%" alt="">
+<a class="hit" href="https://www.mori-yukinojo.com/50th/music/" target="_blank" rel="noopener" aria-label="Official 50th site"></a>
+<div class="cap"><span class="k">PERFORMING</span><h2>JAM Project</h2><div class="m">"静寂のアポストル" — ONE-PUNCH MAN S2 OPENING</div></div></div>
+<div class="slide linked"><img src="img/kv-hotei.jpg" style="object-position:50% 25%" alt="">
+<a class="hit" href="https://www.mori-yukinojo.com/50th/music/" target="_blank" rel="noopener" aria-label="Official 50th site"></a>
+<div class="cap"><span class="k">PERFORMING</span><h2>TOMOYASU HOTEI / KAZUYOSHI SAITO / YUKI SAITO / YUI ASAKA AND MORE<span class="ja">布袋寅泰 ／ 斉藤和義 ／ 斉藤由貴 ／ 浅香唯 ほか</span></h2><div class="m">LINE-UP AS ANNOUNCED — SUBJECT TO CHANGE<span class="ja">出演者は発表時点・変更の可能性あり</span></div></div></div>
+</div>
+<button type="button" class="arw p" id="arwP" aria-label="previous">‹</button>
+<button type="button" class="arw n" id="arwN" aria-label="next">›</button>
+</div>
+
+<div class="featttl">
+<h2>We got the tickets.<br>Now, <em>the homework</em>.<span class="ja">チケットは取れた。あとは予習だけ。</span></h2>
+<p>Two seats won in the official Ticket Pia pre-sale. This page has everything for the night: who Mori Yukinojo is, the songs worth hearing before we go, the timetable, and how to get to the hall.<span class="ja">ぴあのオフィシャル先行で2席当選。当日までに必要なこと（森雪之丞がどんな人か、行く前に聴いておきたい曲、当日の時間割、会場への行き方）をこの1ページにまとめた。</span></p>
+</div>
+
+<div class="h" id="who">WHO IS MORI YUKINOJO?<span class="ja">森雪之丞ってどんな人？</span></div>
+<div class="featttl" style="padding-top:10px"><h2 style="font-size:clamp(20px,2.4vw,32px)">A lyricist, not a singer. For 50 years he has written the words that other people sing: <em>over 3,000 songs</em>.<span class="ja">歌手ではなく作詞家。50年間、ほかの人が歌う言葉を書いてきた。その数3,000曲以上。</span></h2>
+<p>Born in 1954, debuted as a lyricist in 1976. His range runs from anime themes (Kinnikuman in 1983, Dragon Ball from 1989) to rock with Tomoyasu Hotei, idol pop, and musicals he writes and directs himself. Tonight the singers of those songs come to sing them for him.<span class="ja">1954年生まれ、1976年に作詞家デビュー。アニメ主題歌（1983年の『キン肉マン』、1989年からの『ドラゴンボール』）から、布袋寅泰とのロック、アイドル歌謡、自ら書いて演出するミュージカルまで手がける。この夜は、その歌を歌ってきた本人たちが、森雪之丞のために集まって歌う。</span><br><a href="https://www.mori-yukinojo.com/profile/" target="_blank" rel="noopener" style="color:var(--org)">Official profile ↗</a></p></div>
+
+<div class="h" id="songs">HOMEWORK — SONGS TO KNOW<span class="ja">予習リスト — 聴いておきたい曲</span></div>
+<p class="intro">The setlist has not been announced. These are songs with lyrics by Mori Yukinojo that the artists on the bill have recorded, so they are the likeliest candidates. Every lyric credit was checked against a published source (linked under each song).<span class="ja">セットリストは未発表。ここに並べたのは「森雪之丞が作詞し、出演者本人が録音した曲」で、当日歌われる可能性が高い候補。作詞クレジットはすべて出典で確認済み（各曲の下にリンク）。</span></p>
+<div class="songs">
+<div class="song"><div class="who">HIRONOBU KAGEYAMA · 影山ヒロノブ</div>
+<h3>CHA-LA HEAD-CHA-LA</h3><p>Dragon Ball Z opening theme (1989). The one most of the hall will sing along to. Links are Kageyama&#x27;s 2005 re-recording.<span class="ja">『ドラゴンボールZ』初代OP（1989）。会場で一番大合唱になりそうな曲。リンクは影山本人の2005年再録版。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=JZQ3oUSSyHo" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/0nJfYZkKhCE68G8b0K42Su" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/3061/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">HIRONOBU KAGEYAMA · 影山ヒロノブ</div>
+<h3>WE GOTTA POWER</h3><p>The second Dragon Ball Z opening (1993). Links are the 2005 re-recording.<span class="ja">『ドラゴンボールZ』2代目OP（1993）。リンクは2005年再録版。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=sUtmqZ634qY" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/5lD87jxL8lB1pKp0G89J97" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/618/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">TOMOYASU HOTEI · 布袋寅泰</div>
+<h3>POISON</h3><p>One of Hotei&#x27;s two big hits of 1995 — the swaggering guitar riff.<span class="ja">1995年の布袋の大ヒット曲のひとつ。あのギターリフの曲。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=BoXNE5Fxp0w" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/4Gur8MH3dWEOq5PiOq2Pqf" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/42926/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">TOMOYASU HOTEI · 布袋寅泰</div>
+<h3>スリル<span class="ja">Thrill</span></h3><p>Hotei&#x27;s other 1995 hit. Mori has written close to a hundred songs with Hotei since 1991.<span class="ja">同じく1995年の大ヒット。森雪之丞は1991年から布袋と100曲近く作ってきた。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=WfMEHQjHdH4" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/5KvhrCpZa6zVl8xpTVVZC7" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/8738/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">TOMOYASU HOTEI · 布袋寅泰</div>
+<h3>バンビーナ<span class="ja">Bambina</span></h3><p>Hotei&#x27;s big hit of 1999.<span class="ja">1999年の布袋の大ヒット。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=lwOWS02RoEw" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/1rDphI3DIeNXbrL1E6pOWM" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/11565/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">YUKI SAITO · 斉藤由貴</div>
+<h3>悲しみよこんにちは<span class="ja">Kanashimi yo Konnichiwa</span></h3><p>Opening theme of the anime Maison Ikkoku.<span class="ja">アニメ『めぞん一刻』のオープニング。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=c1Ib0ofb87Q" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/4PykuFIJt1YlG1mvyYr0kY" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/1355/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">YUI ASAKA · 浅香唯</div>
+<h3>C-Girl</h3><p>Her 10th single and a No.1 hit. The YouTube link is an official 1989 live video.<span class="ja">10枚目のシングルで1位を取った曲。YouTubeは公式の1989年ライブ映像。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=Pjdh0HaRQyE" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/4LzLO62awR6sLe7sZ1P6v5" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/2189/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">YUI ASAKA · 浅香唯</div>
+<h3>Melody</h3><p>Her 12th single. The YouTube link is an official 1989 live video.<span class="ja">12枚目のシングル。YouTubeは公式の1989年ライブ映像。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=3x4GmyqCRhY" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/11sOVdRRWQcWak7yTzT0bc" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/4503/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">JAM PROJECT · JAM Project</div>
+<h3>静寂のアポストル<span class="ja">Seijaku no Apostle</span></h3><p>One-Punch Man season 2 opening (2019).<span class="ja">『ワンパンマン』第2期オープニング（2019）。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=lpGSwTUSynM" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/3J1AfHWkccqgnT6TiCJQv1" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/266705/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">KAZUYOSHI SAITO · 斉藤和義</div>
+<h3>天使の遺言<span class="ja">Tenshi no Yuigon</span></h3><p>Not a Saito original: his cover on the 2006 Mori tribute album &quot;Words of Yukinojo&quot;. He also wrote music for Mori&#x27;s 2019 musical, so expect something unusual from him.<span class="ja">斉藤和義のオリジナルではなく、2006年のトリビュート盤『Words of 雪之丞』でのカバー。2019年の森雪之丞のミュージカルに曲を書いているので、当日は何か特別な形で出てくるかもしれない。</span></p>
+<div class="lk"><a class="yt" href="https://www.youtube.com/watch?v=ix42PM7xGjU" target="_blank" rel="noopener">▶ YOUTUBE</a><a href="https://open.spotify.com/track/5yaLQotVO4vz2MSqQoiUX3" target="_blank" rel="noopener">SPOTIFY</a></div>
+<div class="src">Lyrics: Mori Yukinojo — <a href="https://www.uta-net.com/song/50581/" target="_blank" rel="noopener">credit</a></div></div>
+<div class="song"><div class="who">EVERYTHING IN ONE PLACE · まとめて聴く</div>
+<h3>Official playlist: "森 雪之丞 Works"<span class="ja">公式プレイリスト「森 雪之丞 Works」</span></h3>
+<p>Linked from Mori's official site. Every song on this page is in it, plus much more.<span class="ja">森雪之丞の公式サイトからリンクされているプレイリスト。このページの曲は全部入っていて、ほかの曲も聴ける。</span></p>
+<div class="lk"><a class="yt" href="https://open.spotify.com/playlist/6RDa5oLPHejvCIZl23F5yC" target="_blank" rel="noopener">SPOTIFY PLAYLIST</a></div></div>
+<div class="song wide"><div class="who">ALSO BY HIM — NOT ON THE BILL · 出演者以外の代表作</div>
+<p style="margin-top:8px"><a href="https://open.spotify.com/track/7K0hzTjRC0PCWXkBJuWcRH" target="_blank" rel="noopener" style="color:inherit">限界突破×サバイバー</a> (氷川きよし, Dragon Ball Super opening) · <a href="https://open.spotify.com/track/5ItXAcidK1KlJ9LL1RXGBk" target="_blank" rel="noopener" style="color:inherit">Super Powers</a> (V6, One Piece opening) · <a href="https://open.spotify.com/track/7cAexYA1vH6srKeIuKySud" target="_blank" rel="noopener" style="color:inherit">超絶☆ダイナミック!</a> (吉井和哉, Dragon Ball Super opening (2015)) · <a href="https://open.spotify.com/track/1aC2oUiR4Ans2kQp84zvaO" target="_blank" rel="noopener" style="color:inherit">ジャカ☆ジャーン (Jaka Jaan)</a> (Zedd feat. C&amp;K, Dragon Ball DAIMA opening (2024)) · <a href="https://open.spotify.com/track/5g8RurzBblZMTsM69wnyCv" target="_blank" rel="noopener" style="color:inherit">LOVE &amp; JUSTICE</a> (FLOW, Kinnikuman Perfect Origin Arc theme (2024)) · <a href="https://open.spotify.com/track/0HCNfRFxM6myYEmM6MEVmg" target="_blank" rel="noopener" style="color:inherit">真実</a> (矢沢永吉, 2025 new song)</p><p>These singers are not announced for this show; listed so you know how far his work reaches.<span class="ja">この日の出演は発表されていない。作品の幅を知るための参考。</span></p></div>
+</div>
+
+<div class="h" id="day">THE DAY — SAT 27 FEB<span class="ja">当日の流れ — 2月27日（土）</span></div>
+<div class="tl">
+<div class="row"><div class="t">15:30</div><div><h3>Yuuki leaves Kinshichō<span class="ja">Yuuki 錦糸町を出発</span></h3><p>Sōbu Line to Ochanomizu, then the Chūō Line (Rapid) to Tachikawa. About an hour with one change.<span class="ja">総武線でお茶の水へ、中央線快速に乗り換えて立川へ。乗換1回・約1時間。</span></p></div></div>
+<div class="row hot"><div class="t">16:40</div><div><h3>Meet at JR Tachikawa Station<span class="ja">JR立川駅で合流</span></h3><p>Yuuki will message the exact spot on the day. Your ticket gets handed over here.<span class="ja">待ち合わせ場所は当日メッセージで送る。チケットはここで渡す。</span></p></div></div>
+<div class="row"><div class="t">16:50</div><div><h3>Walk to the hall — about 8 minutes<span class="ja">会場まで歩く（徒歩約8分）</span></h3><p>Out of the North Exit and across the deck toward GREEN SPRINGS; the hall sits inside that complex.<span class="ja">北口を出てデッキを渡り、GREEN SPRINGS方面へ。会場はその一角にある。</span></p></div></div>
+<div class="row"><div class="t">17:00</div><div><h3>Doors open<span class="ja">開場</span></h3><p>All seats are reserved, so there is no need to queue early.<span class="ja">全席指定なので早く並ぶ必要はない。</span></p></div></div>
+<div class="row hot"><div class="t">18:00</div><div><h3>Show starts<span class="ja">開演</span></h3><p>Band led by bassist Seiji Kameda.<span class="ja">バンマスはベースの亀田誠治。</span></p></div></div>
+<div class="row"><div class="t">20:30–21:00</div><div><h3>Expected finish — our estimate, not official<span class="ja">終演見込み（こちらの予想・公式発表ではない）</span></h3><p>Anniversary shows with many guests often run long, so leave some slack after 21:00.<span class="ja">ゲストの多い記念公演は延びがちなので、21時以降は少し余裕を見ておく。</span></p></div></div>
+</div>
+
+<div class="cols">
+<div class="col"><div class="k">VENUE<span class="ja">会場</span></div>
+<div class="ent"><a href="https://www.t-sg.jp/access/" target="_blank" rel="noopener"><h3>TACHIKAWA STAGE GARDEN<span class="ja">立川ステージガーデン</span></h3></a>
+<p>3-3 N1 Midori-chō, Tachikawa, Tokyo 190-0014<span class="ja">〒190-0014 東京都立川市緑町3-3 N1</span></p>
+<span class="s">OFFICIAL ACCESS PAGE</span></div>
+</div>
+<div class="col"><div class="k">GETTING THERE<span class="ja">行き方</span></div>
+<div class="ent"><a href="https://www.google.com/maps/dir/?api=1&amp;origin=JR+Tachikawa+Station&amp;destination=TACHIKAWA+STAGE+GARDEN&amp;travelmode=walking" target="_blank" rel="noopener"><h3>8 min walk from JR Tachikawa (North Exit)<span class="ja">JR立川駅北口から徒歩8分</span></h3></a>
+<p>Or 7 min from Tachikawa-Kita Station on the Tama Monorail. From Shinjuku, about 25 min on the Chūō Line Special Rapid. There is no parking at the hall.<span class="ja">多摩モノレール立川北駅からは徒歩7分。新宿からは中央線特快で約25分。会場に駐車場はない。</span></p>
+<span class="s">WALKING ROUTE ON GOOGLE MAPS</span></div>
+</div>
+<div class="col" id="ticket"><div class="k">TICKETS<span class="ja">チケット</span></div>
+<div class="ent"><h3>Paper tickets, 2 seats — Yuuki has them<span class="ja">紙チケット2枚 — Yuuki が持っていく</span></h3>
+<p>Yuuki issues both through Ticket Pia by Sat 20 Feb and gives you yours when we meet. Nothing for you to do. We find out where we sit once the tickets are printed.<span class="ja">Yuuki が2/20（土）までにチケットぴあで2枚とも発券し、合流したときに渡す。Michael さんがやることはない。席は発券した時点でわかる。</span></p>
+<span class="s hot">NOTHING TO DO</span></div>
+</div>
+</div>
+
+<div class="foot">
+<div><div class="k">GOOD TO KNOW<span class="ja">知っておくと良いこと</span></div>
+<p>All seats reserved, one price. Some seats are seated-only for safety reasons. The line-up is as announced and may change.<span class="ja">全席指定・全席同一料金。安全上の理由で着席観覧になる席もある。出演者は発表時点のもので変更の可能性あり。</span></p></div>
+<div><div class="k">THE BAND<span class="ja">バンド</span></div>
+<p>Seiji Kameda (bass, band master) · Kasuke Tomoyasu Kawamura (drums) · Hirokazu Ogura, Yoshiyuki Sahashi (guitar) · Yuta Saito (keyboards) · Takuo Yamamoto (sax)<span class="ja">亀田誠治（ベース＆バンドマスター）・河村カースケ智康（ドラムス）・小倉博和、佐橋佳幸（ギター）・斎藤有太（キーボード）・山本拓夫（サックス）</span></p></div>
+</div>
+
+<div class="credits">
+<div class="k">SOURCES AND IMAGES</div>
+<p>Mori Yukinojo official 50th site (mori-yukinojo.com/50th/music/) · TACHIKAWA STAGE GARDEN access page (t-sg.jp) · lyric credits as linked under each song · checked 29 Sep 2026<br>All photographs are from the official 50th anniversary site and remain the property of their rights holders. Shown here for reference.<span class="ja">写真はすべて50周年公式サイトのもので、権利は各権利者に帰属する。参考として掲載。</span></p>
+</div>
+</div>
+
+<script>
+/* hero carousel */
+var car=document.getElementById('car'),track=document.getElementById('track'),slides=track.children.length,dots=document.getElementById('dots'),at=0,timer=null,held=false;
+for(var i=0;i<slides;i++){var dot=document.createElement('i');dot.dataset.n=i;dots.appendChild(dot);}
+dots.addEventListener('click',function(e){var d=e.target.closest('i');if(d)to(+d.dataset.n);});
+function restart(){clearTimeout(timer);timer=null;if(!held)timer=setTimeout(function(){to(at+1);},5200);}
+function to(n){at=((n%slides)+slides)%slides;track.style.transform='translateX('+(-at*100)+'%)';for(var j=0;j<slides;j++)dots.children[j].classList.toggle('on',j===at);restart();}
+function go(d){to(at+d);}
+document.getElementById('arwP').addEventListener('click',function(){go(-1);});
+document.getElementById('arwN').addEventListener('click',function(){go(1);});
+to(0);
+car.addEventListener('mouseenter',function(){held=true;clearTimeout(timer);timer=null;});
+car.addEventListener('mouseleave',function(){held=false;restart();});
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
+var x0=null,swiped=false;
+car.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;swiped=false;held=true;clearTimeout(timer);},{passive:true});
+car.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;x0=null;held=false;if(Math.abs(dx)>40){swiped=true;go(dx<0?1:-1);}else restart();},{passive:true});
+car.addEventListener('click',function(e){if(swiped){swiped=false;e.preventDefault();e.stopPropagation();}},true);
+</script>
+</body></html>
