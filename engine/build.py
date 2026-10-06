@@ -472,12 +472,12 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .pts li i{{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--ac);color:#fff;font-weight:900;font-size:12px;display:inline-flex;align-items:center;justify-content:center;margin-top:3px}}
 .pts li small{{display:block;font-size:12.5px;color:var(--mute);font-weight:500;line-height:1.6}}
 .nums{{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;width:100%}}.nums div{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}}
-.nums dt{{font-size:10.5px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}.nums dd small{{display:block;font-size:10.5px;color:var(--mute)}}
+.nums dt{{font-size:12px;color:var(--ash);letter-spacing:.06em}}.nums dd{{margin:0;font-size:22px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}}.nums dd small{{display:block;font-size:12px;color:var(--mute)}}
 .rest{{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}}.rest li{{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14.5px}}
 .rest li b{{font-weight:900;word-break:keep-all;overflow-wrap:break-word;min-width:0;flex:1 1 auto}}
 .rest li:has(>span) b{{white-space:nowrap;flex:0 0 auto}}
 .rest li>span{{min-width:0}}.rest li span{{color:var(--mute);font-size:12.5px;text-align:right}}.rest li b small{{white-space:normal;word-break:normal;overflow-wrap:anywhere}}
-.rest li small{{display:block;font-size:11.5px;color:var(--ash);font-weight:500;line-height:1.6}}
+.rest li small{{display:block;font-size:12px;color:var(--ash);font-weight:500;line-height:1.6}}
 .rest li a{{white-space:nowrap;flex:0 0 auto;font-size:12px;font-weight:900;color:#fff;background:var(--ac);border-radius:999px;padding:6px 12px;text-decoration:none}}
 .tt{{margin:2px 0 0}}
 .tt-cap{{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--ac);margin-bottom:6px}}
@@ -499,7 +499,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 .hub{{text-align:center;align-items:center}}.hub .date{{display:inline-block;background:var(--ac);color:#fff;font-weight:900;font-size:18px;padding:6px 18px;border-radius:999px}}
 .hub h1{{font-size:clamp(34px,10vw,52px);font-weight:900;letter-spacing:-.03em;margin-top:6px}}.hub .who{{font-size:13.5px;color:var(--mute);max-width:26em}}
 .hub .photo{{width:100%}}.hint{{font-size:12px;color:var(--ash);text-align:center}}
-.end{{text-align:center;align-items:center}}.credit{{font-size:10.5px;color:var(--ash);line-height:1.7;max-width:420px;font-weight:500}}.credit a{{color:inherit}}
+.end{{text-align:center;align-items:center}}.credit{{font-size:12px;color:var(--ash);line-height:1.7;max-width:420px;font-weight:500}}.credit a{{color:inherit}}
 .opt{{border:2px solid var(--line);border-radius:20px;padding:14px 14px 16px;display:grid;gap:10px;background:#fff}}
 .opt.on{{border-color:var(--ac);box-shadow:0 0 0 4px var(--wash)}}
 .badge{{display:inline-block;background:var(--wash);color:var(--ac);font-size:11.5px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.06em}}
@@ -581,6 +581,7 @@ function upd(){{raf=0;
  const cur=secs.find(s=>{{const b=s.getBoundingClientRect();return b.top<=mid&&b.bottom>=mid;}});
  const t=cur?cur.dataset.clock:'';
  klabel.textContent=t;klabel.classList.toggle('on',!!t);
+ if(t&&matchMedia('(max-width:480px)').matches){{clearTimeout(window._kt);window._kt=setTimeout(()=>klabel.classList.remove('on'),900);}}
 }}
 deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{{passive:true}});
 addEventListener('resize',()=>{{build();upd();}});
