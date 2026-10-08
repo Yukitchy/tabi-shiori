@@ -64,6 +64,10 @@ section+section{border-top:1px solid var(--line)}
 .opt:has(input:checked):after{border-color:var(--ac);background:var(--ac) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
 .opt:has(input:focus-visible){outline:2px solid var(--ac);outline-offset:2px}
 .q .memo{margin-top:10px;font-size:13px;color:var(--ash);line-height:1.6}
+.lk{display:inline-flex;align-items:center;gap:6px;margin:10px 10px 0 0;font-size:13px;font-weight:900;color:var(--ac);text-decoration:none;border:2px solid var(--wash);border-radius:999px;padding:6px 12px;background:#fff}
+.lk:after{content:"↗";font-size:12px}
+.lk:hover{border-color:var(--ac)}
+.lks{display:flex;flex-wrap:wrap}
 
 /* 決まっていること */
 .fixed{display:grid;gap:14px}
@@ -159,6 +163,7 @@ footer a.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--shadow)}
 <label class="opt" data-src="https://tickets.jr-odekake.net/shohindb/view/consumer/tokutoku/detail.html?staticShnId=100020042"><input type="radio" name="q3" value="b"><span class="t">新幹線で​日曜の​夕方に​東京へ</span><span class="l"><b>失う​もの</b>安い​切符は <span class="num nw">11/8</span> までに​買う。​買った​あと​列車を​変えられない</span></label>
 </div>
 <p class="memo">ツアーは​13:00に​終わります。​どちらに​しても、​荷物は​バスセンターの​ロッカーに。</p>
+<div class="lks"><a class="lk" href="https://travel.willer.co.jp/bus_search/hiroshima/all/tokyo/tokyo/">WILLER 広島発の​便を​見る</a><a class="lk" href="https://tickets.jr-odekake.net/shohindb/view/consumer/tokutoku/detail.html?staticShnId=100020042">新幹線 EX早特21の​きまり</a></div>
 </div>
 
 <div class="q">
@@ -174,10 +179,10 @@ footer a.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--shadow)}
 <section id="fixed"><div class="wrap">
 <div class="sec-h"><h2>決まっている​こと</h2></div>
 <div class="fixed">
-<article class="fx"><figure><img src="../hiroshima-2026-11/img/arena.jpg" alt="広島グリーンアリーナ" ></figure><div class="body"><div class="k">ライブ</div><div class="v">BUMP OF CHICKEN</div><dl><dt>日</dt><dd><span class="num">11/28</span> 土</dd><dt>開場</dt><dd><span class="num">17:00</span></dd><dt>開演</dt><dd><span class="num">18:00</span></dd><dt>券</dt><dd>ゆりやの​名義で​2枚</dd></dl></div></article>
-<article class="fx"><figure><img src="../hiroshima-2026-11/img/house.jpg" alt="江田島B邸" ></figure><div class="body"><div class="k">宿</div><div class="v">ADDress 江田島B邸</div><dl><dt>部屋</dt><dd><span class="num">202</span> 号室<small>2人まで</small></dd><dt>入室</dt><dd><span class="num">16:00</span> から <span class="num">21:00</span></dd><dt>車</dt><dd>家の​前に​2〜3台</dd></dl></div></article>
-<article class="fx"><figure><img src="../hiroshima-2026-11/img/ondo.jpg" alt="音戸大橋" ></figure><div class="body"><div class="k">車</div><div class="v">ガッツ 広島大手町​店</div><dl><dt>借りる</dt><dd><span class="num">27日 9:30</span></dd><dt>返す</dt><dd><span class="num">29日 9:00</span><small>借りた​店に​しか返せない</small></dd><dt>車種</dt><dd>軽の​4ドア</dd></dl></div></article>
-<article class="fx"><figure><img src="../hiroshima-2026-11/img/dome.jpg" alt="原爆ドーム" ></figure><div class="body"><div class="k">自転車ツアー</div><div class="v">sokoiko 石飛さん</div><dl><dt>日</dt><dd><span class="num">11/29</span> 日</dd><dt>時間</dt><dd><span class="num">10:00</span> から <span class="num">13:00</span></dd><dt>集合</dt><dd>確認待ち<small>いつもは平和記念公園レストハウス</small></dd></dl></div></article>
+<article class="fx"><figure><img src="../hiroshima-2026-11/img/arena.jpg" alt="広島グリーンアリーナ" ></figure><div class="body"><div class="k">ライブ</div><div class="v">BUMP OF CHICKEN</div><dl><dt>日</dt><dd><span class="num">11/28</span> 土</dd><dt>開場</dt><dd><span class="num">17:00</span></dd><dt>開演</dt><dd><span class="num">18:00</span></dd><dt>券</dt><dd>ゆりやの​名義で​2枚</dd></dl><a class="lk" href="https://www.yumebanchi.jp/event/42396/">公演情報</a></div></article>
+<article class="fx"><figure><img src="../hiroshima-2026-11/img/house.jpg" alt="江田島B邸" ></figure><div class="body"><div class="k">宿</div><div class="v">ADDress 江田島B邸</div><dl><dt>部屋</dt><dd><span class="num">202</span> 号室<small>2人まで</small></dd><dt>入室</dt><dd><span class="num">16:00</span> から <span class="num">21:00</span></dd><dt>車</dt><dd>家の​前に​2〜3台</dd></dl><div class="lks"><a class="lk" href="https://address.love/homes/663">江田島B邸を​予約</a><a class="lk" href="https://address.zendesk.com/hc/ja/articles/23734617676441">同伴者の​登録</a></div></div></article>
+<article class="fx"><figure><img src="../hiroshima-2026-11/img/ondo.jpg" alt="音戸大橋" ></figure><div class="body"><div class="k">車</div><div class="v">ガッツ 広島大手町​店</div><dl><dt>借りる</dt><dd><span class="num">27日 9:30</span></dd><dt>返す</dt><dd><span class="num">29日 9:00</span><small>借りた​店に​しか返せない</small></dd><dt>車種</dt><dd>軽の​4ドア</dd></dl><div class="lks"><a class="lk" href="https://guts-rentacar.com/reserve/?shop=68">ガッツを​予約</a><a class="lk" href="https://guts-rentacar.com/shop/hiroshima/ootemachi/">大手町​店</a></div></div></article>
+<article class="fx"><figure><img src="../hiroshima-2026-11/img/dome.jpg" alt="原爆ドーム" ></figure><div class="body"><div class="k">自転車ツアー</div><div class="v">sokoiko 石飛さん</div><dl><dt>日</dt><dd><span class="num">11/29</span> 日</dd><dt>時間</dt><dd><span class="num">10:00</span> から <span class="num">13:00</span></dd><dt>集合</dt><dd>確認待ち<small>いつもは平和記念公園レストハウス</small></dd></dl><a class="lk" href="https://www.sokoiko-mint.com/en">sokoiko</a></div></article>
 </div>
 </div></section>
 
@@ -214,9 +219,9 @@ footer a.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--shadow)}
 <section id="deadline"><div class="wrap">
 <div class="sec-h"><h2>予約の​締切</h2></div>
 <ul class="dl">
-<li><span class="when now">今すぐ</span><span><b>夜​行バス、​ADDressの​申請と​同伴者登録、​ガッツ</b><small>同伴者登録は​最大3営業日かかる。​どれも​早い​ほど席と​部屋が​ある</small></span></li>
-<li data-src="https://tickets.jr-odekake.net/shohindb/view/consumer/tokutoku/detail.html?staticShnId=100020042"><span class="when num">11/8 日</span><span><b>新幹線の​早割の​締切</b><small>問い3で​新幹線に​した​時だけ。​23:30まで</small></span></li>
-<li data-src="https://btimes.jp/hiroshima/park/41830/ https://www.akippa.com/parking/1e1fde91631ef5cad003c69b9d633174"><span class="when num">11/14 土</span><span><b>駐車場の​予約が​開く</b><small>榎町の​B-Timesは​14日前から。​広瀬町の​akippaは​先行予約が​出る​見込み</small></span></li>
+<li><span class="when now">今すぐ</span><span><b>夜​行バス、​ADDressの​申請と​同伴者登録、​ガッツ</b><small>同伴者登録は​最大3営業日かかる。​どれも​早い​ほど席と​部屋が​ある</small><span class="lks"><a class="lk" href="https://travel.willer.co.jp/">WILLER 26日の​便</a><a class="lk" href="https://address.love/homes/663">ADDress 江田島B邸</a><a class="lk" href="https://address.zendesk.com/hc/ja/articles/23734617676441">同伴者の​登録</a><a class="lk" href="https://guts-rentacar.com/reserve/?shop=68">ガッツ 予約</a></span></span></li>
+<li data-src="https://tickets.jr-odekake.net/shohindb/view/consumer/tokutoku/detail.html?staticShnId=100020042"><span class="when num">11/8 日</span><span><b>新幹線の​早割の​締切</b><small>問い3で​新幹線に​した​時だけ。​23:30まで</small><span class="lks"><a class="lk" href="https://tickets.jr-odekake.net/shohindb/view/consumer/tokutoku/detail.html?staticShnId=100020042">EX早特21</a></span></span></li>
+<li data-src="https://btimes.jp/hiroshima/park/41830/ https://www.akippa.com/parking/1e1fde91631ef5cad003c69b9d633174"><span class="when num">11/14 土</span><span><b>駐車場の​予約が​開く</b><small>榎町の​B-Timesは​14日前から。​広瀬町の​akippaは​先行予約が​出る​見込み</small><span class="lks"><a class="lk" href="https://www.akippa.com/parking/1e1fde91631ef5cad003c69b9d633174">akippa 広瀬町</a><a class="lk" href="https://btimes.jp/hiroshima/park/41830/">B-Times 榎町</a></span></span></li>
 <li data-src="https://www.akippa.com/parking/1e1fde91631ef5cad003c69b9d633174"><span class="when num">11/15 日</span><span><b>akippa 広瀬町の​通常予約</b><small>0:00に​更新。​取れなければ下の​順番で​次へ</small></span></li>
 </ul>
 </div></section>
@@ -227,7 +232,7 @@ footer a.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--shadow)}
 <li><span><b><a href="https://www.akippa.com/parking/1e1fde91631ef5cad003c69b9d633174">akippa 広瀬町3-22</a></b><small>24時間出し入れ自由。​軽だけ、​高さ220cmまで</small></span><span class="walk">徒歩15分</span></li>
 <li data-src="https://www.akippa.com/parking/95be98516e4c573779bef246a45cd1cf"><span><b><a href="https://www.akippa.com/parking/95be98516e4c573779bef246a45cd1cf">大手町​中央駐車場</a></b><small>akippaと​特Pに​掲載。​高さ210cmまで。​再入庫は​できない</small></span><span class="walk">徒歩9分</span></li>
 <li data-src="https://btimes.jp/hiroshima/park/41830/"><span><b><a href="https://btimes.jp/hiroshima/park/41830/">B-Times 榎町</a></b><small>平面、​屋根なし。​14日前から​予約</small></span><span class="walk">約1km</span></li>
-<li data-src="https://parkinggod.jp/hourly/spot/NHR000026"><span><b>アットパークあい​おい​<span class="nw">（基</span>町<span class="nw">5）</span></b><small>予約なしで​入れる。​24時間、​75台。​全部​取れなかった​時の​受け皿</small></span><span class="walk">徒歩6分</span></li>
+<li data-src="https://parkinggod.jp/hourly/spot/NHR000026"><span><b><a href="https://parkinggod.jp/hourly/spot/NHR000026">アットパークあい​おい​<span class="nw">（基</span>町<span class="nw">5）</span></a></b><small>予約なしで​入れる。​24時間、​75台。​全部​取れなかった​時の​受け皿</small></span><span class="walk">徒歩6分</span></li>
 </ol>
 </div></section>
 
