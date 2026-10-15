@@ -379,7 +379,7 @@ def build(slug):
                 f'<p class="vcap">{esc(v["cap"])}</p>')
     def sec(s):
         head = vid(s.get('video')) if s.get('video') else photo(s['photo'])
-        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}"><div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
+        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}">'+(f'<div class="mv">{esc(s["move"])}</div>' if s.get('move') else '')+f'<div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
                 f'<p class="lead">{emp(s["lead"])}</p>{numsblk(s.get("nums",[]))}{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
@@ -464,6 +464,7 @@ h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-
 #deck{{height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
 .s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;max-width:min(560px,100%);overflow-x:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;margin:0 auto}}
 .eyebrow{{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}}
+.mv{{display:inline-block;align-self:flex-start;background:var(--wash);color:var(--ac);font-weight:900;font-size:13px;border-radius:999px;padding:5px 12px;margin-bottom:8px}}
 .s h2{{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}}.s h2 em{{font-style:normal;color:var(--ac)}}.s h2 span,.who span{{white-space:nowrap}}
 .lead{{font-size:15px;color:var(--mute);line-height:1.75}}
 .photo{{margin:0;border-radius:20px;overflow:hidden;background:#e9eef3;aspect-ratio:16/10}}.photo img{{display:block;width:100%;height:100%;object-fit:cover}}
