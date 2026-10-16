@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>__TITLE__</title><meta name="robots" content="noindex">__BMETA__
+<meta property="og:title" content="__TITLE__"><meta property="og:description" content="__DESC__"><meta property="og:image" content="__OG__">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="core.css">
+<style>
+__CSS__
+</style></head>
+<body data-view="line">
+<header class="head">
+  <nav class="seg"><a href="../">予定</a><a class="on" href="#">記録</a></nav>
+  <nav class="seg">__TABS__</nav>
+</header>
+<div class="view vline"><div id="mapwrap"><div id="map"></div></div><main id="line"></main></div>
+<div class="view valbum"><div id="album"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="core.js"></script>
+<script>
+(async()=>{
+const D=await loadTrip(), S=D.stops, line=$('#line');
+const two=n=>String(n).padStart(2,'0');
+const sel={};
+const DC=s=>D.days[s.di].color;
+let html='';
+D.days.forEach((dy,di)=>{
+  if(!dy.count)return;
+  const N=dy.nums, mine=S.map((s,i)=>[s,i]).filter(([s])=>s.di===di);
+  html+=`<section data-i="-${di+1}" data-day="${dy.n}" class="first" style="--dc:${dy.color}"><div class="rail"><span class="dot"></span></div><div class="board">
+<h1>${D.days.length>1?`<span class="dayno">${dy.k}</span><br>`:''}${dy.label}の記録<b>${esc(dy.route)}、${dy.count}駅</b></h1>
+<div class="cells">
+<div><small>写真</small><strong>${N.photos}<span>枚</span></strong></div>
+<div><small>動画</small><strong>${N.videos}<span>本</span></strong></div>
+<div><small>移動（直線の合計）</small><strong>${N.km}<span>km</span></strong></div>
+<div><small>立ち寄り</small><strong>${N.stops}<span>地点</span></strong></div>
+<div class="wide"><small>始発 → 終着</small><strong>${N.start}<span>→</span> ${N.end}</strong><small>${HMS(mins(N.start,N.end))}動いていた日</small></div>
+</div><p class="hint">下へ送ると1駅ずつ進みます。地図の点を押すとその写真へ。</p></div></section>`;
+  mine.forEach(([s,i],j)=>{
+    const nx=S[i+1], isLast=j===mine.length-1, tail=isLast&&!s.voices.length;
+    html+=`<section data-i="${i}" data-day="${dy.n}" class="${tail?'last':''}" style="--dc:${dy.color}"><div class="rail"><span class="no">${two(s.no)}</span></div><div class="bd">
+  <div class="time num">${s.t0}${s.t1!==s.t0?`<em>– ${s.t1}</em>`:''}</div>
+  <h2>${esc(s.name)}</h2>
+  <p class="meta">写真<b>${s.items.length}</b>枚${s.km!=null?` · 前の駅から<b>${s.km}</b>km`:''}${s.voices.length?' · 会話あり':''}</p>
+  <button class="hero" data-i="${i}"><img alt="" loading="${i<2?'eager':'lazy'}" src="${IMG(s.items[0].f)}"></button>
+  ${s.items.length>1?`<div class="strip">${s.items.map((it,k)=>`<button data-f="${it.f}" class="${k?'':'on'}"><img loading="lazy" src="${IMG(it.f)}" alt="">${it.k==='v'?'<i class="vmark">▶</i>':''}</button>`).join('')}</div>`:''}
+  <div class="next">${isLast?`<b>終着</b> ここで${dy.n}日はおしまい`:`次は <span class="num">${two(nx.no)}</span><b>${esc(nx.name)}</b><span class="num">${nx.t0}</span>`}</div>
+  </div></section>`;
+    sel[i]=s.items[0].f;
+    s.voices.forEach((v,vk)=>{html+=`<section data-i="${i}" data-day="${dy.n}" data-talk="1" class="${isLast&&vk===s.voices.length-1?'last':''}" style="--dc:${dy.color}"><div class="rail"></div><div class="talk"><h2>${esc(v.title)}</h2><p class="g">${esc(v.gist)}</p><ol>${v.lines.map(l=>`<li><span class="num">${l[0]}</span><span>${esc(l[1])}</span></li>`).join('')}</ol></div></section>`});
+  });
+});
+line.innerHTML=html;
+const M=makeMap($('#map'),D,{color:D.days[0].color,lit:'#ffb800',pin:(n,s)=>`<b class="pn" style="--dc:${DC(s)}">${two(n)}</b>`});
+M.overview();
+const secOf=i=>$(`#line section[data-i="${i}"]:not([data-talk])`);
+function show(i,f){
+  sel[i]=f;const sec=secOf(i);$('.hero img',sec).src=IMG(f);
+  $$('.strip button',sec).forEach(b=>{b.classList.toggle('on',b.dataset.f===f);if(b.dataset.f===f)b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})});
+  M.light(f);
+}
+line.addEventListener('click',e=>{
+  const t=e.target.closest('.strip button');if(t){show(+t.closest('section').dataset.i,t.dataset.f);return}
+  const h=e.target.closest('.hero');if(h){const i=+h.dataset.i,L=S[i].items;lightbox(D,L,L.findIndex(x=>x.f===sel[i]),it=>show(i,it.f))}
+});
+let cur=null;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const i=+e.target.dataset.i;if(i===cur)return;cur=i;
+  setTab('d'+e.target.dataset.day);
+  if(i<0){M.overview();M.light(null)}else{M.fly(i);M.light(sel[i])}}),{root:line,threshold:.6});
+$$('#line section').forEach(s=>io.observe(s));
+const go=i=>secOf(i).scrollIntoView({behavior:'smooth'});
+M.onPin=go; M.onDot=p=>{go(p.stop);show(p.stop,p.f)};
+if(/^#\d+$/.test(location.hash))secOf(+location.hash.slice(1)-1).scrollIntoView();
+tabs(D,it=>{},n=>{M.map.invalidateSize();const s=$(`#line section[data-day="${n}"]`);s&&s.scrollIntoView()});
+})();
+</script>
+</body></html>

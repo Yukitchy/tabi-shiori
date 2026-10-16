@@ -96,19 +96,16 @@ dialog.pop::backdrop{background:rgba(0,0,0,.55)}
 .langsw{position:fixed;top:10px;right:10px;z-index:8;display:flex;gap:6px}
 .langsw a{background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:12px;font-weight:900;text-decoration:none;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}
 
-:root{--bar:0px}html.tabbed{--bar:96px}html.tabbed.t1{--bar:52px}
+:root{--bar:0px}html.tabbed{--bar:52px}
 html.tabbed body{padding-top:var(--bar)}
 html.tabbed #deck{height:calc(100vh - var(--bar));height:calc(100dvh - var(--bar))}
 html.tabbed .s{min-height:calc(100vh - var(--bar));min-height:calc(100dvh - var(--bar));padding-top:18px;padding-bottom:22px}
 html.tabbed .rail{top:calc(50% + var(--bar)/2)}
 html.tabbed .langsw{top:calc(var(--bar) + 6px)}
-.tabs{position:fixed;left:0;right:0;top:0;height:var(--bar);z-index:9;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:3px 12px 0}
-.tabs>div{max-width:536px;margin:0 auto;display:flex;gap:6px}
-.tabs .t2{margin-top:3px}
-.tabs a,.tabs span{flex:1 1 0;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:900;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--mute)}
-.tabs .t1r a{font-size:16px}
-.tabs .t2 a,.tabs .t2 span{font-size:14px;background:#fff;border-radius:999px}
-.tabs a.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.tabs{position:fixed;left:0;right:0;top:0;height:var(--bar);z-index:9;background:#fff;border-bottom:1px solid var(--line);padding:0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tabs>div{display:flex;background:#f3f3f3;border-radius:99px;padding:3px}
+.tabs a,.tabs span{display:block;padding:6px 13px;border-radius:99px;font-size:14px;font-weight:700;color:#6b6b6b;text-decoration:none;white-space:nowrap}
+.tabs a.on{background:#111;color:#fff}
 .tabs span.off{opacity:.38}
 /* 1節=1画面に収める詰め */
 html.tabbed .s{gap:8px}
