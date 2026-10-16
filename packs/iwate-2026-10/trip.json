@@ -934,5 +934,10 @@
   }
  ],
  "kiroku_title": "岩手の記録",
- "kiroku_desc": "16日の道のり・その場の会話・写真と動画のアルバム。"
+ "kiroku_desc": "龍泉洞の地底湖と北山崎の断崖。走った道のりと写真・動画のアルバム。",
+ "og": {
+  "icon": "岩",
+  "yotei": {"label": "10/16 金 → 10/17 土", "photos": [["img/ryusendo.jpg", "50% 50%"], ["img/kitayamazaki.jpg", "50% 50%"], ["img/sanriku.jpg", "50% 50%"], ["img/jodogahama.jpg", "50% 50%"]]},
+  "kiroku": {"photos": [["album/072.jpg", "50% 50%"], ["album/124.jpg", "50% 72%"], ["album/043.jpg", "50% 0%"], ["album/138.jpg", "50% 50%"]]}
+ }
 }

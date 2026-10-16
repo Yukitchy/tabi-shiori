@@ -518,9 +518,9 @@ def build(slug):
     bmeta,bsig,bcss=brandsig(slug,LANG,BUILT)
     endsec=f'''<section class="s end"><div class="eyebrow">{esc(T["end"])}</div><h2>{d["end"]["h"]}</h2><p class="lead">{emp(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
     hub=f'''<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">{esc(T["scroll"])} {esc(d["rail"]["top"])} → {esc(d["rail"]["bottom"])}</p></section>'''
-    def render(ttl,ogt,ogd,ogi,lfhead,albumcss,hubhtml,body,mapjs,selectjs,selbar,rtop,rbot,railjs,tabs,cls):
+    def render(ttl,ogt,ogd,ogi,lfhead,albumcss,hubhtml,body,mapjs,selectjs,selbar,rtop,rbot,railjs,tabs,cls,extra=''):
       return f'''<!doctype html><html lang="{LANG}"{cls}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{esc(ttl)}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(ogt)}"><meta property="og:description" content="{esc(ogd)}"><meta property="og:image" content="{ogi}">
+<title>{esc(ttl)}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(ogt)}"><meta property="og:description" content="{esc(ogd)}"><meta property="og:image" content="{ogi}">{extra}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>{lfhead}
@@ -684,12 +684,19 @@ build();upd();{mapjs}{selectjs}
 
     plan_body=f"{pres}{chs}{secs}{carsec}{packsec}{endsec}"
     rail0=d["rail"]
+    BASE='https://yukitchy.github.io/tabi-shiori/'+slug+'/'
+    def share(url,card):
+        """シェアカード: engine/ogcard.py が作った img/og-*.png と icon.png があれば使う"""
+        ogi=BASE+'img/'+card if (P/'img'/card).exists() else BASE+f'img/{c["photo"]}.jpg'
+        ico=f'<link rel="icon" href="{BASE}img/icon.png"><link rel="apple-touch-icon" href="{BASE}img/icon.png">' if (P/'img'/'icon.png').exists() else ''
+        return ogi,(f'<meta property="og:url" content="{url}"><meta property="og:type" content="website">'
+                    f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">{ico}')
+    pog,pex=share(BASE,'og-yotei.png')
     if not items:
-        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],f'img/{c["photo"]}.jpg',lfhead,albumcss,hub,plan_body,mapjs,selectjs,selbar,rail0["top"],rail0["bottom"],railjs,'',''),encoding='utf-8')
+        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],pog,lfhead,albumcss,hub,plan_body,mapjs,selectjs,selbar,rail0["top"],rail0["bottom"],railjs,'','',pex),encoding='utf-8')
         print('built',O/'index.html')
     else:
         # --- 記録があるパック: 予定(index.html)と記録(kiroku/index.html)の2ページ ---
-        BASE='https://yukitchy.github.io/tabi-shiori/'+slug+'/'
         def bar(cur,row,hrefs):
             r1=''.join(f'<a href="{h}"{" class=\"on\" aria-current=\"page\"" if k==cur else ""}>{k}</a>' for k,h in hrefs)
             r2=''.join((f'<a href="#{g}" data-g="{g}">{esc(l)}</a>' if g else f'<span class="off">{esc(l)}</span>') for l,g in row)
@@ -700,22 +707,23 @@ build();upd();{mapjs}{selectjs}
         pbar,pcls=bar('予定',prow,[('予定','./'),('記録','kiroku/')])
         pbar+='<script>if(location.hash=="#album")location.replace("kiroku/")</script>'
         hub_p=hub.replace('<section class="s hub">','<section class="s hub" id="g-top">',1)
-        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],f'img/{c["photo"]}.jpg','','',hub_p,plan_body,'','','',rail0["top"],rail0["bottom"],railjs,pbar,pcls),encoding='utf-8')
+        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],pog,'','',hub_p,plan_body,'','','',rail0["top"],rail0["bottom"],railjs,pbar,pcls,pex),encoding='utf-8')
         print('built',O/'index.html')
         # 記録ページ
         K=O/'kiroku';K.mkdir(exist_ok=True)
         ktitle=d.get('kiroku_title') or d["title"]+' の記録'
         kdesc=d.get('kiroku_desc') or ktitle
-        kog=BASE+'album/'+ogrec if ogrec else BASE+f'img/{c["photo"]}.jpg'
+        kog,kex=share(BASE+'kiroku/','og-kiroku.png')
+        if not (P/'img'/'og-kiroku.png').exists() and ogrec: kog=BASE+'album/'+ogrec
         if d.get('stops'):
             import kiroku as KR
-            KR.build_kiroku(d,stops,voice,ktitle,kdesc,kog,bmeta,K)
+            KR.build_kiroku(d,stops,voice,ktitle,kdesc,kog,bmeta+kex,K)
         else:
             rrow=[(l,f'g-r{i+1}') for i,l in enumerate(rec_days)]
             kbar,kcls=bar('記録',rrow,[('予定','../'),('記録','./')])
             rj=json.loads(railjs);rj['a2']=rj['a1']
             if rj['mk']:rj['mk']=[rj['mk'][0]]*2
-            (K/'index.html').write_text(render(ktitle,ktitle,kdesc,kog,lfhead,albumcss,'',album,mapjs,selectjs,selbar,rail0["top"],rail0["bottom"],json.dumps(rj,ensure_ascii=False),kbar,kcls),encoding='utf-8')
+            (K/'index.html').write_text(render(ktitle,ktitle,kdesc,kog,lfhead,albumcss,'',album,mapjs,selectjs,selbar,rail0["top"],rail0["bottom"],json.dumps(rj,ensure_ascii=False),kbar,kcls,kex),encoding='utf-8')
         print('built',K/'index.html')
     if items: build_list(slug,d,items,O)
 def status(d,has_album=False):
