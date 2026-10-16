@@ -86,7 +86,7 @@ show((location.hash||'#flow').slice(1)||'flow');
 addEventListener('hashchange',function(){show((location.hash||'#flow').slice(1)||'flow')});
 
 (function(){
- var figs=[...document.querySelectorAll('.grid figure[data-k]')];
+ var figs=[...document.querySelectorAll('.grid figure[data-k],.belt figure[data-k]')];
  var bar=document.getElementById('selbar'),mode=document.getElementById('selmode');
  if(!figs.length||!bar||!mode)return;
  var n=bar.querySelector('.n'),go=bar.querySelector('.go'),cancel=bar.querySelector('.cancel');
@@ -99,7 +99,7 @@ addEventListener('hashchange',function(){show((location.hash||'#flow').slice(1)|
  }
  mode.addEventListener('click',function(){
   document.body.classList.add('selecting');paint();
-  document.getElementById('album').nextElementSibling.scrollIntoView({behavior:'smooth'});
+  var s0=figs[0].closest('section');s0&&s0.scrollIntoView({behavior:'smooth'});
  });
  cancel.addEventListener('click',function(){sel.clear();document.body.classList.remove('selecting');paint()});
  figs.forEach(function(f){

@@ -55,7 +55,7 @@ BIG_CSS='''
 '''
 SELECT_JS='''
 (function(){
- var figs=[...document.querySelectorAll('.grid figure[data-k]')];
+ var figs=[...document.querySelectorAll('.grid figure[data-k],.belt figure[data-k]')];
  var bar=document.getElementById('selbar'),mode=document.getElementById('selmode');
  if(!figs.length||!bar||!mode)return;
  var n=bar.querySelector('.n'),go=bar.querySelector('.go'),cancel=bar.querySelector('.cancel');
@@ -68,7 +68,7 @@ SELECT_JS='''
  }
  mode.addEventListener('click',function(){
   document.body.classList.add('selecting');paint();
-  document.getElementById('album').nextElementSibling.scrollIntoView({behavior:'smooth'});
+  var s0=figs[0].closest('section');s0&&s0.scrollIntoView({behavior:'smooth'});
  });
  cancel.addEventListener('click',function(){sel.clear();document.body.classList.remove('selecting');paint()});
  figs.forEach(function(f){
@@ -336,9 +336,51 @@ LABELS={
        'nopick':'还没有选。看看下面的方案，按你喜欢的那个。'},
 }
 
+
+TABS_CSS='''
+:root{--bar:0px}html.tabbed{--bar:96px}html.tabbed.t1{--bar:52px}
+html.tabbed body{padding-top:var(--bar)}
+html.tabbed #deck{height:calc(100vh - var(--bar));height:calc(100dvh - var(--bar))}
+html.tabbed .s{min-height:calc(100vh - var(--bar));min-height:calc(100dvh - var(--bar));padding-top:18px;padding-bottom:22px}
+html.tabbed .rail{top:calc(50% + var(--bar)/2)}
+html.tabbed .langsw{top:calc(var(--bar) + 6px)}
+.tabs{position:fixed;left:0;right:0;top:0;height:var(--bar);z-index:9;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:3px 12px 0}
+.tabs>div{max-width:536px;margin:0 auto;display:flex;gap:6px}
+.tabs .t2{margin-top:3px}
+.tabs a,.tabs span{flex:1 1 0;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:900;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--mute)}
+.tabs .t1r a{font-size:16px}
+.tabs .t2 a,.tabs .t2 span{font-size:14px;background:#fff;border-radius:999px}
+.tabs a.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.tabs span.off{opacity:.38}
+/* 1節=1画面に収める詰め */
+html.tabbed .s{gap:8px}
+html.tabbed .s h2{font-size:clamp(24px,7vw,32px)}
+html.tabbed .photo{aspect-ratio:auto;height:min(19dvh,160px)}
+html.tabbed .vid{max-height:22dvh}
+html.tabbed .lead{font-size:14px;line-height:1.6}
+html.tabbed .pts{gap:6px}html.tabbed .pts li{font-size:15px;line-height:1.4}
+html.tabbed .pts li small{font-size:12px;line-height:1.5}
+html.tabbed .tt ul{margin-bottom:8px}html.tabbed .tt li{padding:5px 2px}
+html.tabbed .tt li b,html.tabbed .tt li .tm{font-size:14px}html.tabbed .tt li small{font-size:12px;line-height:1.45}
+html.tabbed .note{padding:9px 12px;font-size:12.5px;line-height:1.55}
+html.tabbed .links{gap:5px}html.tabbed .links a{padding:4px 10px}
+html.tabbed .mv{margin-bottom:0}
+html.tabbed .nums div{padding:8px 6px}
+html.tabbed .tile img,html.tabbed .tile .noimg{aspect-ratio:auto;height:clamp(44px,10dvh,84px)}html.tabbed .tile .cb{padding:6px 8px 7px}html.tabbed .tile small{margin-top:0}
+html.tabbed .tiles{gap:8px}
+.f1 .photo,.f1 .vid,.f1 .vcap{display:none}
+html.tabbed .f3 .tile img,html.tabbed .f3 .tile .noimg{display:none}
+html.tabbed .f2 .lead{font-size:13px;line-height:1.5}html.tabbed .f2 .pts{gap:4px}html.tabbed .f2 .pts li{font-size:14px}html.tabbed .f2 .pts li small{font-size:11.5px;line-height:1.4}
+html.tabbed .f2 .tt li{padding:3px 2px}html.tabbed .f2 .tt li small{font-size:11.5px}html.tabbed .f2 .links a{font-size:11.5px}html.tabbed .f2 .tt ul{margin-bottom:5px}
+'''
 STOP_CSS='''
-.stop .grid .w2 img{aspect-ratio:4/3}
-.rmap{height:46vh;min-height:280px;border-radius:20px;overflow:hidden;background:#e9eef3}.rmap img{max-width:none}
+.stop{gap:10px}.stop h2{font-size:clamp(24px,7vw,34px)}
+.heroc{grid-template-columns:1fr}.heroc figure{grid-column:auto}
+.heroc img,.heroc video{aspect-ratio:4/3;max-height:36dvh;height:auto}
+.belt{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:4px}
+.belt figure{flex:0 0 70%;scroll-snap-align:start}
+.belt img,.belt .w2 video{aspect-ratio:4/3;max-height:22dvh;height:auto}
+.rmap{height:38dvh;min-height:200px;border-radius:20px;overflow:hidden;background:#e9eef3}.rmap img{max-width:none}
 .pin{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;border:2px solid #fff;font:900 12px/22px sans-serif;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 details.more summary{cursor:pointer;text-align:center;font-weight:900;font-size:14px;color:var(--ac);padding:12px;margin-top:8px;border:2px solid var(--wash);border-radius:12px;list-style:none}
 details.more[open] summary{margin-bottom:8px}
@@ -356,7 +398,7 @@ P.forEach(function(p){L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:
 var l=pts[pts.length-1],near=pts.filter(function(q){return Math.abs(q[0]-l[0])<1.2&&Math.abs(q[1]-l[1])<1.2});
 var fit=function(){m.fitBounds(L.latLngBounds(near.length>1?near:pts),{padding:[30,30]})};fit();
 new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el)})})();'''.replace("\\'","'")
-def record_html(stops,items,cell,P,voice,numsblk):
+def record_html(stops,items,cell,P,voice,numsblk,AP='album/'):
     """立ち寄り地点セクション群 -> (html, 地図データ)。日ごとに「今日の数字」＋経路地図＋地点ごとの1画面"""
     out='';SM={};byk={i['f']:i for i in items}
     def hm(s):return s[11:16]
@@ -375,9 +417,9 @@ def record_html(stops,items,cell,P,voice,numsblk):
         mp=[];
         for s in S:
             if s['kind']=='stop' and s['lat'] is not None:
-                mp.append({'lat':s['lat'],'lng':s['lng'],'n':len(mp)+1,'name':s['name'],'t':f'{hm(s["t0"])}〜{hm(s["t1"])}','f':'album/'+s['items'][0]['f'][:3]+'.jpg'})
+                mp.append({'lat':s['lat'],'lng':s['lng'],'n':len(mp)+1,'name':s['name'],'t':f'{hm(s["t0"])}〜{hm(s["t1"])}','f':AP+s['items'][0]['f'][:3]+'.jpg'})
         if mp: SM[f'map-{day}']=mp
-        out+=(f'<section class="s" data-clock="{dd}の記録"><div class="eyebrow">{dd}の記録</div><h2><em>今日の</em><span>数字</span></h2>{numsblk(n1)}{numsblk(n2)}'
+        out+=(f'<section class="s" id="g-d{int(day[8:10])}" data-clock="{dd}の記録"><div class="eyebrow">{dd}の記録</div><h2><em>今日の</em><span>数字</span></h2>{numsblk(n1)}{numsblk(n2)}'
               +(f'<div class="rmap" id="map-{day}"></div>' if mp else '')+'</section>')
         for s in S:
             if s['kind']=='voice':
@@ -387,16 +429,15 @@ def record_html(stops,items,cell,P,voice,numsblk):
                 mv=('📍 前の地点と同じ場所' if k<.3 else f'{"🚄" if k>100 else "🚗"} 前の地点から約{k:.0f}km' if k>=10 else f'🚗 前の地点から約{k:.1f}km')
                 mv=f'<div class="mv">{mv}</div>'
             I=s['items'];ph=[i for i in I if i['kind']=='photo']
-            if len(I)>8 and ph:  # 多い地点は代表（容量の大きい＝細部の多い写真）を上に
-                hero=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size);I=[hero]+[i for i in I if i is not hero]
-                hero_cell=cell(hero).replace('<figure ','<figure class="w2" ',1) if hero['kind']=='photo' else cell(hero)
-                cells=[hero_cell]+[cell(i) for i in I[1:]]
-            else: cells=[cell(i) for i in I]
-            g=f'<div class="grid">{"".join(cells[:12])}</div>'
-            if len(cells)>12: g+=f'<details class="more"><summary>残り{len(cells)-12}枚も見る</summary><div class="grid">{"".join(cells[12:])}</div></details>'
+            # 1地点=1画面: 代表写真1枚(大)＋残りは横スワイプの帯。会話がある地点は会話→帯
+            vcb=vcblk(s['voice']) if s['voice'] else ''
+            if vcb: hero=None;rest=I
+            else:
+                hero=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size) if len(I)>8 and ph else (ph or I)[0]
+                rest=[i for i in I if i is not hero]
+            g=(f'<div class="grid heroc">{cell(hero)}</div>' if hero else '')+vcb+(f'<div class="grid belt">{"".join(cell(i) for i in rest)}</div>' if rest else '')
             tm=hm(s['t0']) if s['t0']==s['t1'] or hm(s['t0'])==hm(s['t1']) else f'{hm(s["t0"])}〜{hm(s["t1"])}'
-            out+=(f'<section class="s stop" data-clock="{esc(s["name"])}">{mv}<div class="eyebrow">{tm}</div><h2><em>{esc(s["name"])}</em></h2>{g}'
-                  +(vcblk(s['voice']) if s['voice'] else '')+'</section>')
+            out+=(f'<section class="s stop" data-clock="{esc(s["name"])}">{mv}<div class="eyebrow">{tm}</div><h2><em>{esc(s["name"])}</em></h2>{g}</section>')
     if voice and voice.get('note'): out=out[:-10]+f'<p class="selhelp">{esc(voice["note"])}</p></section>'
     return out,SM
 
@@ -460,16 +501,18 @@ def build(slug):
         js=("<script>if(!window.__tiles){window.__tiles=1;document.addEventListener('click',function(e){var t=e.target.closest('.tile');if(t){document.getElementById(t.dataset.pop).showModal();return}"
             "var c=e.target.closest('.pclose');if(c){c.closest('dialog').close();return}if(e.target.tagName==='DIALOG')e.target.close()})}</script>")
         return out+'</div>'+pops+js
-    def sec(s):
+    def sec(s,gid=''):
         head = vid(s.get('video')) if s.get('video') else (photo(s['photo']) if s.get('photo') else '')
-        return (f'<section class="s" data-clock="{esc(s.get("clock",""))}">'+(f'<div class="mv">{esc(s["move"])}</div>' if s.get('move') else '')+f'<div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
+        return (f'<section class="s"{f" id={chr(34)}{gid}{chr(34)}" if gid else ""} data-clock="{esc(s.get("clock",""))}">'+(f'<div class="mv">{esc(s["move"])}</div>' if s.get('move') else '')+f'<div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
                 f'<p class="lead">{emp(s["lead"])}</p>{tiles(s.get("tiles",[]))}{numsblk(s.get("nums",[]))}{pts(s.get("pts",[]))}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
-    secs=''
+    secs='';plan_days=[]  # 予定ページの日ジャンプ用: 各日(「16日 朝」の数字)の最初のセクションに id
     for s in d['sections']:
-        secs+=sec(s)
+        m=re.match(r'(\d+)日',s.get('day',''));gid=''
+        if m and int(m[1]) not in plan_days: plan_days.append(int(m[1]));gid=f'g-d{m[1]}'
+        secs+=sec(s,gid)
     # --- アルバム（album.json があるときだけ） ---
-    album='';lfhead='';mapjs=''
+    album='';lfhead='';mapjs='';AP='../album/';rec_days=[];ogrec=''
     AJ=P/'album.json'
     items=json.load(open(AJ))['items'] if AJ.exists() else []
     if items:
@@ -479,36 +522,40 @@ def build(slug):
         # ponytail: 100m格子でざっくり重複排除。厳密なクラスタリングが要るなら差し替え
         spots=len({(round(i['lat']/.0009),round(i['lng']/.0011)) for i in gps})
         nP=sum(1 for i in items if i['kind']=='photo');nV=len(items)-nP
-        album=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
+        intro=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
                f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSあり")])}'
-               '<a class="bigbtn" href="list/" target="_blank" rel="noopener">写真と動画を一覧で見る</a>'
+               '<a class="bigbtn" href="../list/" target="_blank" rel="noopener">写真と動画を一覧で見る</a>'
                '<button class="bigbtn" id="selmode" type="button" style="margin-top:8px">写真を選んで保存する</button>'
                '<p class="selhelp">1枚だけでいいときは、写真の右下の「保存」を押してください。</p></section>')
         def cell(i):
             k=i['f'][:3];cap=f'<figcaption>{esc(i.get("cap",""))}</figcaption>' if i.get('cap') else ''
             ext='mp4' if i['kind']=='video' else 'jpg'
-            sv=f'<a class="saveb" href="album/{k}.{ext}" download="{slug}-{k}.{ext}">保存</a>'
+            sv=f'<a class="saveb" href="{AP}{k}.{ext}" download="{slug}-{k}.{ext}">保存</a>'
             sb='<button class="selb" type="button" aria-pressed="false" aria-label="選ぶ"></button>'
-            return (f'<figure class="w2" data-k="{k}" data-ext="{ext}"><video controls playsinline preload="none" poster="album/{k}.jpg" src="album/{k}.mp4"></video>{sb}{sv}{cap}</figure>'
+            return (f'<figure class="w2" data-k="{k}" data-ext="{ext}"><video controls playsinline preload="none" poster="{AP}{k}.jpg" src="{AP}{k}.mp4"></video>{sb}{sv}{cap}</figure>'
                     if i['kind']=='video' else
-                    f'<figure data-k="{k}" data-ext="{ext}"><a href="album/{k}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="album/{k}.jpg" alt=""></a>{sb}{sv}{cap}</figure>')
+                    f'<figure data-k="{k}" data-ext="{ext}"><a href="{AP}{k}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="{AP}{k}.jpg" alt=""></a>{sb}{sv}{cap}</figure>')
         import stops as ST
         voice=json.load(open(P/'voice.json')) if (P/'voice.json').exists() else None
         stops=ST.make(items,P,voice) if d.get('stops') else []  # trip.json に "stops": true で「道のり」表示
         if stops:
-            recs,SM=record_html(stops,items,cell,P,voice,numsblk)
-            album+=recs
+            recs,SM=record_html(stops,items,cell,P,voice,numsblk,AP)
+            album=recs+intro;rec_days=sorted({int(x['day'][8:10]) for x in stops})
+            ph=[i for i in items if i['kind']=='photo' and (P/'album'/i['f']).stat().st_size<700000]
+            ogrec=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size)['f'] if ph else ''
         else:
+          album=intro
           days={}
           for i in items: days.setdefault(i['taken'][:10],[]).append(i)
           for ymd,L in days.items():
             lab=f'{int(ymd[5:7])}/{int(ymd[8:10])}'
-            album+=f'<section class="s" data-clock="{lab}"><div class="eyebrow">{lab}</div><div class="grid">{"".join(cell(i) for i in L)}</div></section>'
+            rec_days.append(lab)
+            album+=f'<section class="s" id="g-r{len(rec_days)}" data-clock="{lab}"><div class="eyebrow">{lab}</div><div class="grid">{"".join(cell(i) for i in L)}</div></section>'
         if gps and not stops:
             album+='<section class="s" data-clock="地図"><div class="eyebrow">地図</div><h2><em>行った</em><span>ところ</span></h2><div id="map"></div></section>'
             lfhead=('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
                     '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
-            MP=json.dumps([{'lat':i['lat'],'lng':i['lng'],'f':'album/'+i['f'][:3]+'.jpg','cap':i.get('cap','')} for i in gps],ensure_ascii=False)
+            MP=json.dumps([{'lat':i['lat'],'lng':i['lng'],'f':AP+i['f'][:3]+'.jpg','cap':i.get('cap','')} for i in gps],ensure_ascii=False)
             mapjs=('\nconst MP='+MP+',MC='+json.dumps(d['accent'])+';(function(){var el=document.getElementById("map");if(!el||!window.L)return;'
                    'var m=L.map(el,{scrollWheelZoom:false}),pts=MP.map(function(p){return [p.lat,p.lng]});'
                    'L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; <a href=\\"https://www.openstreetmap.org/copyright\\">OpenStreetMap</a>"}).addTo(m);'
@@ -523,7 +570,7 @@ def build(slug):
             mapjs='\nconst SM='+json.dumps(SM,ensure_ascii=False)+',MC='+json.dumps(d['accent'])+STOPMAP_JS
     albumcss=(ALBUM_CSS+(STOP_CSS if d.get('stops') else '')) if items else ''
     bigcss=BIG_CSS if d.get('text')=='large' else ''
-    selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="album/";'+SELECT_JS) if items else ''
+    selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="'+AP+'";'+SELECT_JS) if items else ''
     selbar=('<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
             '<button class="go" type="button" disabled>保存</button></div>') if items else ''
     pickmsg=T['pick']
@@ -546,8 +593,10 @@ def build(slug):
     langsw=('<div class="langsw">'+''.join(f'<a href="{esc(u)}">{esc(t)}</a>' for t,u in d.get('alt',[]))+'</div>') if d.get('alt') else ''
     bmeta,bsig,bcss=brandsig(slug,LANG,BUILT)
     endsec=f'''<section class="s end"><div class="eyebrow">{esc(T["end"])}</div><h2>{d["end"]["h"]}</h2><p class="lead">{emp(d["end"]["lead"])}</p><p class="credit">{esc(d["credit"])}</p></section>''' if d.get('end') else ''
-    page=f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{esc(d["title"])}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(d["title"])}"><meta property="og:description" content="{esc(d["og_desc"])}"><meta property="og:image" content="img/{c["photo"]}.jpg">
+    hub=f'''<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">{esc(T["scroll"])} {esc(d["rail"]["top"])} → {esc(d["rail"]["bottom"])}</p></section>'''
+    def render(ttl,ogt,ogd,ogi,lfhead,albumcss,hubhtml,body,mapjs,selectjs,selbar,rtop,rbot,railjs,tabs,cls):
+      return f'''<!doctype html><html lang="{LANG}"{cls}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{esc(ttl)}</title><meta name="robots" content="noindex">{bmeta}<meta property="og:title" content="{esc(ogt)}"><meta property="og:description" content="{esc(ogd)}"><meta property="og:image" content="{ogi}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>{lfhead}
@@ -643,16 +692,13 @@ dialog.pop::backdrop{{background:rgba(0,0,0,.55)}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
 .langsw{{position:fixed;top:10px;right:10px;z-index:8;display:flex;gap:6px}}
 .langsw a{{background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:12px;font-weight:900;text-decoration:none;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}}
-{albumcss}{bcss}{bigcss}
+{albumcss}{TABS_CSS if tabs else ''}{bcss}{bigcss}
 </style></head><body>
-{langsw}
-<div class="rail" aria-hidden="true"><span class="lab t">{esc(d["rail"]["top"])}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(d["rail"]["bottom"])}</span></div>
+{langsw}{tabs}
+<div class="rail" aria-hidden="true"><span class="lab t">{esc(rtop)}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(rbot)}</span></div>
 <div id="deck">
-<section class="s hub"><span class="date">{esc(d["date_label"])}</span><h1>{esc(d["title"])}</h1>{photo(c["photo"],True)}<p class="who">{c["who"]}</p><dl class="nums">{nums}</dl><p class="hint">{esc(T["scroll"])} {esc(d["rail"]["top"])} → {esc(d["rail"]["bottom"])}</p></section>
-{pres}{chs}{secs}{album}
-{carsec}
-{packsec}
-{endsec}
+{hubhtml}
+{body}
 {bsig}
 </div>
 {selbar}
@@ -678,6 +724,13 @@ const deck=document.getElementById('deck'),car=document.getElementById('car'),kl
 const secs=[...document.querySelectorAll('#deck .s')].filter(s=>s.dataset.clock);
 const range=()=>Math.max(1,deck.scrollHeight-deck.clientHeight);
 let stops=[];
+const DAYS=[...document.querySelectorAll('.tabs .t2 a')];
+// 1節=1画面: はみ出す節だけ、写真→文字サイズの順に詰める
+if(document.documentElement.classList.contains('tabbed')){{
+ const fit=()=>secs.forEach(s=>{{s.classList.remove('f1','f2');for(const c of ['f1','f2','f3']){{if(s.offsetHeight<=deck.clientHeight+1)break;s.classList.add(c)}}}});
+ fit();addEventListener('resize',fit);addEventListener('load',fit);if(document.fonts)document.fonts.ready.then(fit);
+}}
+DAYS.forEach(b=>b.addEventListener('click',e=>{{e.preventDefault();const t=document.getElementById(b.dataset.g);if(t)t.scrollIntoView({{behavior:'smooth',block:'start'}})}}));
 function build(){{
  rail.querySelectorAll('.stop').forEach(e=>e.remove());stops=[];
  secs.forEach(s=>{{
@@ -693,6 +746,7 @@ function upd(){{raf=0;
  const A=r<0.5?RAIL.a1:RAIL.a2;const rs=document.documentElement.style;rs.setProperty('--ac',A.ac);rs.setProperty('--shadow',A.sh);rs.setProperty('--wash',A.wa);
  if(RAIL.mk)car.textContent=r<0.5?RAIL.mk[0]:RAIL.mk[1];
  stops.forEach(o=>o.el.classList.toggle('on',r>=o.p-0.004));
+ if(DAYS.length){{const m2=innerHeight/2;let a=DAYS.find(b=>!b.classList.contains('off')||0)||DAYS[0];DAYS.forEach(b=>{{const e=document.getElementById(b.dataset.g);if(e&&e.getBoundingClientRect().top<=m2)a=b}});DAYS.forEach(b=>b.classList.toggle('on',b===a));}}
  const mid=deck.clientHeight/2;
  const cur=secs.find(s=>{{const b=s.getBoundingClientRect();return b.top<=mid&&b.bottom>=mid;}});
  const t=cur?cur.dataset.clock:'';
@@ -703,7 +757,43 @@ deck.addEventListener('scroll',()=>{{if(!raf)raf=requestAnimationFrame(upd);}},{
 addEventListener('resize',()=>{{build();upd();}});
 build();upd();{mapjs}{selectjs}
 </script></body></html>'''
-    (O/'index.html').write_text(page,encoding='utf-8'); print('built',O/'index.html',len(page))
+
+    plan_body=f"{pres}{chs}{secs}{carsec}{packsec}{endsec}"
+    rail0=d["rail"]
+    if not items:
+        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],f'img/{c["photo"]}.jpg',lfhead,albumcss,hub,plan_body,mapjs,selectjs,selbar,rail0["top"],rail0["bottom"],railjs,'',''),encoding='utf-8')
+        print('built',O/'index.html')
+    else:
+        # --- 記録があるパック: 予定(index.html)と記録(kiroku/index.html)の2ページ ---
+        BASE='https://yukitchy.github.io/tabi-shiori/'+slug+'/'
+        def bar(cur,row,hrefs):
+            r1=''.join(f'<a href="{h}"{" class=\"on\" aria-current=\"page\"" if k==cur else ""}>{k}</a>' for k,h in hrefs)
+            r2=''.join((f'<a href="#{g}" data-g="{g}">{esc(l)}</a>' if g else f'<span class="off">{esc(l)}</span>') for l,g in row)
+            return (f'<nav class="tabs" aria-label="ページ切り替え"><div class="t1r">{r1}</div>'+(f'<div class="t2">{r2}</div>' if len(row)>=2 else '')+'</nav>',
+                    ' class="tabbed"' if len(row)>=2 else ' class="tabbed t1"')
+        # 予定ページ
+        prow=([('出発前','g-top')] if d.get('pre_sections') else [])+[(f'{n}日',f'g-d{n}') for n in plan_days]
+        pbar,pcls=bar('予定',prow,[('予定','./'),('記録','kiroku/')])
+        pbar+='<script>if(location.hash=="#album")location.replace("kiroku/")</script>'
+        hub_p=hub.replace('<section class="s hub">','<section class="s hub" id="g-top">',1)
+        (O/'index.html').write_text(render(d["title"],d["title"],d["og_desc"],f'img/{c["photo"]}.jpg','','',hub_p,plan_body,'','','',rail0["top"],rail0["bottom"],railjs,pbar,pcls),encoding='utf-8')
+        print('built',O/'index.html')
+        # 記録ページ
+        if d.get('stops'):
+            nums=sorted(set(plan_days)|set(rec_days))
+            rrow=[(f'{n}日',f'g-d{n}' if n in rec_days else '') for n in nums]+[('アルバム','album')]
+            rtop_,rbot_=(f'{nums[0]}日' if nums else rail0["top"]),'アルバム'
+        else:
+            rrow=[(l,f'g-r{i+1}') for i,l in enumerate(rec_days)]
+            rtop_,rbot_=rail0["top"],rail0["bottom"]
+        kbar,kcls=bar('記録',rrow,[('予定','../'),('記録','./')])
+        K=O/'kiroku';K.mkdir(exist_ok=True)
+        ktitle=d.get('kiroku_title') or d["title"]+' の記録'
+        rj=json.loads(railjs);rj['a2']=rj['a1']
+        if rj['mk']:rj['mk']=[rj['mk'][0]]*2
+        kog=BASE+'album/'+ogrec if ogrec else BASE+f'img/{c["photo"]}.jpg'
+        (K/'index.html').write_text(render(ktitle,ktitle,d.get('kiroku_desc') or ktitle,kog,lfhead,albumcss,'',album,mapjs,selectjs,selbar,rtop_,rbot_,json.dumps(rj,ensure_ascii=False),kbar,kcls),encoding='utf-8')
+        print('built',K/'index.html')
     if items: build_list(slug,d,items,O)
 def status(d,has_album=False):
     """アルバムがある＝もう行った。無ければ dates[1] が過ぎていれば done"""
@@ -887,7 +977,7 @@ def build_index(who='yuri',label='ゆりと'):
                 pick=[ph[int((k+1)*len(ph)/5)] for k in range(4)]
                 rest=len(ph)-4
             else: pick=ph;rest=0
-            cells=''.join(f'<a href="../{slug}/#album"><img src="{thumb(slug,it)}" alt="" loading="lazy">'
+            cells=''.join(f'<a href="../{slug}/{"kiroku/" if (ROOT/"docs"/slug/"kiroku").exists() else "#album"}"><img src="{thumb(slug,it)}" alt="" loading="lazy">'
                           +(f'<b>+{rest}</b>' if rest and n==len(pick)-1 else '')+'</a>' for n,it in enumerate(pick))
             peek=f'<div class="peek">{cells}</div>'
         cards+=(f'<li class="trip" id="t{pn}" style="--r:{rot}deg"><a class="print" href="../{slug}/">'
