@@ -90,7 +90,7 @@
     ],
     [
      "お昼",
-     "13:10ごろ道の駅いわいずみで。龍泉洞から車で7分、国道455号の途中。施設は8:30〜18:00（レストランの時間は電話 0194-32-3070 で確認）"
+     "13:10ごろ。次のページの6店から選ぶ"
     ]
    ],
    "links": [
@@ -160,6 +160,136 @@
      "https://www.town.iwaizumi.lg.jp/"
     ]
    ]
+  },
+  {
+   "day": "16日 お昼",
+   "clock": "16日 午後",
+   "move": "🚗 龍泉洞から車で0〜20分",
+   "h": "お昼は<em>6つ</em>から<span>選ぶ</span>",
+   "lead": "金曜の13時台に開いている店です。押すと詳しく見られます。北山崎へ向かう道の途中にある店が多めです。",
+   "tiles": [
+    {
+     "name": "龍泉洞レストハウス",
+     "genre": "食堂",
+     "area": "岩泉町",
+     "what": "龍泉洞に併設の食堂です。ホルモン鍋定食やホルモンラーメンなどが紹介されています（るるぶの掲載で、価格は古い可能性があります）。",
+     "hours": "11:00〜15:30（食べログでは11:00〜18:00。11月以降は短縮、冬季不定）",
+     "closed": null,
+     "rating": "食べログ3.33",
+     "from": "龍泉洞に併設（るるぶ掲載）",
+     "lat": 39.860488,
+     "lng": 141.796948,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E9%BE%8D%E6%B3%89%E6%B4%9E%E3%83%AC%E3%82%B9%E3%83%88%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%B2%A9%E6%B3%89%E7%94%BA",
+     "url": "https://tabelog.com/iwate/A0304/A030405/3006806/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3006806/ ／ るるぶ https://rurubu.jp/andmore/spot/80003141",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Tonkatsu_Teishoku_20200715-02.jpg/960px-Tonkatsu_Teishoku_20200715-02.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_Teishoku_20200715-02.jpg",
+      "credit": "Tonkatsu Teishoku 20200715-02.jpg by 円周率３パーセント, CC BY-SA 4.0"
+     }
+    },
+    {
+     "name": "レストラン岩泉（道の駅いわいずみ内）",
+     "genre": "洋食・ステーキ",
+     "area": "岩泉町",
+     "what": "道の駅いわいずみの中にあるレストランです。食べログでは洋食・ステーキ・日本料理に分類されています。具体的なメニューは確認できていません。",
+     "hours": "11:00〜17:30（別の掲載ではL.O.16:00）",
+     "closed": null,
+     "rating": "食べログ3.17",
+     "from": "龍泉洞から車で約8分",
+     "lat": 39.842118,
+     "lng": 141.862172,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E5%B2%A9%E6%B3%89%20%E9%81%93%E3%81%AE%E9%A7%85%E3%81%84%E3%82%8F%E3%81%84%E3%81%9A%E3%81%BF",
+     "url": "https://tabelog.com/iwate/A0304/A030405/3002191/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3002191/（公式HPとして http://www.ryusendo-water.co.jp/sk_rdaichi.html が掲載されているが未確認）",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg/960px-Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg",
+      "credit": "Beef and hamburg steak plate served in the restaurant in Koiwai Farm.jpg by 掬茶, CC BY-SA 4.0"
+     }
+    },
+    {
+     "name": "ゆう竹食堂",
+     "genre": "日本料理（食堂）",
+     "area": "岩泉町",
+     "what": "岩泉町の道の駅の近くにある食堂です。食べログの予算は1,000円未満となっています。メニューの詳細は確認できていません。",
+     "hours": "11:30〜20:00（L.O.18:30）",
+     "closed": "木曜",
+     "rating": "食べログ3.09",
+     "from": "龍泉洞から車で約7分",
+     "lat": 39.841521,
+     "lng": 141.860278,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%82%86%E3%81%86%E7%AB%B9%E9%A3%9F%E5%A0%82%20%E5%B2%A9%E6%B3%89%E7%94%BA",
+     "url": "https://tabelog.com/iwate/A0304/A030405/3010353/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3010353/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Tonkatsu_Teishoku_in_Hamada%2C_Shimane_01.jpg/960px-Tonkatsu_Teishoku_in_Hamada%2C_Shimane_01.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_Teishoku_in_Hamada,_Shimane_01.jpg",
+      "credit": "Tonkatsu Teishoku in Hamada, Shimane 01.jpg by ノボホショコロトソ, CC BY 4.0"
+     }
+    },
+    {
+     "name": "かもしか",
+     "genre": "食堂・ラーメン",
+     "area": "岩泉町（小本）",
+     "what": "小本地区の食堂です。食べログではラーメンも扱う食堂として載っています。メニューの詳細は確認できていません。",
+     "hours": "11:00〜20:00",
+     "closed": null,
+     "rating": "食べログ3.06",
+     "from": "龍泉洞から車で約13分",
+     "lat": 39.839176,
+     "lng": 141.939993,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%8B%E3%82%82%E3%81%97%E3%81%8B%20%E5%B2%A9%E6%B3%89%E7%94%BA%E5%B0%8F%E6%9C%AC",
+     "url": "https://tabelog.com/iwate/A0304/A030401/3006896/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030401/3006896/（同住所に「味処かもしか」11:00〜19:00の掲載もあり、重複の可能性）",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg/960px-Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg",
+      "credit": "Shoyu Ramen（Tokyo Ramen） - 01.jpg by Quercus acuta, CC BY-SA 4.0"
+     }
+    },
+    {
+     "name": "北川食堂",
+     "genre": "海鮮丼・食堂",
+     "area": "田野畑村",
+     "what": "三陸の旬の地魚を気軽に食べてもらいたい、と食べログの紹介にある食堂です。海鮮丼で評価の高い店です。席は50席です。",
+     "hours": "11:00〜15:00（金曜は夜も17:00〜22:00）",
+     "closed": "月曜",
+     "rating": "食べログ3.41",
+     "from": "龍泉洞から車で約21分",
+     "lat": 39.92392,
+     "lng": 141.901105,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E5%B7%9D%E9%A3%9F%E5%A0%82%20%E7%94%B0%E9%87%8E%E7%95%91%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3004462/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3004462/（公式サイト http://www.shokokai.or.jp/03/0348411113/index.htm が掲載されているが未確認）",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg/960px-%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg",
+      "credit": "特製生ウニ丼と天然ほや刺（はまなす亭）.jpg by くろふね, CC BY-SA 4.0"
+     }
+    },
+    {
+     "name": "道の駅たのはた 思惟の風",
+     "genre": "道の駅の食事処",
+     "area": "田野畑村",
+     "what": "道の駅の中の食事コーナーです（30席）。産直コーナーも併設されています。メニューは確認できていません。",
+     "hours": "11:00〜15:00（産直は9:00〜18:00）",
+     "closed": "無休",
+     "rating": "食べログ3.19",
+     "from": "龍泉洞から車で約20分",
+     "lat": 39.914321,
+     "lng": 141.902677,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%E3%81%9F%E3%81%AE%E3%81%AF%E3%81%9F%20%E6%80%9D%E6%83%9F%E3%81%AE%E9%A2%A8",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3011413/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3011413/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Grilled_Okhotsk_Atka_Mackerel.jpg/960px-Grilled_Okhotsk_Atka_Mackerel.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Grilled_Okhotsk_Atka_Mackerel.jpg",
+      "credit": "Grilled Okhotsk Atka Mackerel.jpg by Fred Cherrygarden, CC BY-SA 4.0"
+     }
+    }
+   ],
+   "links": []
   },
   {
    "day": "16日 午後",
@@ -264,38 +394,129 @@
   {
    "day": "16日 夜ごはん",
    "clock": "16日 夜",
-   "move": "🚗 くろさき荘 → 普代の街 約10分",
-   "h": "<em>普代</em>で<span>夕ごはん</span>",
-   "photo": "fudaihama",
-   "lead": "普代は夜まで開いている店が少なめです。どの店も夜の営業時間を確認できていないので、昼のうちに電話するか、達也に聞いておくと安心です。「お食事処いち龍」は11〜15時なので昼向きで、夜は使えません。",
-   "pts": [
-    [
-     "きんちゃん寿司",
-     "普代駅から徒歩4分の寿司店。夜の営業は未確認"
-    ],
-    [
-     "みつよし食堂",
-     "駅から歩いて5分ほどの食堂。日曜休み。夜の営業は未確認"
-    ],
-    [
-     "やめて食べる手",
-     "宿の近くのマルコシ商店で買って宿で食べる。朝ごはんも同じ店で買えます"
-    ],
-    [
-     "18:30〜19:30",
-     "食べ終えたら宿へ。宿は21時までに着けばいい"
-    ]
+   "move": "🚗 くろさき荘から車で5〜25分",
+   "h": "夕ごはんは<em>6つ</em>から<span>選ぶ</span>",
+   "lead": "金曜の18時半に開いている店です。押すと詳しく見られます。夜の店は少ないので、決めたら電話してから向かうと確実です。",
+   "tiles": [
+    {
+     "name": "Cafe AWAI",
+     "genre": "定食・カフェ",
+     "area": "普代村",
+     "what": "家守の藤本さんが運営に関わっているカフェ。おすすめは季節のあわい膳。藤本さんからも、時間があればぜひと言われています。",
+     "hours": "12:00〜20:00（金・土・日）",
+     "closed": "月・木は17時まで",
+     "rating": null,
+     "from": "普代村普代112-1。宿と同じ普代の中",
+     "map": "https://www.google.com/maps/search/?api=1&query=%E5%B2%A9%E6%89%8B%E7%9C%8C%E4%B8%8B%E9%96%89%E4%BC%8A%E9%83%A1%E6%99%AE%E4%BB%A3%E6%9D%91%E6%99%AE%E4%BB%A3112-1",
+     "url": "https://www.instagram.com/cafeawai2025/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Beef_curry_rice_003.jpg/960px-Beef_curry_rice_003.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Beef_curry_rice_003.jpg",
+      "credit": "Beef curry rice 003.jpg by Ocdp, CC0"
+     }
+    },
+    {
+     "name": "みつよし食堂",
+     "genre": "食堂",
+     "area": "普代村",
+     "what": "普代駅から歩いて行ける昔ながらの食堂です。メニューの詳細は確認できていません。",
+     "hours": "11:30〜20:00",
+     "closed": "日曜",
+     "rating": "食べログ3.09",
+     "from": "くろさき荘から車で約9分",
+     "lat": 40.004198,
+     "lng": 141.88555,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%BF%E3%81%A4%E3%82%88%E3%81%97%E9%A3%9F%E5%A0%82%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3003367/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3003367/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Katsudon_001.jpg/960px-Katsudon_001.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Katsudon_001.jpg",
+      "credit": "Katsudon 001.jpg by Ocdp, CC0"
+     }
+    },
+    {
+     "name": "魚定",
+     "genre": "食堂・ラーメン・海鮮",
+     "area": "普代村",
+     "what": "食べログでは食堂・ラーメン・海鮮に分類されています（旧店名 太田名部レストハウス）。席は30席です。メニューの詳細は確認できていません。",
+     "hours": "10:00〜20:00",
+     "closed": null,
+     "rating": "食べログ3.07",
+     "from": "くろさき荘から車で約6分",
+     "lat": 40.009091,
+     "lng": 141.906558,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E9%AD%9A%E5%AE%9A%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3001158/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001158/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Sashimi_teishoku_%286923601699%29.jpg/960px-Sashimi_teishoku_%286923601699%29.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Sashimi_teishoku_(6923601699).jpg",
+      "credit": "Sashimi teishoku (6923601699).jpg by Monica Kaneko from Sao Paulo, Brasil, CC BY-SA 2.0"
+     }
+    },
+    {
+     "name": "いち龍",
+     "genre": "ラーメン・郷土料理",
+     "area": "普代村",
+     "what": "浜ラーメンや刺身定食、焼き魚定食など約40品があると紹介されています（ハモニ掲載）。席は20席です。",
+     "hours": "17:00〜19:30（料理のL.O.は19:00）。昼は11:00〜15:00",
+     "closed": "不定期（食べログ）",
+     "rating": "食べログ3.06",
+     "from": "くろさき荘から車で約9分",
+     "lat": 40.009063,
+     "lng": 141.886051,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%84%E3%81%A1%E9%BE%8D%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3001155/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001155/ ／ ハモニ https://hamoni.jp/area/iwate/shimohei/fudai/shops/washoku-japanese-cuisine",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bowl_of_shio_ramen_with_pork.jpg/960px-Bowl_of_shio_ramen_with_pork.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Bowl_of_shio_ramen_with_pork.jpg",
+      "credit": "Bowl of shio ramen with pork.jpg by GiveMeMollusks, CC0"
+     }
+    },
+    {
+     "name": "お食事処 十府ヶ浦",
+     "genre": "食堂・ラーメン",
+     "area": "野田村",
+     "what": "野田村の食堂です。小上がりがある44席の店です。食べログの夜の予算は4,000円台です。メニューの詳細は確認できていません。",
+     "hours": "17:00〜21:00頃（15:00〜17:00は休み）",
+     "closed": "月曜",
+     "rating": "食べログ3.08",
+     "from": "くろさき荘から車で約21分",
+     "lat": 40.112409,
+     "lng": 141.818969,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%8A%E9%A3%9F%E4%BA%8B%E5%87%A6%20%E5%8D%81%E5%BA%9C%E3%83%B6%E6%B5%A6%20%E9%87%8E%E7%94%B0%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3009534/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3009534/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Gomoku_chahan_and_Shio_ramen.jpg/960px-Gomoku_chahan_and_Shio_ramen.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Gomoku_chahan_and_Shio_ramen.jpg",
+      "credit": "Gomoku chahan and Shio ramen.jpg by ノボホショコロトソ, CC BY 4.0"
+     }
+    },
+    {
+     "name": "たい寿司",
+     "genre": "寿司",
+     "area": "田野畑村",
+     "what": "田野畑村の寿司店です。食べログの夜の予算は3,000円台です。",
+     "hours": "17:00〜22:00",
+     "closed": "水曜",
+     "rating": "食べログ3.00",
+     "from": "くろさき荘から車で約21分",
+     "lat": 39.925032,
+     "lng": 141.900498,
+     "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%9F%E3%81%84%E5%AF%BF%E5%8F%B8%20%E7%94%B0%E9%87%8E%E7%95%91%E6%9D%91",
+     "url": "https://tabelog.com/iwate/A0304/A030406/3001951/",
+     "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001951/",
+     "photo": {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg/960px-Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi,_Wing_Takanawa_(20230802203124).jpg",
+      "credit": "Shichifuku Nigiri Sushi at Tsukiji Tamasushi, Wing Takanawa (20230802203124).jpg by N509FZ, CC BY-SA 4.0"
+     }
+    }
    ],
-   "links": [
-    [
-     "普代村の飲食店（ナビタイム）",
-     "https://www.navitime.co.jp/category/02/03485/"
-    ],
-    [
-     "地図（普代駅まわり）",
-     "https://www.google.com/maps/search/?api=1&query=普代駅"
-    ]
-   ]
+   "links": []
   },
   {
    "day": "16日 夜",
@@ -317,7 +538,7 @@
     ],
     [
      "朝ごはん",
-     "マルコシ商店（徒歩10分）で。翌朝は普代駅から電車なので前の晩に買っておく"
+     "越戸商店（徒歩10分）で。翌朝は普代駅から電車なので前の晩に買っておく"
     ]
    ],
    "links": [
@@ -557,7 +778,7 @@
   "h": "それでは 10月16日に",
   "lead": "予定が変わったら佑樹に言ってください。このページも直します。"
  },
- "credit": "写真: Wikimedia Commons（各撮影者・CC BY / CC BY-SA）とADDress公式ページより。料金・営業時間は2026年9月時点の各公式サイト。 移動時間は2026年10月16日にOpenStreetMapの経路計算（渋滞なし）で、三陸鉄道の時刻と運賃は同日のYahoo!路線情報（17日・土曜）で調べた目安です。",
+ "credit": "写真: Wikimedia Commons（各撮影者・CC BY / CC BY-SA）とADDress公式ページより。料金・営業時間は2026年9月時点の各公式サイト。 移動時間は2026年10月16日にOpenStreetMapの経路計算（渋滞なし）で、三陸鉄道の時刻と運賃は同日のYahoo!路線情報（17日・土曜）で調べた目安です。 食事の店の営業時間は食べログの掲載（2026年10月16日確認）、Cafe AWAIは公式Instagram。料理の写真はWikimedia Commonsのイメージで、お店の写真ではありません。",
  "pre_sections": [
   {
    "day": "新幹線",
@@ -625,6 +846,61 @@
     }
    ],
    "clock": "出発の前に"
+  },
+  {
+   "day": "達也へ",
+   "clock": "出発の前に",
+   "h": "運転する<em>ルート</em>を<span>先に入れておく</span>",
+   "photo": "sanriku",
+   "lead": "押すとGoogleマップが開いて、経由地が入った状態でナビを始められます。16日は1本で通しても、区間ごとに押してもかまいません。",
+   "pts": [
+    [
+     "16日 通し",
+     "集合 → 龍泉洞 → 道の駅いわいずみ → 北山崎 → 黒崎 → 普代B邸。夕ごはんの店は選んだタイルの「地図」から"
+    ],
+    [
+     "17日 通し",
+     "宮古駅 → 浄土ヶ浜 → 魚菜市場 → 盛岡駅"
+    ],
+    [
+     "区間ごと",
+     "下のボタンを上から順に押す"
+    ]
+   ],
+   "links": [
+    [
+     "16日 通しルート",
+     "https://www.google.com/maps/dir/?api=1&origin=39.7010827%2C141.1375259&destination=%E5%B2%A9%E6%89%8B%E7%9C%8C%E4%B8%8B%E9%96%89%E4%BC%8A%E9%83%A1%E6%99%AE%E4%BB%A3%E6%9D%91%E5%AE%87%E7%95%99%E9%83%A86-8&travelmode=driving&waypoints=%E9%BE%8D%E6%B3%89%E6%B4%9E%20%E5%B2%A9%E6%89%8B%E7%9C%8C%E5%B2%A9%E6%B3%89%E7%94%BA%7C%E9%81%93%E3%81%AE%E9%A7%85%E3%81%84%E3%82%8F%E3%81%84%E3%81%9A%E3%81%BF%7C%E5%8C%97%E5%B1%B1%E5%B4%8E%E3%83%93%E3%82%B8%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%7C%E9%99%B8%E4%B8%AD%E9%BB%92%E5%9F%BC%E7%81%AF%E5%8F%B0"
+    ],
+    [
+     "① 集合 → 龍泉洞",
+     "https://www.google.com/maps/dir/?api=1&origin=39.7010827%2C141.1375259&destination=%E9%BE%8D%E6%B3%89%E6%B4%9E%20%E5%B2%A9%E6%89%8B%E7%9C%8C%E5%B2%A9%E6%B3%89%E7%94%BA&travelmode=driving"
+    ],
+    [
+     "② 龍泉洞 → 道の駅いわいずみ",
+     "https://www.google.com/maps/dir/?api=1&origin=%E9%BE%8D%E6%B3%89%E6%B4%9E%20%E5%B2%A9%E6%89%8B%E7%9C%8C%E5%B2%A9%E6%B3%89%E7%94%BA&destination=%E9%81%93%E3%81%AE%E9%A7%85%E3%81%84%E3%82%8F%E3%81%84%E3%81%9A%E3%81%BF&travelmode=driving"
+    ],
+    [
+     "③ 道の駅 → 北山崎",
+     "https://www.google.com/maps/dir/?api=1&origin=%E9%81%93%E3%81%AE%E9%A7%85%E3%81%84%E3%82%8F%E3%81%84%E3%81%9A%E3%81%BF&destination=%E5%8C%97%E5%B1%B1%E5%B4%8E%E3%83%93%E3%82%B8%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&travelmode=driving"
+    ],
+    [
+     "④ 北山崎 → 黒崎",
+     "https://www.google.com/maps/dir/?api=1&origin=%E5%8C%97%E5%B1%B1%E5%B4%8E%E3%83%93%E3%82%B8%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&destination=%E9%99%B8%E4%B8%AD%E9%BB%92%E5%9F%BC%E7%81%AF%E5%8F%B0&travelmode=driving"
+    ],
+    [
+     "⑤ 黒崎 → 普代B邸",
+     "https://www.google.com/maps/dir/?api=1&origin=%E9%99%B8%E4%B8%AD%E9%BB%92%E5%9F%BC%E7%81%AF%E5%8F%B0&destination=%E5%B2%A9%E6%89%8B%E7%9C%8C%E4%B8%8B%E9%96%89%E4%BC%8A%E9%83%A1%E6%99%AE%E4%BB%A3%E6%9D%91%E5%AE%87%E7%95%99%E9%83%A86-8&travelmode=driving"
+    ],
+    [
+     "達也の帰り 普代B邸 → 宮古駅",
+     "https://www.google.com/maps/dir/?api=1&origin=%E5%B2%A9%E6%89%8B%E7%9C%8C%E4%B8%8B%E9%96%89%E4%BC%8A%E9%83%A1%E6%99%AE%E4%BB%A3%E6%9D%91%E5%AE%87%E7%95%99%E9%83%A86-8&destination=%E5%AE%AE%E5%8F%A4%E9%A7%85&travelmode=driving"
+    ],
+    [
+     "17日 通しルート",
+     "https://www.google.com/maps/dir/?api=1&origin=%E5%AE%AE%E5%8F%A4%E9%A7%85&destination=%E7%9B%9B%E5%B2%A1%E9%A7%85&travelmode=driving&waypoints=%E6%B5%84%E5%9C%9F%E3%83%B6%E6%B5%9C%E3%83%93%E3%82%B8%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%7C%E5%AE%AE%E5%8F%A4%E5%B8%82%E9%AD%9A%E8%8F%9C%E5%B8%82%E5%A0%B4"
+    ]
+   ]
   },
   {
    "day": "移動時間の一覧",

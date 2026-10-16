@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """tabi-shiori engine: packs/<slug>/trip.json + img/ -> docs/<slug>/index.html"""
-import json,sys,shutil,html,pathlib,datetime,re,hashlib
+import json,zlib,sys,shutil,html,pathlib,datetime,re,hashlib
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 def esc(s):return html.escape(s,quote=True)
 def emp(s):return re.sub(r"\*\*(.+?)\*\*",r"<b>\1</b>",esc(s))
@@ -377,10 +377,29 @@ def build(slug):
         return (f'<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/{esc(v["id"])}?rel=0" title="{esc(v["cap"])}" '
                 f'loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
                 f'<p class="vcap">{esc(v["cap"])}</p>')
+    def tiles(L):
+        # 2列タイル＋タップで詳細ダイアログ（patrick-tokyo-day の型）
+        if not L: return ''
+        out='<div class="tiles">'; pops=''
+        for i,t in enumerate(L):
+            pid=f'pop-{zlib.crc32(t["name"].encode())}'; ph=t.get('photo') or {}
+            img=f'<img src="{esc(ph["src"])}" alt="料理の例: {esc(t["genre"])}" loading="lazy">' if ph.get('src') else '<span class="noimg"></span>'
+            out+=f'<button type="button" class="tile" data-pop="{pid}">{img}<span class="cb"><span class="gn">{esc(t["genre"])}</span><b>{esc(t["name"])}</b><small>{esc((t.get("hours") or "").split("（")[0])}</small></span></button>'
+            rows=''.join(f'<p class="rt">{esc(x)}</p>' for x in [t.get('area') and t.get('from') and f'{t["area"]}・{t["from"]}' or t.get('area') or t.get('from'),
+                         t.get('hours') and f'営業 {t["hours"]}', t.get('closed') and f'定休 {t["closed"]}'] if x)
+            rt=f'<p class="rt"><span class="st">★ {esc(t["rating"])}</span></p>' if t.get('rating') else ''
+            lk=''.join(f'<a href="{esc(u)}" target="_blank" rel="noopener">{lab} ↗</a>' for lab,u in [('地図',t.get('map')),('くわしく',t.get('url'))] if u)
+            pops+=(f'<dialog class="pop" id="{pid}" aria-label="{esc(t["name"])}"><button type="button" class="pclose" aria-label="閉じる">✕</button>'
+                   +(f'<img class="pimg" src="{esc(ph["src"])}" alt="">' if ph.get('src') else '')
+                   +f'<div class="pbody"><p class="gn">{esc(t["genre"])}</p><h3>{esc(t["name"])}</h3>{rt}<p class="pt">{esc(t.get("what") or "")}</p>{rows}<p class="pl">{lk}</p>'
+                   +(f'<p class="pc">写真は料理の例で、お店の写真ではありません。{esc(ph.get("credit",""))}</p>' if ph.get('src') else '')+'</div></dialog>')
+        js=("<script>if(!window.__tiles){window.__tiles=1;document.addEventListener('click',function(e){var t=e.target.closest('.tile');if(t){document.getElementById(t.dataset.pop).showModal();return}"
+            "var c=e.target.closest('.pclose');if(c){c.closest('dialog').close();return}if(e.target.tagName==='DIALOG')e.target.close()})}</script>")
+        return out+'</div>'+pops+js
     def sec(s):
-        head = vid(s.get('video')) if s.get('video') else photo(s['photo'])
+        head = vid(s.get('video')) if s.get('video') else (photo(s['photo']) if s.get('photo') else '')
         return (f'<section class="s" data-clock="{esc(s.get("clock",""))}">'+(f'<div class="mv">{esc(s["move"])}</div>' if s.get('move') else '')+f'<div class="eyebrow">{esc(s["day"])}</div><h2>{s["h"]}</h2>{head}'
-                f'<p class="lead">{emp(s["lead"])}</p>{numsblk(s.get("nums",[]))}{pts(s["pts"])}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
+                f'<p class="lead">{emp(s["lead"])}</p>{tiles(s.get("tiles",[]))}{numsblk(s.get("nums",[]))}{pts(s.get("pts",[]))}{tt(s.get("tt",[]))}{links(s.get("links",[]))}</section>')
     pres=''.join(sec(s) for s in d.get('pre_sections',[]))
     secs=''
     for s in d['sections']:
@@ -461,12 +480,33 @@ def build(slug):
 :root{{--bg:#fff;--card:#f6f9fc;--ink:#202020;--mute:#645f5e;--ash:#8a8482;--line:#e3e8ee;--ac:{d["accent"]};--shadow:{d["accent_shadow"]};--wash:{d["accent_wash"]};color-scheme:light}}
 *{{box-sizing:border-box;min-width:0}}html,body{{margin:0;overflow-x:hidden;overscroll-behavior-x:none;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;font-weight:700;-webkit-font-smoothing:antialiased}}
 h1,h2,h3,p{{margin:0}}h1,h2{{line-height:1.15;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}}
-#deck{{height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
-.s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;padding:52px 22px 40px;max-width:min(560px,100%);overflow-x:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;margin:0 auto}}
+#deck{{height:100vh;height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}}
+.s{{min-height:100vh;min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;padding:52px 22px 40px;max-width:min(560px,100%);overflow-x:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;margin:0 auto}}
 .eyebrow{{font-size:12px;letter-spacing:.12em;color:var(--ac);font-weight:900}}
 .mv{{display:inline-block;align-self:flex-start;background:var(--wash);color:var(--ac);font-weight:900;font-size:13px;border-radius:999px;padding:5px 12px;margin-bottom:8px}}
 .s h2{{font-size:clamp(28px,8vw,40px);font-weight:900;letter-spacing:-.02em}}.s h2 em{{font-style:normal;color:var(--ac)}}.s h2 span,.who span{{white-space:nowrap}}
 .lead{{font-size:15px;color:var(--mute);line-height:1.75}}
+.tiles{{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
+.tile{{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;padding:0;cursor:pointer}}
+.tile img,.tile .noimg{{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eee}}
+.tile .cb{{display:block;padding:8px 10px 10px}}
+.tile .gn{{display:block;font-size:10.5px;font-weight:900;letter-spacing:.06em;color:var(--ac)}}
+.tile b{{display:block;font-size:14px;line-height:1.3;margin-top:2px}}
+.tile small{{display:block;font-size:11px;color:var(--mute);margin-top:2px}}
+.tile:hover,.tile:focus-visible{{border-color:var(--ink)}}
+dialog.pop{{border:0;border-radius:14px;padding:0;width:min(92vw,420px);max-height:88vh;max-height:88svh;overflow:auto;color:var(--ink);background:#fff;margin:auto}}
+dialog.pop::backdrop{{background:rgba(0,0,0,.55)}}
+.pop .pimg{{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}}
+.pop .pbody{{padding:16px 18px 20px}}
+.pop .gn{{font-size:11px;font-weight:900;letter-spacing:.06em;color:var(--ac)}}
+.pop h3{{font-size:22px;line-height:1.25;font-weight:900;margin:2px 0 6px}}
+.pop .rt{{font-size:13px;color:var(--mute);margin-top:6px}}
+.pop .st{{color:var(--ac);font-weight:700}}
+.pop .pt{{font-size:15px;line-height:1.6;margin-top:10px}}
+.pop .pl{{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}}
+.pop .pl a{{display:inline-block;font-size:13px;font-weight:700;text-decoration:none;color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:6px 14px}}
+.pop .pc{{margin-top:14px;font-size:11px;color:#999;line-height:1.5}}
+.pclose{{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font:inherit;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.25)}}
 .photo{{margin:0;border-radius:20px;overflow:hidden;background:#e9eef3;aspect-ratio:16/10}}.photo img{{display:block;width:100%;height:100%;object-fit:cover}}
 .photo figcaption{{display:none}}
 .pts{{list-style:none;margin:0;padding:0;display:grid;gap:10px}}.pts li{{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:16px;line-height:1.5}}

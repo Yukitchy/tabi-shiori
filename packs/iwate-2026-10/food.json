@@ -1,0 +1,247 @@
+{
+ "lunch": [
+  {
+   "name": "龍泉洞レストハウス",
+   "genre": "食堂",
+   "area": "岩泉町",
+   "what": "龍泉洞に併設の食堂です。ホルモン鍋定食やホルモンラーメンなどが紹介されています（るるぶの掲載で、価格は古い可能性があります）。",
+   "hours": "11:00〜15:30（食べログでは11:00〜18:00。11月以降は短縮、冬季不定）",
+   "closed": null,
+   "rating": "食べログ3.33",
+   "from": "龍泉洞に併設（るるぶ掲載）",
+   "lat": 39.860488,
+   "lng": 141.796948,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E9%BE%8D%E6%B3%89%E6%B4%9E%E3%83%AC%E3%82%B9%E3%83%88%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%B2%A9%E6%B3%89%E7%94%BA",
+   "url": "https://tabelog.com/iwate/A0304/A030405/3006806/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3006806/ ／ るるぶ https://rurubu.jp/andmore/spot/80003141",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Tonkatsu_Teishoku_20200715-02.jpg/960px-Tonkatsu_Teishoku_20200715-02.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_Teishoku_20200715-02.jpg",
+    "credit": "Tonkatsu Teishoku 20200715-02.jpg by 円周率３パーセント, CC BY-SA 4.0"
+   }
+  },
+  {
+   "name": "レストラン岩泉（道の駅いわいずみ内）",
+   "genre": "洋食・ステーキ",
+   "area": "岩泉町",
+   "what": "道の駅いわいずみの中にあるレストランです。食べログでは洋食・ステーキ・日本料理に分類されています。具体的なメニューは確認できていません。",
+   "hours": "11:00〜17:30（別の掲載ではL.O.16:00）",
+   "closed": null,
+   "rating": "食べログ3.17",
+   "from": "龍泉洞から車で約8分（地図ルート計算の目安）",
+   "lat": 39.842118,
+   "lng": 141.862172,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%83%AC%E3%82%B9%E3%83%88%E3%83%A9%E3%83%B3%E5%B2%A9%E6%B3%89%20%E9%81%93%E3%81%AE%E9%A7%85%E3%81%84%E3%82%8F%E3%81%84%E3%81%9A%E3%81%BF",
+   "url": "https://tabelog.com/iwate/A0304/A030405/3002191/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3002191/（公式HPとして http://www.ryusendo-water.co.jp/sk_rdaichi.html が掲載されているが未確認）",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg/960px-Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Beef_and_hamburg_steak_plate_served_in_the_restaurant_in_Koiwai_Farm.jpg",
+    "credit": "Beef and hamburg steak plate served in the restaurant in Koiwai Farm.jpg by 掬茶, CC BY-SA 4.0"
+   }
+  },
+  {
+   "name": "ゆう竹食堂",
+   "genre": "日本料理（食堂）",
+   "area": "岩泉町",
+   "what": "岩泉町の道の駅の近くにある食堂です。食べログの予算は1,000円未満となっています。メニューの詳細は確認できていません。",
+   "hours": "11:30〜20:00（L.O.18:30）",
+   "closed": "木曜",
+   "rating": "食べログ3.09",
+   "from": "龍泉洞から車で約7分（地図ルート計算の目安）",
+   "lat": 39.841521,
+   "lng": 141.860278,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%82%86%E3%81%86%E7%AB%B9%E9%A3%9F%E5%A0%82%20%E5%B2%A9%E6%B3%89%E7%94%BA",
+   "url": "https://tabelog.com/iwate/A0304/A030405/3010353/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030405/3010353/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Tonkatsu_Teishoku_in_Hamada%2C_Shimane_01.jpg/960px-Tonkatsu_Teishoku_in_Hamada%2C_Shimane_01.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_Teishoku_in_Hamada,_Shimane_01.jpg",
+    "credit": "Tonkatsu Teishoku in Hamada, Shimane 01.jpg by ノボホショコロトソ, CC BY 4.0"
+   }
+  },
+  {
+   "name": "かもしか",
+   "genre": "食堂・ラーメン",
+   "area": "岩泉町（小本）",
+   "what": "小本地区の食堂です。食べログではラーメンも扱う食堂として載っています。メニューの詳細は確認できていません。",
+   "hours": "11:00〜20:00",
+   "closed": null,
+   "rating": "食べログ3.06",
+   "from": "龍泉洞から車で約13分（地図ルート計算の目安）",
+   "lat": 39.839176,
+   "lng": 141.939993,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%8B%E3%82%82%E3%81%97%E3%81%8B%20%E5%B2%A9%E6%B3%89%E7%94%BA%E5%B0%8F%E6%9C%AC",
+   "url": "https://tabelog.com/iwate/A0304/A030401/3006896/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030401/3006896/（同住所に「味処かもしか」11:00〜19:00の掲載もあり、重複の可能性）",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg/960px-Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg",
+    "credit": "Shoyu Ramen（Tokyo Ramen） - 01.jpg by Quercus acuta, CC BY-SA 4.0"
+   }
+  },
+  {
+   "name": "北川食堂",
+   "genre": "海鮮丼・食堂",
+   "area": "田野畑村",
+   "what": "三陸の旬の地魚を気軽に食べてもらいたい、と食べログの紹介にある食堂です。海鮮丼で評価の高い店です。席は50席です。",
+   "hours": "11:00〜15:00（金曜は夜も17:00〜22:00）",
+   "closed": "月曜",
+   "rating": "食べログ3.41",
+   "from": "龍泉洞から車で約21分（地図ルート計算の目安）",
+   "lat": 39.92392,
+   "lng": 141.901105,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E5%B7%9D%E9%A3%9F%E5%A0%82%20%E7%94%B0%E9%87%8E%E7%95%91%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3004462/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3004462/（公式サイト http://www.shokokai.or.jp/03/0348411113/index.htm が掲載されているが未確認）",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg/960px-%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:%E7%89%B9%E8%A3%BD%E7%94%9F%E3%82%A6%E3%83%8B%E4%B8%BC%E3%81%A8%E5%A4%A9%E7%84%B6%E3%81%BB%E3%82%84%E5%88%BA%EF%BC%88%E3%81%AF%E3%81%BE%E3%81%AA%E3%81%99%E4%BA%AD%EF%BC%89.jpg",
+    "credit": "特製生ウニ丼と天然ほや刺（はまなす亭）.jpg by くろふね, CC BY-SA 4.0"
+   }
+  },
+  {
+   "name": "道の駅たのはた 思惟の風",
+   "genre": "道の駅の食事処",
+   "area": "田野畑村",
+   "what": "道の駅の中の食事コーナーです（30席）。産直コーナーも併設されています。メニューは確認できていません。",
+   "hours": "11:00〜15:00（産直は9:00〜18:00）",
+   "closed": "無休",
+   "rating": "食べログ3.19",
+   "from": "龍泉洞から車で約20分（地図ルート計算の目安）",
+   "lat": 39.914321,
+   "lng": 141.902677,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%E3%81%9F%E3%81%AE%E3%81%AF%E3%81%9F%20%E6%80%9D%E6%83%9F%E3%81%AE%E9%A2%A8",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3011413/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3011413/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Grilled_Okhotsk_Atka_Mackerel.jpg/960px-Grilled_Okhotsk_Atka_Mackerel.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Grilled_Okhotsk_Atka_Mackerel.jpg",
+    "credit": "Grilled Okhotsk Atka Mackerel.jpg by Fred Cherrygarden, CC BY-SA 4.0"
+   }
+  }
+ ],
+ "dinner": [
+  {
+   "name": "みつよし食堂",
+   "genre": "食堂",
+   "area": "普代村",
+   "what": "普代駅から歩いて行ける昔ながらの食堂です。メニューの詳細は確認できていません。",
+   "hours": "11:30〜20:00",
+   "closed": "日曜",
+   "rating": "食べログ3.09",
+   "from": "くろさき荘から車で約9分（地図ルート計算の目安）",
+   "lat": 40.004198,
+   "lng": 141.88555,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%BF%E3%81%A4%E3%82%88%E3%81%97%E9%A3%9F%E5%A0%82%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3003367/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3003367/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Katsudon_001.jpg/960px-Katsudon_001.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Katsudon_001.jpg",
+    "credit": "Katsudon 001.jpg by Ocdp, CC0"
+   }
+  },
+  {
+   "name": "魚定",
+   "genre": "食堂・ラーメン・海鮮",
+   "area": "普代村",
+   "what": "食べログでは食堂・ラーメン・海鮮に分類されています（旧店名 太田名部レストハウス）。席は30席です。メニューの詳細は確認できていません。",
+   "hours": "10:00〜20:00",
+   "closed": null,
+   "rating": "食べログ3.07",
+   "from": "くろさき荘から車で約6分（地図ルート計算の目安）",
+   "lat": 40.009091,
+   "lng": 141.906558,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E9%AD%9A%E5%AE%9A%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3001158/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001158/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Sashimi_teishoku_%286923601699%29.jpg/960px-Sashimi_teishoku_%286923601699%29.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Sashimi_teishoku_(6923601699).jpg",
+    "credit": "Sashimi teishoku (6923601699).jpg by Monica Kaneko from Sao Paulo, Brasil, CC BY-SA 2.0"
+   }
+  },
+  {
+   "name": "いち龍",
+   "genre": "ラーメン・郷土料理",
+   "area": "普代村",
+   "what": "浜ラーメンや刺身定食、焼き魚定食など約40品があると紹介されています（ハモニ掲載）。席は20席です。",
+   "hours": "17:00〜19:30（料理のL.O.は19:00）。昼は11:00〜15:00",
+   "closed": "不定期（食べログ）",
+   "rating": "食べログ3.06",
+   "from": "くろさき荘から車で約9分（地図ルート計算の目安）",
+   "lat": 40.009063,
+   "lng": 141.886051,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%84%E3%81%A1%E9%BE%8D%20%E6%99%AE%E4%BB%A3%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3001155/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001155/ ／ ハモニ https://hamoni.jp/area/iwate/shimohei/fudai/shops/washoku-japanese-cuisine",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bowl_of_shio_ramen_with_pork.jpg/960px-Bowl_of_shio_ramen_with_pork.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Bowl_of_shio_ramen_with_pork.jpg",
+    "credit": "Bowl of shio ramen with pork.jpg by GiveMeMollusks, CC0"
+   }
+  },
+  {
+   "name": "浜茶や食堂",
+   "genre": "食堂",
+   "area": "田野畑村",
+   "what": "田野畑村にある食堂です。食べログでは食堂に分類されています。メニューの詳細は確認できていません。",
+   "hours": "11:00〜21:00",
+   "closed": "不定休",
+   "rating": "食べログ3.07",
+   "from": "くろさき荘から車で約22分（地図ルート計算の目安）",
+   "lat": 39.923554,
+   "lng": 141.90024,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E6%B5%9C%E8%8C%B6%E3%82%84%E9%A3%9F%E5%A0%82%20%E7%94%B0%E9%87%8E%E7%95%91%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3006706/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3006706/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Beef_curry_rice_003.jpg/960px-Beef_curry_rice_003.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Beef_curry_rice_003.jpg",
+    "credit": "Beef curry rice 003.jpg by Ocdp, CC0"
+   }
+  },
+  {
+   "name": "お食事処 十府ヶ浦",
+   "genre": "食堂・ラーメン",
+   "area": "野田村",
+   "what": "野田村の食堂です。小上がりがある44席の店です。食べログの夜の予算は4,000円台です。メニューの詳細は確認できていません。",
+   "hours": "17:00〜21:00頃（15:00〜17:00は休み）",
+   "closed": "月曜",
+   "rating": "食べログ3.08",
+   "from": "くろさき荘から車で約21分（地図ルート計算の目安）",
+   "lat": 40.112409,
+   "lng": 141.818969,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%8A%E9%A3%9F%E4%BA%8B%E5%87%A6%20%E5%8D%81%E5%BA%9C%E3%83%B6%E6%B5%A6%20%E9%87%8E%E7%94%B0%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3009534/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3009534/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Gomoku_chahan_and_Shio_ramen.jpg/960px-Gomoku_chahan_and_Shio_ramen.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Gomoku_chahan_and_Shio_ramen.jpg",
+    "credit": "Gomoku chahan and Shio ramen.jpg by ノボホショコロトソ, CC BY 4.0"
+   }
+  },
+  {
+   "name": "たい寿司",
+   "genre": "寿司",
+   "area": "田野畑村",
+   "what": "田野畑村の寿司店です。食べログの夜の予算は3,000円台です。",
+   "hours": "17:00〜22:00",
+   "closed": "水曜",
+   "rating": "食べログ3.00",
+   "from": "くろさき荘から車で約21分（地図ルート計算の目安）",
+   "lat": 39.925032,
+   "lng": 141.900498,
+   "map": "https://www.google.com/maps/search/?api=1&query=%E3%81%9F%E3%81%84%E5%AF%BF%E5%8F%B8%20%E7%94%B0%E9%87%8E%E7%95%91%E6%9D%91",
+   "url": "https://tabelog.com/iwate/A0304/A030406/3001951/",
+   "source": "食べログ https://tabelog.com/iwate/A0304/A030406/3001951/",
+   "photo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg/960px-Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi,_Wing_Takanawa_(20230802203124).jpg",
+    "credit": "Shichifuku Nigiri Sushi at Tsukiji Tamasushi, Wing Takanawa (20230802203124).jpg by N509FZ, CC BY-SA 4.0"
+   }
+  }
+ ],
+ "notes": "全12店とも営業時間・定休日は食べログ（ユーザー投稿を含む掲載情報）が確認元で、公式サイト・自治体・観光協会では店ごとの営業時間を確認できませんでした。金曜に開いている前提で選んでいますが、不定休・不定期の店（浜茶や食堂、いち龍、龍泉洞レストハウス〔冬季〕など）は前日までに電話確認が安全です。10月16日（金）のこの日付に限った臨時休業の情報は確認していません。評価は全店食べログ。ランチの「龍泉洞から車で約〇分」と夕食の「くろさき荘から車で約〇分」は、公開ルート計算（OSRM）による目安で、信号・工事・渋滞は含みません。ランチ・夕食とも6店そろえましたが、岩泉町で短角牛・そばの店は金曜13時台に営業を確認できた店がありませんでした（白樺荘のそばは早坂高原で遠く、11月〜4月は休業のため不採用）。岩泉町の焼肉店（ぐうぐう亭 11:00〜14:00、ママハウス 11:30〜14:00）は13時台で閉店間際になるため外しました。国民宿舎くろさき荘は、日帰り客の夕食利用の可否・レストランの営業時間を公式情報で確認できませんでした（電話 0194-35-2611 は検索結果に載っていた番号です）。宿泊客向けの食事会場の記載のみで、候補には入れていません。きんちゃん寿司（普代）は食べログでは夜営業の掲載ですが、別の掲載で店内営業は予約限定とあり食い違うため外しました。写真は料理ジャンルのイメージ写真で、店の写真ではありません。"
+}
