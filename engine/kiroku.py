@@ -8,7 +8,7 @@ def build_kiroku(d,stops,voice,ktitle,kdesc,og,bmeta,K):
     stops=[s for s in stops if s['kind']=='stop' and s['items']]+[s for s in stops if s['kind']=='voice']
     stops.sort(key=lambda s:s['t0']);S=[]
     for s in stops:
-        v=[s['voice']] if s['voice'] else []
+        v=list(s.get('vs') or ([s['voice']] if s['voice'] else []))
         if s['kind']=='voice':  # 独立した会話は同じ日の直前の駅にぶら下げる
             p=next((x for x in reversed(S) if x['day']==s['day']),None)
             if p:p['voices'].append(s['voice'])

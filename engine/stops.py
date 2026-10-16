@@ -70,7 +70,7 @@ def make(items,P,voice=None):
             o=(min(t,T(s['t1']))-max(f,T(s['t0']))).total_seconds()
             if o>bo:best,bo=s,o
         if best:
-            best['voice']=v
+            best['voice']=best['voice'] or v; best.setdefault('vs',[]).append(v)
             if best['src']=='geo': best['name']=v['title']
         else: out.append(dict(day=v['from'][:10],name=v['title'],src='voice',t0=v['from'],t1=v['to'],items=[],lat=None,lng=None,kind='voice',voice=v))
     out.sort(key=lambda s:s['t0']);prev={}
