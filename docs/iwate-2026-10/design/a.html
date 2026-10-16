@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>岩手の記録 A 路線図</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="core.css">
+<style>
+/* モチーフ: 路線図と発車標（借用: uber.com の白黒キオスク＋出発●→到着■の縦線） */
+:root{--bg:#fff;--ink:#111;--sub:#6b6b6b;--line:#eee;--acc:#0b6fc2;--head:52px;--mapH:38dvh}
+.num{font-family:Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.head{position:fixed;top:0;left:0;right:0;height:var(--head);display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border-bottom:1px solid var(--line);z-index:20}
+.seg{display:flex;background:#f3f3f3;border-radius:99px;padding:3px}
+.seg a,.seg button{display:block;padding:6px 13px;border-radius:99px;font-size:14px;font-weight:700;color:var(--sub);text-decoration:none;white-space:nowrap}
+.seg .on{background:#111;color:#fff}
+#mapwrap{position:fixed;top:var(--head);left:0;right:0;height:var(--mapH);z-index:1}
+#map{width:100%;height:100%;background:#eef1f3}
+.pn{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:#fff;border:3px solid var(--acc);font:800 13px Inter,sans-serif;color:#111;box-shadow:0 1px 4px #0003;transition:transform .2s}
+.pin.on .pn{background:var(--acc);color:#fff;transform:scale(1.25)}
+#line{position:fixed;top:calc(var(--head) + var(--mapH));left:0;right:0;bottom:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;background:#fff;border-top:1px solid var(--line);z-index:2}
+#line section{height:calc(100dvh - var(--head) - var(--mapH));scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:52px 1fr;padding-right:16px;overflow:hidden}
+.rail{position:relative;display:flex;justify-content:center}
+.rail::before{content:"";position:absolute;top:0;bottom:0;width:6px;background:var(--acc)}
+section:first-child .rail::before{top:30px}
+section.last .rail::before{bottom:calc(100% - 30px)}
+.rail .no{position:relative;margin-top:16px;width:34px;height:34px;border-radius:8px;background:#fff;border:4px solid var(--acc);display:grid;place-items:center;font:800 14px Inter,sans-serif}
+.rail .dot{position:relative;margin-top:22px;width:22px;height:22px;border-radius:50%;background:#111;border:5px solid #fff;box-shadow:0 0 0 3px #111}
+.bd{padding:12px 0 6px;display:flex;flex-direction:column;min-width:0}
+.time{font-size:30px;font-weight:800;line-height:1.1}
+.time em{font-style:normal;font-weight:500;color:var(--sub);font-size:20px;margin-left:6px}
+.bd h2{font-size:22px;font-weight:900;line-height:1.3;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{color:var(--sub);font-size:15px;margin-bottom:8px}
+.meta b{color:var(--ink);font-weight:700}
+.hero{position:relative;flex:1;min-height:0;border-radius:10px;overflow:hidden;background:#f3f3f3}
+.hero img{width:100%;height:100%;object-fit:cover}
+.strip{display:flex;gap:4px;overflow-x:auto;margin-top:6px;padding-bottom:2px;scrollbar-width:none;flex:none}
+.strip::-webkit-scrollbar{display:none}
+.strip button{position:relative;flex:none;width:56px;height:56px;border-radius:6px;overflow:hidden;outline-offset:-3px}
+.strip img{width:100%;height:100%;object-fit:cover}
+.strip button.on{outline:3px solid var(--acc)}
+.next{flex:none;display:flex;align-items:baseline;gap:8px;margin-top:8px;font-size:15px;color:var(--sub);border-top:1px solid var(--line);padding-top:6px;white-space:nowrap;overflow:hidden}
+.next b{color:var(--ink)}
+.next .num{color:var(--acc);font-weight:700}
+/* 今日の数字（発車標） */
+.board{padding:16px 0 12px;display:flex;flex-direction:column;gap:10px}
+.board h1{font-size:15px;font-weight:700;color:var(--sub)}
+.board h1 b{display:block;color:var(--ink);font-size:26px;font-weight:900;line-height:1.3}
+.cells{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cells div{background:#fff;padding:10px 12px}
+.cells small{display:block;color:var(--sub);font-size:13px}
+.cells strong{font:800 28px/1.1 Inter,sans-serif;font-variant-numeric:tabular-nums}
+.cells strong span{font:700 14px "Noto Sans JP";margin-left:2px}
+.cells .wide{grid-column:span 2}
+.hint{font-size:15px;color:var(--sub)}
+/* 会話 */
+.talk{padding:14px 0 10px;display:flex;flex-direction:column;min-height:0}
+.talk h2{font-size:20px;font-weight:900}
+.talk p.g{font-size:15px;color:var(--sub);margin:2px 0 8px}
+.talk ol{list-style:none;overflow-y:auto;display:flex;flex-direction:column;gap:6px;min-height:0}
+.talk li{display:grid;grid-template-columns:46px 1fr;gap:6px;font-size:15px;line-height:1.5}
+.talk li .num{color:var(--acc);font-weight:700;font-size:14px;padding-top:1px}
+.talk li span{background:#f3f3f3;border-radius:4px 14px 14px 14px;padding:6px 10px}
+@media (min-width:900px){
+  :root{--mapH:0px}
+  #mapwrap{right:auto;width:58vw;bottom:0;height:auto}
+  #line{left:58vw;top:var(--head)}
+  #line section{height:calc(100dvh - var(--head));padding:0 28px 0 8px}
+  .bd{padding:28px 0 22px}.time{font-size:40px}.bd h2{font-size:28px}
+  .strip button{width:72px;height:72px}
+}
+</style></head>
+<body data-view="d16">
+<header class="head">
+  <nav class="seg"><a href="../index.html">予定</a><a class="on" href="#">記録</a></nav>
+  <nav class="seg"><button data-tab="d16" class="on">16日</button><button data-tab="d17">17日</button><button data-tab="album">アルバム</button></nav>
+</header>
+<div class="view v16"><div id="mapwrap"><div id="map"></div></div><main id="line"></main></div>
+<div class="view v17"><div class="empty"><b class="num">10/17</b>あしたの写真が入ると、ここに2日目の路線ができます。</div></div>
+<div class="view valbum"><div id="album"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="core.js"></script>
+<script>
+(async()=>{
+const D=await loadTrip(), S=D.stops, N=D.nums, line=$('#line');
+const two=n=>String(n).padStart(2,'0');
+const sel={}; // stop -> 表示中の写真
+let html=`<section data-i="-1"><div class="rail"><span class="dot"></span></div><div class="board">
+<h1>10月16日（金）の記録<b>大宮 → 普代、${S.length}駅</b></h1>
+<div class="cells">
+<div><small>写真</small><strong>${N.photos}<span>枚</span></strong></div>
+<div><small>動画</small><strong>${N.videos}<span>本</span></strong></div>
+<div><small>移動（直線の合計）</small><strong>${N.km}<span>km</span></strong></div>
+<div><small>立ち寄り</small><strong>${N.stops}<span>地点</span></strong></div>
+<div class="wide"><small>始発 → 終着</small><strong>${N.start}<span>→</span> ${N.end}</strong><small>${HMS(mins(N.start,N.end))}動いていた日</small></div>
+</div><p class="hint">下へ送ると1駅ずつ進みます。地図の点を押すとその写真へ。</p></div></section>`;
+S.forEach((s,i)=>{
+  const nx=S[i+1], last=i===S.length-1;
+  html+=`<section data-i="${i}" class="${last?'last':''}"><div class="rail"><span class="no">${two(s.no)}</span></div><div class="bd">
+  <div class="time num">${s.t0}${s.t1!==s.t0?`<em>– ${s.t1}</em>`:''}</div>
+  <h2>${esc(s.name)}</h2>
+  <p class="meta">写真<b>${s.items.length}</b>枚${s.km!=null?` · 前の駅から<b>${s.km}</b>km`:''}${s.voice?' · 会話あり':''}</p>
+  <button class="hero" data-i="${i}"><img alt="" loading="${i<2?'eager':'lazy'}" src="${IMG(s.items[0].f)}"></button>
+  ${s.items.length>1?`<div class="strip">${s.items.map((it,j)=>`<button data-f="${it.f}" class="${j?'':'on'}"><img loading="lazy" src="${IMG(it.f)}" alt="">${it.k==='v'?'<i class="vmark">▶</i>':''}</button>`).join('')}</div>`:''}
+  <div class="next">${last?'<b>終着</b> ここで16日はおしまい':`次は <span class="num">${two(nx.no)}</span><b>${esc(nx.name)}</b><span class="num">${nx.t0}</span>`}</div>
+  </div></section>`;
+  sel[i]=s.items[0].f;
+  if(s.voice){const v=s.voice;html+=`<section data-i="${i}" data-talk="1"><div class="rail"></div><div class="talk"><h2>${esc(v.title)}</h2><p class="g">${esc(v.gist)}</p><ol>${v.lines.map(l=>`<li><span class="num">${l[0]}</span><span>${esc(l[1])}</span></li>`).join('')}</ol></div></section>`}
+});
+line.innerHTML=html;
+const M=makeMap($('#map'),D,{color:'#0b6fc2',lit:'#ffb800',pin:n=>`<b class="pn">${two(n)}</b>`});
+M.overview();
+const secOf=i=>$(`#line section[data-i="${i}"]:not([data-talk])`);
+function show(i,f){ // 駅iの写真fを主役にする
+  sel[i]=f;const sec=secOf(i);$('.hero img',sec).src=IMG(f);
+  $$('.strip button',sec).forEach(b=>{b.classList.toggle('on',b.dataset.f===f);if(b.dataset.f===f)b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})});
+  M.light(f);
+}
+line.addEventListener('click',e=>{
+  const t=e.target.closest('.strip button');if(t){show(+t.closest('section').dataset.i,t.dataset.f);return}
+  const h=e.target.closest('.hero');if(h){const i=+h.dataset.i,L=S[i].items;lightbox(D,L,L.findIndex(x=>x.f===sel[i]),it=>show(i,it.f))}
+});
+let cur=null;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const i=+e.target.dataset.i;if(i===cur)return;cur=i;
+  if(i<0){M.overview();M.light(null)}else{M.fly(i);M.light(sel[i])}}),{root:line,threshold:.6});
+$$('#line section').forEach(s=>io.observe(s));
+const go=i=>secOf(i).scrollIntoView({behavior:'smooth'});
+M.onPin=go; M.onDot=p=>{go(p.stop);show(p.stop,p.f)};
+if(location.hash)secOf(+location.hash.slice(1)-1).scrollIntoView();
+tabs(D,it=>{});
+})();
+</script>
+</body></html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>記録ページ 3案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111;--sub:#666;--line:#e6e6e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.7 "Noto Sans JP",system-ui,sans-serif;color:var(--ink);background:#fff;padding:28px 16px 60px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:26px;font-weight:900;line-height:1.35}
+.lead{color:var(--sub);margin:6px 0 24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.card{display:flex;flex-direction:column;gap:10px}
+.shot{display:block;border-radius:22px;overflow:hidden;border:1px solid var(--line);aspect-ratio:375/812;background:#f4f4f4}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{font-size:13px;font-weight:700;color:var(--c)}
+.card h2{font-size:22px;font-weight:900;line-height:1.35}
+.one{font-size:16px;font-weight:700}
+dl{display:grid;grid-template-columns:5.5em 1fr;gap:4px 10px;font-size:15px;border-top:1px solid var(--line);padding-top:10px}
+dt{color:var(--sub)}
+.src a{color:var(--sub)}
+.go{display:block;text-align:center;background:var(--c);color:#fff;text-decoration:none;font-weight:900;font-size:16px;padding:12px;border-radius:99px;margin-top:4px}
+.note{margin-top:36px;color:var(--sub);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+</style></head><body><div class="wrap">
+<h1><span style="display:inline-block">岩手の記録ページ、</span><span style="display:inline-block">3つの見立て</span></h1>
+<p class="lead">10/16の本物の写真142枚・動画4本・13地点で動くモックです。どれも「地図と写真が連動」「1地点1画面」「今日の数字」「Cafe AWAIの会話」入り。押して触ってみてください。</p>
+<div class="cards">
+ <section class="card" style="--c:#0b6fc2">
+  <a class="shot" href="a.html"><img src="shots/a.jpg" alt="A案の画面"></a>
+  <div class="tag">A　路線図と発車標</div>
+  <h2>1日を1本の路線にする</h2>
+  <p class="one">地点が「駅」。下へ送るたびに次の駅へ着く。</p>
+  <dl><dt>ワクワク</dt><dd>「次は 08 道の駅いわいずみ 13:47」の発車標で、続きを見たくなる</dd>
+  <dt>シュッと</dt><dd>白黒＋路線色の青1色。時刻は大きな等幅数字</dd>
+  <dt>見やすさ</dt><dd>地図が上に常駐。駅番号が地図のピンと同じ</dd>
+  <dt>骨格</dt><dd>上：地図固定／下：縦スナップ＋左端の路線</dd>
+  <dt class="src">借用元</dt><dd class="src"><a href="https://www.uber.com/jp/ja/">uber.com</a> の白黒キオスクと、出発●→到着■の縦線</dd></dl>
+  <a class="go" href="a.html">この案を触る</a>
+ </section>
+ <section class="card" style="--c:#e5322d">
+  <a class="shot" href="b.html"><img src="shots/b.jpg" alt="B案の画面"></a>
+  <div class="tag">B　ライトテーブルのコンタクトシート</div>
+  <h2>写真が主役のフィルム</h2>
+  <p class="one">横にめくると1地点。選んだコマに赤い丸。</p>
+  <dl><dt>ワクワク</dt><dd>現像したてのベタ焼きを眺める感じ。赤いダーマトの丸</dd>
+  <dt>シュッと</dt><dd>白い壁と等幅の小さなキャプションだけ</dd>
+  <dt>見やすさ</dt><dd>1地点の写真が全部1枚に並ぶ。地図は右上のルーペ、押すと全画面</dd>
+  <dt>骨格</dt><dd>横スナップ／上：大写真・下：コマの格子／地図は浮かぶ丸</dd>
+  <dt class="src">借用元</dt><dd class="src"><a href="https://linusrogge.com">linusrogge.com</a> の白い壁と隅の等幅キャプション</dd></dl>
+  <a class="go" href="b.html">この案を触る</a>
+ </section>
+ <section class="card" style="--c:#c8372d">
+  <a class="shot" href="c.html"><img src="shots/c.jpg" alt="C案の画面"></a>
+  <div class="tag">C　三陸の海図と航海日誌</div>
+  <h2>地図の上を寄港していく</h2>
+  <p class="one">画面いっぱいの海図に、生成りのカードが浮かぶ。</p>
+  <dl><dt>ワクワク</dt><dd>緯度経度つきで「寄港」する。三陸の海まで出ていく実感</dd>
+  <dt>シュッと</dt><dd>生成り＋黒ピル＋灯台の赤1色</dd>
+  <dt>見やすさ</dt><dd>地図が全画面で触れる。写真は横スワイプで1枚ずつ大きく</dd>
+  <dt>骨格</dt><dd>地図が背景全面／下：浮かぶカード（縦送り）＋カード内で写真を横送り</dd>
+  <dt class="src">借用元</dt><dd class="src"><a href="https://www.pampam.city">pampam.city</a> の生成りの紙と、地図に浮く黒ピルとカード</dd></dl>
+  <a class="go" href="c.html">この案を触る</a>
+ </section>
+</div>
+<p class="note">どれか1つを選んだら、本番の記録ページ（kiroku/）にその骨格を移します。「Aの路線＋Bの赤丸」のような組み合わせもできます。</p>
+</div></body></html>
