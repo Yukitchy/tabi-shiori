@@ -234,7 +234,7 @@ def build_list(slug,d,items,O):
     vg=''.join(cell(i) for i in videos)
     flow=''
     for n,sec in enumerate(d.get('sections',[])):
-        flow+=(f'<li data-i="{n}"><img loading="lazy" src="../img/{esc(sec["photo"])}.jpg" alt="">'
+        flow+=(f'<li data-i="{n}">'+(f'<img loading="lazy" src="../img/{esc(sec["photo"])}.jpg" alt="">' if sec.get('photo') else '<span class="noimg" style="width:96px;height:96px;border-radius:14px;background:#e9eef3;display:block"></span>')+
                f'<div><div class="tm">{esc(sec.get("day",""))}</div><h3>{re.sub("<[^>]+>","",sec.get("h",""))}</h3>'
                f'<p>{esc(sec.get("lead","")[:90])}{"…" if len(sec.get("lead",""))>90 else ""}</p></div></li>')
 
@@ -336,6 +336,70 @@ LABELS={
        'nopick':'还没有选。看看下面的方案，按你喜欢的那个。'},
 }
 
+STOP_CSS='''
+.stop .grid .w2 img{aspect-ratio:4/3}
+.rmap{height:46vh;min-height:280px;border-radius:20px;overflow:hidden;background:#e9eef3}.rmap img{max-width:none}
+.pin{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;border:2px solid #fff;font:900 12px/22px sans-serif;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+details.more summary{cursor:pointer;text-align:center;font-weight:900;font-size:14px;color:var(--ac);padding:12px;margin-top:8px;border:2px solid var(--wash);border-radius:12px;list-style:none}
+details.more[open] summary{margin-bottom:8px}
+.vc{border-left:3px solid var(--ac);padding:2px 0 2px 12px;display:grid;gap:8px}
+.vc .vt{font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--ac)}
+.vc .vg{margin:0;font-size:14px;line-height:1.7}
+.vc ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.vc li{display:grid;grid-template-columns:40px 1fr;gap:8px;font-size:13px;line-height:1.55}
+.vc time{font-size:11px;color:var(--ash);font-variant-numeric:tabular-nums;padding-top:2px}
+'''.replace("\\'","'")
+STOPMAP_JS=''';(function(){if(!window.L)return;Object.keys(SM).forEach(function(id){var el=document.getElementById(id);if(!el)return;var P=SM[id],m=L.map(el,{scrollWheelZoom:false}),pts=P.map(function(p){return [p.lat,p.lng]});
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(m);
+if(pts.length>1)L.polyline(pts,{color:MC,weight:3,opacity:.7}).addTo(m);
+P.forEach(function(p){L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:'<div class="pin">'+p.n+'</div>',iconSize:[26,26],iconAnchor:[13,13]})}).addTo(m).bindPopup('<b>'+p.name+'</b><br>'+p.t+'<img src="'+p.f+'" style="width:160px;display:block;border-radius:8px;margin-top:4px">')});
+var l=pts[pts.length-1],near=pts.filter(function(q){return Math.abs(q[0]-l[0])<1.2&&Math.abs(q[1]-l[1])<1.2});
+var fit=function(){m.fitBounds(L.latLngBounds(near.length>1?near:pts),{padding:[30,30]})};fit();
+new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el)})})();'''.replace("\\'","'")
+def record_html(stops,items,cell,P,voice,numsblk):
+    """立ち寄り地点セクション群 -> (html, 地図データ)。日ごとに「今日の数字」＋経路地図＋地点ごとの1画面"""
+    out='';SM={};byk={i['f']:i for i in items}
+    def hm(s):return s[11:16]
+    def vcblk(v):
+        return (f'<div class="vc"><div class="vt">その場の会話</div><p class="vg">{esc(v["gist"])}</p><ul>'
+                +''.join(f'<li><time>{esc(t)}</time><span>{esc(x)}</span></li>' for t,x in v.get('lines',[]))+'</ul></div>')
+    days=sorted({s['day'] for s in stops})
+    for day in days:
+        S=[s for s in stops if s['day']==day];lab=f'{int(day[5:7])}/{int(day[8:10])}';dd=f'{int(day[8:10])}日'
+        its=[i for s in S for i in s['items']];nV=sum(1 for i in its if i['kind']=='video')
+        tot=sum(s['km'] or 0 for s in S);ns=sum(1 for s in S if s['kind']=='stop')
+        vm=sum((datetime.datetime.fromisoformat(v['to'])-datetime.datetime.fromisoformat(v['from'])).seconds//60 for v in (voice or {}).get('items',[]) if v['from'][:10]==day)
+        t0=min(i['taken'] for i in its);t1=max(i['taken'] for i in its)
+        n1=[('移動距離',f'{tot:.0f}km','直線の合計'),('立ち寄り',f'{ns}か所',''),('時間帯',hm(t0),'〜 '+hm(t1))]
+        n2=[('写真',f'{len(its)-nV}枚',''),('動画',f'{nV}本','')]+([('会話の記録',f'{vm}分','胸レコ')] if vm else [])
+        mp=[];
+        for s in S:
+            if s['kind']=='stop' and s['lat'] is not None:
+                mp.append({'lat':s['lat'],'lng':s['lng'],'n':len(mp)+1,'name':s['name'],'t':f'{hm(s["t0"])}〜{hm(s["t1"])}','f':'album/'+s['items'][0]['f'][:3]+'.jpg'})
+        if mp: SM[f'map-{day}']=mp
+        out+=(f'<section class="s" data-clock="{dd}の記録"><div class="eyebrow">{dd}の記録</div><h2><em>今日の</em><span>数字</span></h2>{numsblk(n1)}{numsblk(n2)}'
+              +(f'<div class="rmap" id="map-{day}"></div>' if mp else '')+'</section>')
+        for s in S:
+            if s['kind']=='voice':
+                out+=f'<section class="s" data-clock="{esc(s["name"])}"><div class="eyebrow">{hm(s["t0"])}〜{hm(s["t1"])}</div><h2><em>{esc(s["name"])}</em></h2>{vcblk(s["voice"])}</section>';continue
+            k=s['km'];mv=''
+            if k is not None:
+                mv=('📍 前の地点と同じ場所' if k<.3 else f'{"🚄" if k>100 else "🚗"} 前の地点から約{k:.0f}km' if k>=10 else f'🚗 前の地点から約{k:.1f}km')
+                mv=f'<div class="mv">{mv}</div>'
+            I=s['items'];ph=[i for i in I if i['kind']=='photo']
+            if len(I)>8 and ph:  # 多い地点は代表（容量の大きい＝細部の多い写真）を上に
+                hero=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size);I=[hero]+[i for i in I if i is not hero]
+                hero_cell=cell(hero).replace('<figure ','<figure class="w2" ',1) if hero['kind']=='photo' else cell(hero)
+                cells=[hero_cell]+[cell(i) for i in I[1:]]
+            else: cells=[cell(i) for i in I]
+            g=f'<div class="grid">{"".join(cells[:12])}</div>'
+            if len(cells)>12: g+=f'<details class="more"><summary>残り{len(cells)-12}枚も見る</summary><div class="grid">{"".join(cells[12:])}</div></details>'
+            tm=hm(s['t0']) if s['t0']==s['t1'] or hm(s['t0'])==hm(s['t1']) else f'{hm(s["t0"])}〜{hm(s["t1"])}'
+            out+=(f'<section class="s stop" data-clock="{esc(s["name"])}">{mv}<div class="eyebrow">{tm}</div><h2><em>{esc(s["name"])}</em></h2>{g}'
+                  +(vcblk(s['voice']) if s['voice'] else '')+'</section>')
+    if voice and voice.get('note'): out=out[:-10]+f'<p class="selhelp">{esc(voice["note"])}</p></section>'
+    return out,SM
+
 def build(slug):
     P=ROOT/'packs'/slug; d=json.load(open(P/'trip.json'))
     cr=json.load(open(P/'credits.json')) if (P/'credits.json').exists() else {}
@@ -420,20 +484,27 @@ def build(slug):
                '<a class="bigbtn" href="list/" target="_blank" rel="noopener">写真と動画を一覧で見る</a>'
                '<button class="bigbtn" id="selmode" type="button" style="margin-top:8px">写真を選んで保存する</button>'
                '<p class="selhelp">1枚だけでいいときは、写真の右下の「保存」を押してください。</p></section>')
-        days={}
-        for i in items: days.setdefault(i['taken'][:10],[]).append(i)
-        for ymd,L in days.items():
-            lab=f'{int(ymd[5:7])}/{int(ymd[8:10])}';cells=''
-            for i in L:
-                k=i['f'][:3];cap=f'<figcaption>{esc(i.get("cap",""))}</figcaption>' if i.get('cap') else ''
-                ext='mp4' if i['kind']=='video' else 'jpg'
-                sv=f'<a class="saveb" href="album/{k}.{ext}" download="{slug}-{k}.{ext}">保存</a>'
-                sb='<button class="selb" type="button" aria-pressed="false" aria-label="選ぶ"></button>'
-                cells+=(f'<figure class="w2" data-k="{k}" data-ext="{ext}"><video controls playsinline preload="none" poster="album/{k}.jpg" src="album/{k}.mp4"></video>{sb}{sv}{cap}</figure>'
-                        if i['kind']=='video' else
-                        f'<figure data-k="{k}" data-ext="{ext}"><a href="album/{k}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="album/{k}.jpg" alt=""></a>{sb}{sv}{cap}</figure>')
-            album+=f'<section class="s" data-clock="{lab}"><div class="eyebrow">{lab}</div><div class="grid">{cells}</div></section>'
-        if gps:
+        def cell(i):
+            k=i['f'][:3];cap=f'<figcaption>{esc(i.get("cap",""))}</figcaption>' if i.get('cap') else ''
+            ext='mp4' if i['kind']=='video' else 'jpg'
+            sv=f'<a class="saveb" href="album/{k}.{ext}" download="{slug}-{k}.{ext}">保存</a>'
+            sb='<button class="selb" type="button" aria-pressed="false" aria-label="選ぶ"></button>'
+            return (f'<figure class="w2" data-k="{k}" data-ext="{ext}"><video controls playsinline preload="none" poster="album/{k}.jpg" src="album/{k}.mp4"></video>{sb}{sv}{cap}</figure>'
+                    if i['kind']=='video' else
+                    f'<figure data-k="{k}" data-ext="{ext}"><a href="album/{k}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="album/{k}.jpg" alt=""></a>{sb}{sv}{cap}</figure>')
+        import stops as ST
+        voice=json.load(open(P/'voice.json')) if (P/'voice.json').exists() else None
+        stops=ST.make(items,P,voice) if d.get('stops') else []  # trip.json に "stops": true で「道のり」表示
+        if stops:
+            recs,SM=record_html(stops,items,cell,P,voice,numsblk)
+            album+=recs
+        else:
+          days={}
+          for i in items: days.setdefault(i['taken'][:10],[]).append(i)
+          for ymd,L in days.items():
+            lab=f'{int(ymd[5:7])}/{int(ymd[8:10])}'
+            album+=f'<section class="s" data-clock="{lab}"><div class="eyebrow">{lab}</div><div class="grid">{"".join(cell(i) for i in L)}</div></section>'
+        if gps and not stops:
             album+='<section class="s" data-clock="地図"><div class="eyebrow">地図</div><h2><em>行った</em><span>ところ</span></h2><div id="map"></div></section>'
             lfhead=('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
                     '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
@@ -446,7 +517,11 @@ def build(slug):
                    'if(pts.length>1)L.polyline(pts,{color:MC,weight:3,opacity:.7}).addTo(m);'
                    'var fit=function(){m.fitBounds(L.latLngBounds(pts),{padding:[30,30]})};fit();'
                    'new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el);})();')
-    albumcss=ALBUM_CSS if items else ''
+        if stops and SM:
+            lfhead=('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
+                    '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
+            mapjs='\nconst SM='+json.dumps(SM,ensure_ascii=False)+',MC='+json.dumps(d['accent'])+STOPMAP_JS
+    albumcss=(ALBUM_CSS+(STOP_CSS if d.get('stops') else '')) if items else ''
     bigcss=BIG_CSS if d.get('text')=='large' else ''
     selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="album/";'+SELECT_JS) if items else ''
     selbar=('<div id="selbar"><span class="n"></span><button class="cancel" type="button">やめる</button>'
