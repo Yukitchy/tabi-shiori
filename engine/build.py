@@ -398,9 +398,123 @@ P.forEach(function(p){L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:
 var l=pts[pts.length-1],near=pts.filter(function(q){return Math.abs(q[0]-l[0])<1.2&&Math.abs(q[1]-l[1])<1.2});
 var fit=function(){m.fitBounds(L.latLngBounds(near.length>1?near:pts),{padding:[30,30]})};fit();
 new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el)})})();'''.replace("\\'","'")
+KLB_HTML='''<div id="kmap" aria-label="地図"></div>
+<div id="lb" hidden role="dialog" aria-label="写真"><div class="lbm"></div>
+<button type="button" class="lbx" aria-label="閉じる">✕</button><button type="button" class="lbp" aria-label="前の写真">‹</button><button type="button" class="lbn" aria-label="次の写真">›</button>
+<div class="lbc"><div class="lbi"><b class="lbt"></b><span class="lbw"></span></div><a class="lbs" download>保存</a></div></div>'''
+REC_CSS='''
+/* 記録ページ: 地図を上に固定(PCは左)、下(右)に時系列の地点カード */
+html.rec{--mapH:40vh;--mapH:40dvh}
+html.rec #kmap{position:fixed;left:0;right:0;top:var(--bar);height:var(--mapH);z-index:4;border-bottom:1px solid var(--line);background:#e9eef3}
+html.rec #kmap img{max-width:none}
+html.rec.tabbed #deck{margin-top:var(--mapH);height:calc(100vh - var(--bar) - var(--mapH));height:calc(100dvh - var(--bar) - var(--mapH))}
+html.rec.tabbed .s{min-height:calc(100vh - var(--bar) - var(--mapH));min-height:calc(100dvh - var(--bar) - var(--mapH));gap:6px;padding-top:10px;padding-bottom:10px;justify-content:flex-start}
+html.rec .rail{top:calc(var(--bar) + var(--mapH) + (100dvh - var(--bar) - var(--mapH))/2);height:calc(100dvh - var(--bar) - var(--mapH) - 90px);max-height:420px}
+html.rec.tabbed .s{padding-right:58px}
+html.rec.tabbed .s.stop:has(.vc){height:calc(100vh - var(--bar) - var(--mapH));height:calc(100dvh - var(--bar) - var(--mapH))}
+html.rec .stop h2{font-size:clamp(22px,6vw,28px)}
+html.rec .stop .mv{margin:0;padding:3px 10px;font-size:12px}
+html.rec .belt{flex:none}
+html.rec .belt figure{flex:0 0 64%}
+html.rec .belt img,html.rec .belt .w2 video{aspect-ratio:auto;width:100%;height:clamp(110px,24dvh,230px)}
+html.rec .stop:has(.vc) .belt img,html.rec .stop:has(.vc) .belt .w2 video{height:clamp(80px,14dvh,150px)}
+html.rec .stop .vc{flex:1 1 auto;min-height:0;overflow-y:auto;align-content:start;padding-right:4px}
+html.rec .stop .vc .vg{font-size:13px;line-height:1.6}html.rec .stop .vc li{font-size:12.5px;line-height:1.45}
+.belt figure.hl img,.belt figure.hl video{outline:4px solid var(--ac);outline-offset:-4px}
+.belt img{cursor:zoom-in}
+.pin{transition:transform .25s,background .25s}.pin.on{background:#202020;transform:scale(1.4)}
+path.dot.lit{filter:drop-shadow(0 0 5px var(--ac)) drop-shadow(0 0 9px var(--ac))}
+.kp .leaflet-popup-content-wrapper{border-radius:12px}.kp .leaflet-popup-content{margin:6px 8px;font:900 12px/1.4 sans-serif;text-align:center}
+.kp img{display:block;width:112px;border-radius:8px;margin:0 auto 3px}
+@media(min-width:900px){
+ html.rec{--mapH:0px}
+ html.rec #kmap{right:auto;width:50vw;height:calc(100vh - var(--bar));height:calc(100dvh - var(--bar));border-bottom:0;border-right:1px solid var(--line)}
+ html.rec.tabbed #deck{margin-left:50vw}
+ html.rec .belt img,html.rec .belt .w2 video{height:clamp(130px,26dvh,260px)}
+}
+#lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.94);color:#fff;display:flex;flex-direction:column}
+#lb[hidden]{display:none}
+#lb .lbm{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:56px 0 8px}
+#lb .lbm img,#lb .lbm video{max-width:100%;max-height:100%;object-fit:contain;display:block}
+#lb button{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font:900 26px/1 sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+#lb .lbx{top:calc(8px + env(safe-area-inset-top));right:10px;font-size:20px}
+#lb .lbp{left:8px;top:50%;margin-top:-24px}#lb .lbn{right:8px;top:50%;margin-top:-24px}
+#lb .lbc{flex:none;display:flex;align-items:center;gap:12px;padding:10px 16px calc(12px + env(safe-area-inset-bottom));justify-content:space-between}
+#lb .lbi{display:grid;gap:2px;min-width:0}#lb .lbt{font-size:20px;font-variant-numeric:tabular-nums}#lb .lbw{font-size:13px;font-weight:500;opacity:.85}
+#lb .lbs{flex:none;min-height:44px;display:flex;align-items:center;background:#fff;color:#202020;font-weight:900;font-size:15px;border-radius:999px;padding:0 22px;text-decoration:none}
+'''
+KMAP_JS=r'''
+;(function(){
+ if(!window.L||typeof KD==='undefined')return;
+ var D=KD,AP=D.ap,deckEl=document.getElementById('deck'),el=document.getElementById('kmap');
+ var m=L.map(el,{zoomControl:false,scrollWheelZoom:false,attributionControl:true});
+ window.__km=m;L.control.zoom({position:'bottomleft'}).addTo(m);
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(m);
+ var all=[];D.route.forEach(function(r){if(r.length>1)L.polyline(r,{color:MC,weight:4,opacity:.7}).addTo(m);all=all.concat(r)});
+ D.ph.forEach(function(p){if(p.la!=null)all.push([p.la,p.ln])});
+ var allB=L.latLngBounds(all).pad(.12);m.fitBounds(allB);
+ var LO={radius:4.5,fillColor:MC,color:'#fff',weight:1.5,fillOpacity:.9},HI={radius:9,fillColor:'#fff',color:MC,weight:4,fillOpacity:1};
+ var byK={},dots={},order=D.ph.map(function(p){return p.k});D.ph.forEach(function(p,i){p.i=i;byK[p.k]=p});
+ D.ph.forEach(function(p){if(p.la==null)return;
+  var d=L.circleMarker([p.la,p.ln],Object.assign({className:'dot',bubblingMouseEvents:false},LO)).addTo(m);
+  d.on('click',function(){focus(p.k)});dots[p.k]=d});
+ var pins=D.stops.map(function(st,i){if(!st.n)return null;
+  var mk=L.marker([st.la,st.lng],{icon:L.divIcon({className:'',html:'<div class="pin">'+st.n+'</div>',iconSize:[26,26],iconAnchor:[13,13]}),zIndexOffset:500}).addTo(m);
+  mk.on('click',function(){var s=document.querySelector('.s[data-s="'+i+'"]');s&&s.scrollIntoView({behavior:'smooth',block:'start'})});return mk});
+ var pop=L.popup({closeButton:false,autoPan:false,offset:[0,-6],className:'kp'});
+ var cur=-2,holding=false,ht,hk=null;
+ function bump(ms){clearTimeout(ht);ht=setTimeout(function(){holding=false;if(hk){cur=byK[hk].s;sel(hk)}},ms)}
+ function lit(k){Object.keys(dots).forEach(function(x){var d=dots[x],on=x===k;d.setStyle(on?HI:LO);var e=d.getElement();if(e)e.classList.toggle('lit',on);if(on)d.bringToFront()})}
+ function setPin(i){pins.forEach(function(mk,j){var e=mk&&mk.getElement();if(e)e.firstChild.classList.toggle('on',j===i)})}
+ function view(i){
+  m.closePopup();lit(null);document.querySelectorAll('.belt figure.hl').forEach(function(f){f.classList.remove('hl')});
+  setPin(i);
+  if(i<0){m.flyToBounds(allB,{duration:.8});return}
+  var st=D.stops[i];if(st.la==null)return;
+  var pts=[[st.la,st.lng]].concat(st.ph.filter(function(k){return dots[k]}).map(function(k){var l=dots[k].getLatLng();return [l.lat,l.lng]}));
+  m.flyToBounds(L.latLngBounds(pts).pad(.25),{maxZoom:16,duration:.8});
+ }
+ function go(i){if(i===cur)return;cur=i;if(holding)return;view(i)}
+ function sel(k){var p=byK[k];if(!p)return;
+  document.querySelectorAll('.belt figure.hl').forEach(function(f){f.classList.remove('hl')});
+  var f=document.querySelector('.belt figure[data-k="'+k+'"]');if(f)f.classList.add('hl');
+  lit(k);
+  if(p.la!=null){var ll=[p.la,p.ln];
+   pop.setLatLng(ll).setContent('<img src="'+AP+k+'.jpg" alt=""><span>'+p.t+'　'+D.stops[p.s].name+'</span>').openOn(m);
+   if(!m.getBounds().pad(-.15).contains(ll))m.panTo(ll,{duration:.5})}
+  else m.closePopup()}
+ function focus(k){var p=byK[k],f=document.querySelector('.belt figure[data-k="'+k+'"]');if(!p||!f)return;
+  holding=true;hk=k;cur=p.s;setPin(p.s);bump(700);
+  var sc=f.closest('section');deckEl.scrollTo({top:deckEl.scrollTop+sc.getBoundingClientRect().top-deckEl.getBoundingClientRect().top,behavior:'smooth'});
+  var b=f.parentNode;b.scrollTo({left:b.scrollLeft+f.getBoundingClientRect().left-b.getBoundingClientRect().left,behavior:'instant'});
+  sel(k)}
+ var io=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;var d=en.target.dataset;go(d.s!==undefined?+d.s:-1)})},{root:deckEl,rootMargin:'-45% 0px -45% 0px'});
+ document.querySelectorAll('#deck .s[data-s],#deck .s[data-v]').forEach(function(s){io.observe(s)});
+ document.querySelectorAll('.belt').forEach(function(b){b.addEventListener('scroll',function(){clearTimeout(b._t);b._t=setTimeout(function(){
+  var L0=b.getBoundingClientRect().left,best=null,bd=1e9;b.querySelectorAll('figure').forEach(function(f){var d=Math.abs(f.getBoundingClientRect().left-L0);if(d<bd){bd=d;best=f}});
+  if(best&&!holding)sel(best.dataset.k)},150)},{passive:true})});
+ deckEl.addEventListener('scroll',function(){if(holding)bump(300)},{passive:true});
+ var ro=function(){m.invalidateSize()};addEventListener('resize',ro);setTimeout(ro,300);
+ /* 全画面表示 */
+ var lb=document.getElementById('lb'),lm=lb.querySelector('.lbm'),at=0;
+ function show(i){i=(i+order.length)%order.length;at=i;var p=D.ph[i],v=p.e==='mp4';
+  lm.innerHTML=v?'<video controls autoplay playsinline src="'+AP+p.k+'.mp4" poster="'+AP+p.k+'.jpg"></video>':'<img src="'+AP+p.k+'.jpg" alt="">';
+  lb.querySelector('.lbt').textContent=p.t;lb.querySelector('.lbw').textContent=D.stops[p.s].name;
+  var a=lb.querySelector('.lbs');a.href=AP+p.k+'.'+p.e;a.setAttribute('download',SLUG+'-'+p.k+'.'+p.e);sel(p.k)}
+ function open_(k){lb.hidden=false;show(byK[k].i)}
+ function close_(){lb.hidden=true;lm.innerHTML='';focus(D.ph[at].k)}
+ lb.querySelector('.lbx').onclick=close_;lb.querySelector('.lbp').onclick=function(){show(at-1)};lb.querySelector('.lbn').onclick=function(){show(at+1)};
+ addEventListener('keydown',function(e){if(lb.hidden)return;if(e.key==='Escape')close_();if(e.key==='ArrowLeft')show(at-1);if(e.key==='ArrowRight')show(at+1)});
+ var tx=null;lb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+ lb.addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50)show(at+(dx<0?1:-1))});
+ deckEl.addEventListener('click',function(e){
+  var f=e.target.closest('.belt figure');if(!f||e.target.closest('.saveb,.selb')||document.body.classList.contains('selecting'))return;
+  sel(f.dataset.k);if(e.target.tagName==='VIDEO')return;e.preventDefault();open_(f.dataset.k)});
+})();
+'''
 def record_html(stops,items,cell,P,voice,numsblk,AP='album/'):
     """立ち寄り地点セクション群 -> (html, 地図データ)。日ごとに「今日の数字」＋経路地図＋地点ごとの1画面"""
-    out='';SM={};byk={i['f']:i for i in items}
+    out='';byk={i['f']:i for i in items};SI=[];PH=[];ROUTE=[];pn=0
     def hm(s):return s[11:16]
     def vcblk(v):
         return (f'<div class="vc"><div class="vt">その場の会話</div><p class="vg">{esc(v["gist"])}</p><ul>'
@@ -414,13 +528,8 @@ def record_html(stops,items,cell,P,voice,numsblk,AP='album/'):
         t0=min(i['taken'] for i in its);t1=max(i['taken'] for i in its)
         n1=[('移動距離',f'{tot:.0f}km','直線の合計'),('立ち寄り',f'{ns}か所',''),('時間帯',hm(t0),'〜 '+hm(t1))]
         n2=[('写真',f'{len(its)-nV}枚',''),('動画',f'{nV}本','')]+([('会話の記録',f'{vm}分','胸レコ')] if vm else [])
-        mp=[];
-        for s in S:
-            if s['kind']=='stop' and s['lat'] is not None:
-                mp.append({'lat':s['lat'],'lng':s['lng'],'n':len(mp)+1,'name':s['name'],'t':f'{hm(s["t0"])}〜{hm(s["t1"])}','f':AP+s['items'][0]['f'][:3]+'.jpg'})
-        if mp: SM[f'map-{day}']=mp
-        out+=(f'<section class="s" id="g-d{int(day[8:10])}" data-clock="{dd}の記録"><div class="eyebrow">{dd}の記録</div><h2><em>今日の</em><span>数字</span></h2>{numsblk(n1)}{numsblk(n2)}'
-              +(f'<div class="rmap" id="map-{day}"></div>' if mp else '')+'</section>')
+        route=[]
+        out+=(f'<section class="s" id="g-d{int(day[8:10])}" data-v="all" data-clock="{dd}の記録"><div class="eyebrow">{dd}の記録</div><h2><em>今日の</em><span>数字</span></h2>{numsblk(n1)}{numsblk(n2)}</section>')
         for s in S:
             if s['kind']=='voice':
                 out+=f'<section class="s" data-clock="{esc(s["name"])}"><div class="eyebrow">{hm(s["t0"])}〜{hm(s["t1"])}</div><h2><em>{esc(s["name"])}</em></h2>{vcblk(s["voice"])}</section>';continue
@@ -428,18 +537,21 @@ def record_html(stops,items,cell,P,voice,numsblk,AP='album/'):
             if k is not None:
                 mv=('📍 前の地点と同じ場所' if k<.3 else f'{"🚄" if k>100 else "🚗"} 前の地点から約{k:.0f}km' if k>=10 else f'🚗 前の地点から約{k:.1f}km')
                 mv=f'<div class="mv">{mv}</div>'
-            I=s['items'];ph=[i for i in I if i['kind']=='photo']
-            # 1地点=1画面: 代表写真1枚(大)＋残りは横スワイプの帯。会話がある地点は会話→帯
+            I=s['items'];idx=len(SI)
+            # 1地点=1画面: 写真は横スワイプの帯（タップで全画面）。会話がある地点は会話→帯
             vcb=vcblk(s['voice']) if s['voice'] else ''
-            if vcb: hero=None;rest=I
-            else:
-                hero=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size) if len(I)>8 and ph else (ph or I)[0]
-                rest=[i for i in I if i is not hero]
-            g=(f'<div class="grid heroc">{cell(hero)}</div>' if hero else '')+vcb+(f'<div class="grid belt">{"".join(cell(i) for i in rest)}</div>' if rest else '')
+            g=vcb+f'<div class="grid belt">{"".join(cell(i) for i in I)}</div>'
+            pin=0
+            if s['lat'] is not None:
+                pn+=1;pin=pn;route.append([s['lat'],s['lng']])
+            SI.append({'n':pin,'la':s['lat'],'lng':s['lng'],'name':s['name'],'t':f'{hm(s["t0"])}〜{hm(s["t1"])}','ph':[i['f'][:3] for i in I if i.get('lat') is not None]})
+            for i in I: PH.append({'k':i['f'][:3],'e':'mp4' if i['kind']=='video' else 'jpg','la':i.get('lat'),'ln':i.get('lng'),'t':hm(i['taken']),'s':idx,'taken':i['taken']})
             tm=hm(s['t0']) if s['t0']==s['t1'] or hm(s['t0'])==hm(s['t1']) else f'{hm(s["t0"])}〜{hm(s["t1"])}'
-            out+=(f'<section class="s stop" data-clock="{esc(s["name"])}">{mv}<div class="eyebrow">{tm}</div><h2><em>{esc(s["name"])}</em></h2>{g}</section>')
+            out+=(f'<section class="s stop" data-s="{idx}" data-clock="{esc(s["name"])}">{mv}<div class="eyebrow">{tm}</div><h2><em>{esc(s["name"])}</em></h2>{g}</section>')
+        ROUTE.append(route)
     if voice and voice.get('note'): out=out[:-10]+f'<p class="selhelp">{esc(voice["note"])}</p></section>'
-    return out,SM
+    PH.sort(key=lambda p:p['taken'])
+    return out,{'stops':SI,'ph':PH,'route':ROUTE,'ap':AP}
 
 def build(slug):
     P=ROOT/'packs'/slug; d=json.load(open(P/'trip.json'))
@@ -522,7 +634,7 @@ def build(slug):
         # ponytail: 100m格子でざっくり重複排除。厳密なクラスタリングが要るなら差し替え
         spots=len({(round(i['lat']/.0009),round(i['lng']/.0011)) for i in gps})
         nP=sum(1 for i in items if i['kind']=='photo');nV=len(items)-nP
-        intro=(f'<section class="s" id="album" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
+        intro=(f'<section class="s" id="album" data-v="all" data-clock="アルバム"><div class="eyebrow">アルバム</div><h2><em>旅の</em><span>記録</span></h2>'
                f'{numsblk([("写真",f"{nP}枚",""),("動画",f"{nV}本",""),("場所",f"{spots}","GPSあり")])}'
                '<a class="bigbtn" href="../list/" target="_blank" rel="noopener">写真と動画を一覧で見る</a>'
                '<button class="bigbtn" id="selmode" type="button" style="margin-top:8px">写真を選んで保存する</button>'
@@ -539,7 +651,7 @@ def build(slug):
         voice=json.load(open(P/'voice.json')) if (P/'voice.json').exists() else None
         stops=ST.make(items,P,voice) if d.get('stops') else []  # trip.json に "stops": true で「道のり」表示
         if stops:
-            recs,SM=record_html(stops,items,cell,P,voice,numsblk,AP)
+            recs,KD=record_html(stops,items,cell,P,voice,numsblk,AP)
             album=recs+intro;rec_days=sorted({int(x['day'][8:10]) for x in stops})
             ph=[i for i in items if i['kind']=='photo' and (P/'album'/i['f']).stat().st_size<700000]
             ogrec=max(ph,key=lambda i:(P/'album'/i['f']).stat().st_size)['f'] if ph else ''
@@ -564,10 +676,10 @@ def build(slug):
                    'if(pts.length>1)L.polyline(pts,{color:MC,weight:3,opacity:.7}).addTo(m);'
                    'var fit=function(){m.fitBounds(L.latLngBounds(pts),{padding:[30,30]})};fit();'
                    'new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){m.invalidateSize();fit();o.disconnect()}})}).observe(el);})();')
-        if stops and SM:
+        if stops and KD['route']:
             lfhead=('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
                     '<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
-            mapjs='\nconst SM='+json.dumps(SM,ensure_ascii=False)+',MC='+json.dumps(d['accent'])+STOPMAP_JS
+            mapjs='\nconst KD='+json.dumps(KD,ensure_ascii=False)+',MC='+json.dumps(d['accent'])+KMAP_JS
     albumcss=(ALBUM_CSS+(STOP_CSS if d.get('stops') else '')) if items else ''
     bigcss=BIG_CSS if d.get('text')=='large' else ''
     selectjs=('\nconst SLUG='+json.dumps(slug)+',MEDIA="'+AP+'";'+SELECT_JS) if items else ''
@@ -692,7 +804,7 @@ dialog.pop::backdrop{{background:rgba(0,0,0,.55)}}
 @media(prefers-reduced-motion:reduce){{#deck{{scroll-behavior:auto}}}}
 .langsw{{position:fixed;top:10px;right:10px;z-index:8;display:flex;gap:6px}}
 .langsw a{{background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:12px;font-weight:900;text-decoration:none;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}}
-{albumcss}{TABS_CSS if tabs else ''}{bcss}{bigcss}
+{albumcss}{TABS_CSS if tabs else ''}{REC_CSS if 'rec' in cls else ''}{bcss}{bigcss}
 </style></head><body>
 {langsw}{tabs}
 <div class="rail" aria-hidden="true"><span class="lab t">{esc(rtop)}</span><span class="track"></span><span class="klabel" id="klabel"></span>{marker}<span class="lab b">{esc(rbot)}</span></div>
@@ -787,6 +899,8 @@ build();upd();{mapjs}{selectjs}
             rrow=[(l,f'g-r{i+1}') for i,l in enumerate(rec_days)]
             rtop_,rbot_=rail0["top"],rail0["bottom"]
         kbar,kcls=bar('記録',rrow,[('予定','../'),('記録','./')])
+        if d.get('stops'):
+            kcls=kcls.replace('tabbed','tabbed rec');kbar+=KLB_HTML
         K=O/'kiroku';K.mkdir(exist_ok=True)
         ktitle=d.get('kiroku_title') or d["title"]+' の記録'
         rj=json.loads(railjs);rj['a2']=rj['a1']
