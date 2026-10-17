@@ -10,7 +10,7 @@
 .pn{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:#fff;border:3px solid var(--dc,var(--acc));font:800 13px Inter,sans-serif;color:#111;box-shadow:0 1px 4px #0003;transition:transform .2s}
 .pin.on .pn{background:var(--dc,var(--acc));color:#fff;transform:scale(1.25)}
 #line{position:fixed;top:calc(var(--head) + var(--mapH));left:0;right:0;bottom:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;background:#fff;border-top:1px solid var(--line);z-index:2}
-#line section{height:calc(100dvh - var(--head) - var(--mapH));scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:52px 1fr;padding-right:16px;overflow:hidden}
+#line section{height:var(--secH,calc(100dvh - var(--head) - var(--mapH)));scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:52px 1fr;padding-right:16px;overflow:hidden}
 .rail{position:relative;display:flex;justify-content:center}
 .rail::before{content:"";position:absolute;top:0;bottom:0;width:6px;background:var(--dc,var(--acc))}
 section.first .rail::before{top:30px}
@@ -28,6 +28,37 @@ section.last .rail::before{bottom:calc(100% - 30px)}
 .hero img{width:100%;height:100%;object-fit:cover}
 .strip{display:flex;gap:4px;overflow-x:auto;margin-top:6px;padding-bottom:2px;scrollbar-width:none;flex:none}
 .strip::-webkit-scrollbar{display:none}
+.sw{position:relative;flex:none}
+.sw::after{content:"";position:absolute;right:0;top:6px;bottom:2px;width:84px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 70%);pointer-events:none;transition:opacity .25s}
+.sw .more{position:absolute;right:2px;top:calc(50% + 2px);transform:translateY(-50%);z-index:1;background:#111;color:#fff;font:700 13px/1 "Noto Sans JP",sans-serif;padding:9px 12px;border-radius:99px;box-shadow:0 3px 10px rgba(0,0,0,.25);white-space:nowrap;animation:poke 1.8s ease-in-out infinite;transition:opacity .25s}
+@keyframes poke{0%,60%,100%{transform:translate(0,-50%)}30%{transform:translate(5px,-50%)}}
+.sw.end::after,.sw.end .more{opacity:0;pointer-events:none}
+.hero .nav{position:absolute;top:50%;width:38px;height:38px;margin-top:-19px;border-radius:50%;background:rgba(255,255,255,.88);color:#111;display:grid;place-items:center;font:700 26px/1 Inter,sans-serif;padding-bottom:3px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.hero .nav.p{left:8px}.hero .nav.n{right:8px}
+.hero .cnt{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.62);color:#fff;font-size:13px;padding:4px 10px;border-radius:99px}
+.hero .cnt b{font-weight:800}
+.dots,.car,.pg{display:none}
+/* B案: 写真の束（重なった紙の影＋点々） */
+.s-b .sw{display:none}
+.s-b .hero{margin:12px 12px 0 0;overflow:visible;box-shadow:6px -6px 0 -1px #fff,6px -6px 0 0 #d6d6d6,12px -12px 0 -1px #fff,12px -12px 0 0 #c4c4c4}
+.s-b .hero img{border-radius:10px}
+.s-b .hero .cnt{top:8px;bottom:auto;font-size:14px;padding:5px 11px}
+.s-b .dots{display:flex;align-items:center;justify-content:center;gap:6px;flex:none;margin-top:10px}
+.s-b .dots i{width:7px;height:7px;border-radius:50%;background:#cfcfcf;transition:.2s}
+.s-b .dots i.on{width:20px;border-radius:4px;background:var(--dc,var(--acc))}
+.s-b .dots em{font-style:normal;font-size:12px;color:var(--sub);margin-left:6px}
+/* C案: のぞき見カルーセル */
+.s-c .hero,.s-c .sw{display:none}
+.s-c .car{display:flex;flex:1;min-height:0;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:-16px;padding-right:16px}
+.s-c .car::-webkit-scrollbar{display:none}
+.s-c .car button{position:relative;flex:none;width:84%;height:100%;border-radius:10px;overflow:hidden;scroll-snap-align:start;background:#f3f3f3}
+.s-c .car img{width:100%;height:100%;object-fit:cover}
+.s-c .pg{display:flex;align-items:center;gap:10px;flex:none;margin-top:8px;font-size:13px}
+.s-c .pg span{flex:1;height:4px;background:#e6e6e6;border-radius:2px;overflow:hidden}
+.s-c .pg span i{display:block;height:100%;background:var(--dc,var(--acc));transition:width .2s}
+.s-c .pg b{font-weight:800}.s-c .pg em{font-style:normal}.s-c .pg small{color:var(--sub)}
+.svp{position:fixed;right:10px;top:calc(var(--head) + 10px);white-space:nowrap;z-index:50;background:#111;color:#fff;font:700 13px "Noto Sans JP",sans-serif;padding:6px 6px 6px 14px;border-radius:99px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.svp a{color:#fff;text-decoration:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center}.svp a.on{background:#fff;color:#111}
 .strip button{position:relative;flex:none;width:56px;height:56px;border-radius:6px;overflow:hidden;outline-offset:-3px}
 .strip img{width:100%;height:100%;object-fit:cover}
 .strip button.on{outline:3px solid var(--dc,var(--acc))}
@@ -57,7 +88,7 @@ section.last .rail::before{bottom:calc(100% - 30px)}
   :root{--mapH:0px}
   #mapwrap{right:auto;width:58vw;bottom:0;height:auto}
   #line{left:58vw;top:var(--head)}
-  #line section{height:calc(100dvh - var(--head));padding:0 28px 0 8px}
+  #line section{height:var(--secH,calc(100dvh - var(--head)));padding:0 28px 0 8px}
   .bd{padding:28px 0 22px}.time{font-size:40px}.bd h2{font-size:28px}
   .strip button{width:72px;height:72px}
 }
