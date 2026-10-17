@@ -47,28 +47,6 @@ section.last .rail::before{bottom:calc(100% - 30px)}
 .hero .nav.p{left:8px}.hero .nav.n{right:8px}
 .hero .cnt{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.62);color:#fff;font-size:13px;padding:4px 10px;border-radius:99px}
 .hero .cnt b{font-weight:800}
-.dots,.car,.pg{display:none}
-/* B案: 写真の束（重なった紙の影＋点々） */
-.s-b .sw{display:none}
-.s-b .hero{margin:12px 12px 0 0;overflow:visible;box-shadow:6px -6px 0 -1px #fff,6px -6px 0 0 #d6d6d6,12px -12px 0 -1px #fff,12px -12px 0 0 #c4c4c4}
-.s-b .hero img{border-radius:10px}
-.s-b .hero .cnt{top:8px;bottom:auto;font-size:14px;padding:5px 11px}
-.s-b .dots{display:flex;align-items:center;justify-content:center;gap:6px;flex:none;margin-top:10px}
-.s-b .dots i{width:7px;height:7px;border-radius:50%;background:#cfcfcf;transition:.2s}
-.s-b .dots i.on{width:20px;border-radius:4px;background:var(--dc,var(--acc))}
-.s-b .dots em{font-style:normal;font-size:12px;color:var(--sub);margin-left:6px}
-/* C案: のぞき見カルーセル */
-.s-c .hero,.s-c .sw{display:none}
-.s-c .car{display:flex;flex:1;min-height:0;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:-16px;padding-right:16px}
-.s-c .car::-webkit-scrollbar{display:none}
-.s-c .car button{position:relative;flex:none;width:84%;height:100%;border-radius:10px;overflow:hidden;scroll-snap-align:start;background:#f3f3f3}
-.s-c .car img{width:100%;height:100%;object-fit:cover}
-.s-c .pg{display:flex;align-items:center;gap:10px;flex:none;margin-top:8px;font-size:13px}
-.s-c .pg span{flex:1;height:4px;background:#e6e6e6;border-radius:2px;overflow:hidden}
-.s-c .pg span i{display:block;height:100%;background:var(--dc,var(--acc));transition:width .2s}
-.s-c .pg b{font-weight:800}.s-c .pg em{font-style:normal}.s-c .pg small{color:var(--sub)}
-.svp{position:fixed;right:10px;top:calc(var(--head) + 10px);white-space:nowrap;z-index:50;background:#111;color:#fff;font:700 13px "Noto Sans JP",sans-serif;padding:6px 6px 6px 14px;border-radius:99px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.svp a{color:#fff;text-decoration:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center}.svp a.on{background:#fff;color:#111}
 .strip button{position:relative;flex:none;width:56px;height:56px;border-radius:6px;overflow:hidden;outline-offset:-3px}
 .strip img{width:100%;height:100%;object-fit:cover}
 .strip button.on{outline:3px solid var(--dc,var(--acc))}
@@ -140,10 +118,7 @@ D.days.forEach((dy,di)=>{
   <h2>${esc(s.name)}</h2>
   <p class="meta">写真<b>${s.items.length}</b>枚${s.km!=null?` · 前の駅から<b>${s.km}</b>km`:''}${s.voices.length?' · 会話あり':''}</p>
   <button class="hero" data-i="${i}"><img alt="" loading="${i<2?'eager':'lazy'}" src="${IMG(s.items[0].f)}">${s.items.length>1?`<span class="nav p" data-d="-1" aria-label="前の写真">‹</span><span class="nav n" data-d="1" aria-label="次の写真">›</span><span class="cnt num"><b>1</b> / ${s.items.length}</span>`:''}</button>
-  ${s.items.length>1?`<div class="sw"><div class="strip">${s.items.map((it,k)=>`<button data-f="${it.f}" class="${k?'':'on'}"><img loading="lazy" src="${IMG(it.f)}" alt="">${it.k==='v'?'<i class="vmark">▶</i>':''}</button>`).join('')}</div><button class="more" aria-label="写真の続きを見る">全${s.items.length}枚 ›</button></div>
-  <div class="dots" aria-hidden="true">${Array.from({length:Math.min(s.items.length,9)},(_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}${s.items.length>9?`<em>全${s.items.length}枚</em>`:''}</div>
-  <div class="car" data-i="${i}">${s.items.map((it,k)=>`<button data-k="${k}"><img loading="lazy" src="${IMG(it.f)}" alt="">${it.k==='v'?'<i class="vmark">▶</i>':''}</button>`).join('')}</div>
-  <div class="pg"><span><i style="width:${100/s.items.length}%"></i></span><b class="num"><em>1</em> / ${s.items.length}</b><small>横にスワイプ</small></div>`:''}
+  ${s.items.length>1?`<div class="sw"><div class="strip">${s.items.map((it,k)=>`<button data-f="${it.f}" class="${k?'':'on'}"><img loading="lazy" src="${IMG(it.f)}" alt="">${it.k==='v'?'<i class="vmark">▶</i>':''}</button>`).join('')}</div><button class="more" aria-label="写真の続きを見る">全${s.items.length}枚 ›</button></div>`:''}
   <div class="next">${isLast?`<b>終着</b> ここで${dy.n}日はおしまい`:`次は <span class="num">${two(nx.no)}</span><b>${esc(nx.name)}</b><span class="num">${nx.t0}</span>`}</div>
   </div></section>`;
     sel[i]=s.items[0].f;
@@ -157,7 +132,6 @@ const secOf=i=>$(`#line section[data-i="${i}"]:not([data-talk])`);
 function show(i,f){
   sel[i]=f;const sec=secOf(i);$('.hero img',sec).src=IMG(f);
   const k=S[i].items.findIndex(x=>x.f===f),n=S[i].items.length,c=$('.cnt b',sec);if(c)c.textContent=k+1;
-  const ds=$$('.dots i',sec);ds.forEach((d,j)=>d.classList.toggle('on',j===Math.min(ds.length-1,Math.floor(k*ds.length/n))));
   $$('.strip button',sec).forEach(b=>{b.classList.toggle('on',b.dataset.f===f);if(b.dataset.f===f)b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})});
   M.light(f);
 }
@@ -167,16 +141,6 @@ line.addEventListener('click',e=>{
   const mo=e.target.closest('.more');if(mo){const st=mo.previousElementSibling;st.scrollBy({left:st.clientWidth*.8,behavior:'smooth'});return}
   const h=e.target.closest('.hero');if(h){const i=+h.dataset.i,L=S[i].items;lightbox(D,L,L.findIndex(x=>x.f===sel[i]),it=>show(i,it.f))}
 });
-// 帯まわりのデザイン案（?strip=a|b|c で切替。決まったら1案に絞る）
-const SV=(new URLSearchParams(location.search).get('strip')||'a').toLowerCase();document.body.classList.add('s-'+SV);
-if(new URLSearchParams(location.search).has('strip')){const p=document.createElement('nav');p.className='svp';
-  p.innerHTML='写真の案 '+['a','b','c'].map(v=>`<a href="?strip=${v}${location.hash}" class="${v===SV?'on':''}">${v.toUpperCase()}</a>`).join('');document.body.append(p)}
-// C案: のぞき見カルーセル
-$$('.car').forEach(cr=>{const i=+cr.dataset.i,L=S[i].items,sec=cr.closest('section'),bar=$('.pg i',sec),lb=$('.pg em',sec);
-  cr.addEventListener('scroll',()=>{const w=cr.firstElementChild.offsetWidth+8,k=Math.min(L.length-1,Math.round(cr.scrollLeft/w));
-    bar.style.width=(k+1)*100/L.length+'%';lb.textContent=k+1;if(sel[i]!==L[k].f){sel[i]=L[k].f;M.light(L[k].f)}},{passive:true});
-  cr.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;e.stopPropagation();
-    lightbox(D,L,+b.dataset.k,it=>{const k=L.indexOf(it);cr.scrollTo({left:k*(cr.firstElementChild.offsetWidth+8)})})})});
 const step=(i,d)=>{const L=S[i].items,k=L.findIndex(x=>x.f===(sel[i]||L[0].f));show(i,L[(k+d+L.length)%L.length].f)};
 // 大きい写真は左右スワイプでもめくれる
 let tx=null;line.addEventListener('touchstart',e=>{tx=e.target.closest('.hero')?e.touches[0].clientX:null},{passive:true});
@@ -187,8 +151,8 @@ line.addEventListener('click',e=>{if(e.target.closest('.hero[data-sw]'))e.stopIm
 const endChk=st=>st.parentNode.classList.toggle('end',st.scrollLeft+st.clientWidth>=st.scrollWidth-4);
 $$('.strip').forEach(st=>{st.addEventListener('scroll',()=>endChk(st),{passive:true});endChk(st)});
 // 駅に来たら帯を一度だけ少し流して戻す（続きがある合図）
-const nudged=new Set();const nudge=i=>{const st=$(SV==='c'?'.car':'.strip',secOf(i));if(SV==='b')return;if(!st||nudged.has(i)||st.scrollWidth<=st.clientWidth)return;nudged.add(i);
-  setTimeout(()=>{st.scrollBy({left:SV==='c'?140:90,behavior:'smooth'});setTimeout(()=>st.scrollBy({left:SV==='c'?-140:-90,behavior:'smooth'}),650)},350)};
+const nudged=new Set();const nudge=i=>{const st=$('.strip',secOf(i));if(!st||nudged.has(i)||st.scrollWidth<=st.clientWidth)return;nudged.add(i);
+  setTimeout(()=>{st.scrollBy({left:90,behavior:'smooth'});setTimeout(()=>st.scrollBy({left:-90,behavior:'smooth'}),650)},350)};
 // LINE等のアプリ内ブラウザは 100dvh が見えている高さより大きいことがあるので、実際の高さで駅の高さを決める
 const fit=()=>document.documentElement.style.setProperty('--secH',line.clientHeight+'px');fit();addEventListener('resize',fit);
 let cur=null;
