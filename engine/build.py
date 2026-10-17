@@ -881,7 +881,7 @@ def build_index(who='yuri',label='ゆりと'):
         if n<29: return f'{round(n/7)}週間後'
         return f'{max(1,round(n/30.4))}ヶ月後'
     def thumb(slug,it): return f'../{slug}/album/'+(it['f'] if it['kind']=='photo' else it['f'][:-4]+'.jpg')
-    first=T[0]['dates'][0].replace('-','.') if False else T[0][0]['dates'][0].replace('-','.')
+    first=T[0][0]['dates'][0].replace('-','.')
     since=(datetime.date.today()-datetime.date.fromisoformat(T[0][0]['dates'][0])).days
     heroes=[t for t in T if status(t[0])=='done'][-3:]
     stack=''.join(f'<figure><img src="../{s}/img/{d["cover"]["photo"]}.jpg" alt=""></figure>' for d,s,_ in heroes)
