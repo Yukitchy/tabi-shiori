@@ -20,7 +20,7 @@
 .pn{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:#fff;border:3px solid var(--dc,var(--acc));font:800 13px Inter,sans-serif;color:#111;box-shadow:0 1px 4px #0003;transition:transform .2s}
 .pin.on .pn{background:var(--dc,var(--acc));color:#fff;transform:scale(1.25)}
 #line{position:fixed;top:calc(var(--head) + var(--mapH));left:0;right:0;bottom:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;background:#fff;border-top:1px solid var(--line);z-index:2}
-#line section{height:var(--secH,calc(100dvh - var(--head) - var(--mapH)));scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:52px 1fr;padding-right:16px;overflow:hidden}
+#line section{height:var(--secH,calc(100dvh - var(--head) - var(--mapH)));scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:52px 1fr;grid-template-rows:minmax(0,1fr);padding-right:16px;overflow:hidden}
 .rail{position:relative;display:flex;justify-content:center}
 .rail::before{content:"";position:absolute;top:0;bottom:0;width:6px;background:var(--dc,var(--acc))}
 section.first .rail::before{top:30px}
@@ -28,7 +28,7 @@ section.first .rail::before{top:30px}
 section.last .rail::before{bottom:calc(100% - 30px)}
 .rail .no{position:relative;margin-top:16px;width:34px;height:34px;border-radius:8px;background:#fff;border:4px solid var(--dc,var(--acc));display:grid;place-items:center;font:800 14px Inter,sans-serif}
 .rail .dot{position:relative;margin-top:22px;width:22px;height:22px;border-radius:50%;background:#111;border:5px solid #fff;box-shadow:0 0 0 3px #111}
-.bd{padding:12px 0 6px;display:flex;flex-direction:column;min-width:0}
+.bd{padding:12px 0 6px;display:flex;flex-direction:column;min-width:0;min-height:0}
 .time{font-size:30px;font-weight:800;line-height:1.1}
 .time em{font-style:normal;font-weight:500;color:var(--sub);font-size:20px;margin-left:6px}
 .bd h2{font-size:22px;font-weight:900;line-height:1.3;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
